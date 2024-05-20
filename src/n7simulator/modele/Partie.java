@@ -1,12 +1,13 @@
 package n7simulator.modele;
 
 import java.time.LocalDate;
+import java.util.Observable;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
  */
-public class Partie {
+public class Partie extends Observable {
 	
 	/**
 	 * La date par defaut du début du jeu.
@@ -39,6 +40,8 @@ public class Partie {
 	 */
 	public void incrementJournee() {
 		this.journeeEnCours = this.journeeEnCours.plusDays(1);
+		this.setChanged();
+		this.notifyObservers(this);
 	}
 	
 	
