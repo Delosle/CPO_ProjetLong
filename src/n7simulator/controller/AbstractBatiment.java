@@ -22,7 +22,7 @@ public abstract class AbstractBatiment implements InterfaceBatiment {
 	 * @param x2 La colonne du point inférieur droit
 	 * @param y2 La ligne du point inférieur droit
 	 */
-	public void afficherRectangle(CarteGUI laCarte, Integer x1, Integer y1, Integer x2, Integer y2) {
+	protected void afficherRectangle(CarteGUI laCarte, Integer x1, Integer y1, Integer x2, Integer y2) {
 		// On définit les contraintes générales
 		GridBagConstraints contraintes = new GridBagConstraints();
 		contraintes.fill = GridBagConstraints.BOTH;
