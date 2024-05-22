@@ -6,6 +6,7 @@ on:
       - develop
       - us*
       - feat/modifier-jauges
+      - branch-*
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
