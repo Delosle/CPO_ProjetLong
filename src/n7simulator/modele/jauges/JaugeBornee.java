@@ -32,4 +32,10 @@ public class JaugeBornee extends Jauge {
         if(super.valeur + valeur >= BORNE_MAX) super.valeur = BORNE_MAX;
         else super.ajouter(valeur);
     }
+
+    @Override
+    public String toString() {
+        
+        return this.getNom() + " : " + getValue() + " / " + JaugeBornee.BORNE_MAX;
+    }
 }

@@ -4,7 +4,7 @@ package n7simulator.modele.jauges;
  * pour notre simulateur de l'N7; la valeur d'une jauge ne peut etre
  * inférieure à zéro.
  */
-public abstract class Jauge {
+public class Jauge {
     /**
      * Le nom de la jauge.
      */
@@ -59,6 +59,6 @@ public abstract class Jauge {
 
     @Override
     public String toString(){
-        return this.getNom();
+        return this.getNom() + " : " + getValue();
     }
 }
