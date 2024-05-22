@@ -1,6 +1,7 @@
 package n7simulator.vue;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -21,6 +22,8 @@ public class N7Frame extends JFrame {
 	
 	private PilotageGUI interfacePilotage;
 	
+	private JLayeredPane layeredPanel;
+	
 	/**
 	 * 
 	 */
@@ -36,7 +39,7 @@ public class N7Frame extends JFrame {
 		this.setSize((int)width, (int)height);
 		
 		// On créé les layers sur lesquels vont venir se placer nos éléments
-		JLayeredPane layeredPanel = new JLayeredPane();
+		layeredPanel = new JLayeredPane();
 		layeredPanel.setSize(this.getWidth(), this.getHeight());
 		this.add(layeredPanel);
 		
@@ -70,4 +73,11 @@ public class N7Frame extends JFrame {
 		this.setVisible(true);
 	}
 
+	/** Ajouter un élément au JLayeredPane
+	 * @param element L'élément à placer dans un layer
+	 * @param numLayer Le numéro du layer
+	 */
+	public void ajouterLayer(Component element, Integer numLayer) {
+		layeredPanel.add(element, numLayer);
+	}
 }
