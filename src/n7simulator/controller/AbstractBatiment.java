@@ -36,7 +36,7 @@ public abstract class AbstractBatiment extends JPanel implements InterfaceBatime
 	/** On créé un bâtiment abstrait
 	 * @param laFrame la fenêtre générale que l'on récupère pour afficher la vue du bâtiment
 	 */
-	public AbstractBatiment(N7Frame laFrame) {
+	public AbstractBatiment(N7Frame laFrame, JPanel contenu) {
 		// On récupère la frame
 		this.laFrame = laFrame;
 		
@@ -46,17 +46,17 @@ public abstract class AbstractBatiment extends JPanel implements InterfaceBatime
 		double height = screenSize.getHeight();
 		
 		// On définie les dimensions de la fenêtre d'action du bâtiment
-		Integer batimentLargeur = (int)width * 3 / 4;
-		this.setSize(batimentLargeur, (int)height);
+		double batimentLargeur = width * 0.675;
+		this.setSize((int)batimentLargeur, (int)height);
 		
 		// On créé le JPanel qui contient les actions (rempli dans les sous-classes)
-		contenuBatiment = new JPanel();
+		contenuBatiment = contenu;
 		
 		// On fait en sorte que l'on puisse scroller pour voir toutes les actions sur le bâtiment
 		JScrollPane scrollable = new JScrollPane(contenuBatiment);
 		contenuBatiment.setAutoscrolls(true);
 		Integer batimentHauteur = (int)height * 8 / 10;
-		scrollable.setPreferredSize(new Dimension((int)width, batimentHauteur));
+		scrollable.setPreferredSize(new Dimension((int)batimentLargeur, batimentHauteur));
 		this.add(scrollable);
 		
 		// On créé la zone pour les boutons annuler et valider

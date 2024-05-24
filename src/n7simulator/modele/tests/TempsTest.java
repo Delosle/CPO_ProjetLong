@@ -9,41 +9,42 @@ import org.junit.Before;
 import org.junit.Test;
 
 import n7simulator.modele.Partie;
+import n7simulator.modele.Temps;
 
-public class PartieTest {
+public class TempsTest {
 	
-	Partie nouvellePartie;
+	Temps nouveauTemps;
 	
 	@Before public void setUp() {
-		//Creer une nouvelle partie
-		nouvellePartie = new Partie();
+		//Creer un nouveau temps
+		nouveauTemps = new Temps();
 	}
 	
 	/*
-	 * Test vérifiant la date par defaut de la partie lorsque celle-ci 
-	 * est créée de zéro (nouvelle partie et non chargement à partir 
+	 * Test vérifiant la date par defaut du temps lorsque celui-ci
+	 * est créé de zéro (nouveau temps et non chargement à partir 
 	 * d'une sauvegarde)
 	 */
 	@Test
-	public void testInitialisationNouvellePartieDate() {
-		LocalDate dateNouvellePartie = nouvellePartie.getJourneeEnCours();
-		assertEquals(1, dateNouvellePartie.getDayOfMonth());
-		assertEquals(Month.SEPTEMBER, dateNouvellePartie.getMonth());
-		assertEquals(2024, dateNouvellePartie.getYear());
+	public void testInitialisationNouveauTemps() {
+		LocalDate dateNouveauTemps = nouveauTemps.getJourneeEnCours();
+		assertEquals(1, dateNouveauTemps.getDayOfMonth());
+		assertEquals(Month.SEPTEMBER, dateNouveauTemps.getMonth());
+		assertEquals(2024, dateNouveauTemps.getYear());
 	}
 	
 	/*
-	 * Test vérifiant la date de la partie lorsque celle-ci est créée
+	 * Test vérifiant la date du temps lorsque celle-ci est créée
 	 * à partir d'une sauvegarde.
 	 */
 	@Test
-	public void testInitialisationPartieSauvegardeeDate() {
+	public void testInitialisationTempsSauvegarde() {
 		int anneeTest = 2025;
 		int moisTest = 4;
 		int jourTest = 30;
 		Month mois = Month.of(moisTest);
-		Partie partieSauvegardee = new Partie(LocalDate.of(anneeTest, moisTest, jourTest));
-		LocalDate dateCreee = partieSauvegardee.getJourneeEnCours();
+		Temps tempsSauvegarde = new Temps(LocalDate.of(anneeTest, moisTest, jourTest));
+		LocalDate dateCreee = tempsSauvegarde.getJourneeEnCours();
 		assertEquals(jourTest, dateCreee.getDayOfMonth());
 		assertEquals(mois, dateCreee.getMonth());
 		assertEquals(anneeTest, dateCreee.getYear());
@@ -54,9 +55,9 @@ public class PartieTest {
 	 */
 	@Test
 	public void testIncrementDateClassique() {
-		Partie partieDateClassique = new Partie(LocalDate.of(2024, 1, 20));
-		partieDateClassique.incrementJournee();
-		LocalDate dateApres = partieDateClassique.getJourneeEnCours();
+		Temps tempsDateClassique = new Temps(LocalDate.of(2024, 1, 20));
+		tempsDateClassique.incrementJournee();
+		LocalDate dateApres = tempsDateClassique.getJourneeEnCours();
 		assertEquals(21, dateApres.getDayOfMonth());
 		assertEquals(Month.JANUARY, dateApres.getMonth());
 		assertEquals(2024, dateApres.getYear());
@@ -67,9 +68,9 @@ public class PartieTest {
 	 */
 	@Test
 	public void testIncrementDateFinMois() {
-		Partie partieDateClassique = new Partie(LocalDate.of(2024, 1, 31));
-		partieDateClassique.incrementJournee();
-		LocalDate dateApres = partieDateClassique.getJourneeEnCours();
+		Temps dateTempsClassique = new Temps(LocalDate.of(2024, 1, 31));
+		dateTempsClassique.incrementJournee();
+		LocalDate dateApres = dateTempsClassique.getJourneeEnCours();
 		assertEquals(1, dateApres.getDayOfMonth());
 		assertEquals(Month.FEBRUARY, dateApres.getMonth());
 		assertEquals(2024, dateApres.getYear());
@@ -80,9 +81,9 @@ public class PartieTest {
 	 */
 	@Test
 	public void testIncrementDateFinAnnee() {
-		Partie partieDateClassique = new Partie(LocalDate.of(2024, 12, 31));
-		partieDateClassique.incrementJournee();
-		LocalDate dateApres = partieDateClassique.getJourneeEnCours();
+		Temps dateTempsClassique = new Temps(LocalDate.of(2024, 12, 31));
+		dateTempsClassique.incrementJournee();
+		LocalDate dateApres = dateTempsClassique.getJourneeEnCours();
 		assertEquals(1, dateApres.getDayOfMonth());
 		assertEquals(Month.JANUARY, dateApres.getMonth());
 		assertEquals(2025, dateApres.getYear());

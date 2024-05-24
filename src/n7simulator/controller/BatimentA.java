@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.vue.CarteGUI;
+import n7simulator.vue.ElevesGUI;
 import n7simulator.vue.N7Frame;
 
 /**
@@ -18,8 +19,8 @@ public class BatimentA extends AbstractBatiment {
 	/** On créé le bâtiment A
 	 * @param laFrame la fenêtre dans laquelle s'affichera le bâtiment
 	 */
-	public BatimentA(N7Frame laFrame) {
-		super(laFrame);
+	public BatimentA(N7Frame laFrame, JPanel contenu) {
+		super(laFrame, contenu);
 	}
 
 	@Override

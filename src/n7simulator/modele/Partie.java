@@ -7,49 +7,52 @@ import java.util.Observable;
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
  */
-public class Partie extends Observable {
+public final class Partie extends Observable {
+	
+	private static Partie instance;
+	/**
+	 * Le nombre d'élèves inscrits à l'N7.
+	 */
+	private int nombreEleves = 100;
+	
+	private Partie() {}
 	
 	/**
-	 * La date par defaut du début du jeu.
+	 * Permet de récupérer la partie.
+	 * @return
 	 */
-	private static final LocalDate DATE_DEBUT = LocalDate.of(2024, 9, 1);
-	
-	/**
-	 * La date de la journée en cours pour la partie
-	 */
-	private LocalDate journeeEnCours;
-	
-	/**
-	 * Permet de creer une nouvelle partie sans partir d'une sauvegarde
-	 * Utilise donc les valeurs par defauts de debut de partie.
-	 */
-	public Partie() {
-		this.journeeEnCours = DATE_DEBUT;
+	public static Partie getInstance() {
+		if (instance == null) {
+			instance = new Partie();
+		}
+		return instance;
 	}
 	
 	/**
-	 * Permet de creer une partie à partir des données sauvegardées.
-	 * @param dateEnCoursSauvegarde : la date de la journée en cours pour la partie
+	 * Obtenir le nombre d'élèves inscrits à l'N7.
+	 * @return le nombre d'élèves inscrits.
 	 */
-	public Partie(LocalDate dateEnCoursSauvegarde) {
-		this.journeeEnCours = dateEnCoursSauvegarde;
+	public int getNombreEleves() {
+		return nombreEleves;
 	}
 	
 	/**
-	 * Passer au jour suivant en incrementant la date d'un jour.
+	 * Permet d'inscrire de nouveaux élèves.
+	 * @param nouveauxEleves le nombre d'élèves à inscrire
 	 */
-	public void incrementJournee() {
-		this.journeeEnCours = this.journeeEnCours.plusDays(1);
+	public void inscrireEleves(int nouveauxEleves) {
+		nombreEleves += nouveauxEleves;
 		this.setChanged();
 		this.notifyObservers(this);
 	}
 	
-	
 	/**
-	 * Obtenir la date de la journee en cours pour la partie.
-	 * @return la date de la journee en cours
+	 * Permet de désinscrire de nouveaux élèves.
+	 * @param exEleves le nombre d'élèves à désinscrire
 	 */
-	public LocalDate getJourneeEnCours() {
-		return this.journeeEnCours;
+	public void desinscrireEleves(int exEleves) {
+		nombreEleves += exEleves;
+		this.setChanged();
+		this.notifyObservers(this);
 	}
 }

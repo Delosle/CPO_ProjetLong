@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import n7simulator.modele.Partie;
+
 /**
  * 
  */
