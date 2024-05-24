@@ -4,7 +4,7 @@
 Faire un pull 
 
 Pour eclipse :
-Sur eclipse, allez dans File --> Import --> General --> Projects from Folder or Archive
+Sur eclipse, allez dans "File" --> "Import" --> "General" --> "Projects from Folder or Archive"
 Selectionner le dossier CPO_ProjetLong 
 Allez dans le fichier pom.xml
 
