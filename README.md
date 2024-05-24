@@ -8,7 +8,7 @@ Sur eclipse, allez dans "File" --> "Import" --> "General" --> "Projects from Fol
 Selectionner le dossier CPO_ProjetLong 
 Allez dans le fichier pom.xml
 
-Sur la première ligne : Allez tout à droite et accepter le dowload
+Sur la première ligne : Allez tout à droite et accepter le download
 
 Ligne 17 : changer le chemin d'acces vers le JDK afin qu'il soit conforme à votre arborescence 
 
