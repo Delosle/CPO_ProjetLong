@@ -60,15 +60,20 @@ public class CarteGUI extends JPanel {
 
 			}
 		}
-		
-		// On affiche les bâtiments sur la grille
-		batimentA = new BatimentA();
+
+	}
+
+	/** On créé les bâtiments dans la fenêtre
+	 * @param laFrame la fenêtre dans laquelle on place les bâtiments
+	 */
+	public void creerBatiments(N7Frame laFrame) {
+		batimentA = new BatimentA(laFrame);
 		batimentA.afficherSurCarte(this);
-		batimentB = new BatimentB();
+		batimentB = new BatimentB(laFrame);
 		batimentB.afficherSurCarte(this);
-		batimentC = new BatimentC();
+		batimentC = new BatimentC(laFrame);
 		batimentC.afficherSurCarte(this);
-		batimentAdmin = new BatimentAdmin();
+		batimentAdmin = new BatimentAdmin(laFrame);
 		batimentAdmin.afficherSurCarte(this);
 	}
 
