@@ -8,6 +8,7 @@ public class N7Simulator {
 	   public static void main (String[] args){	
 		     Partie laPartie = new Partie();
 		     TempsGUI interfaceTemps = new TempsGUI(laPartie);
+		     laPartie.addObserver(interfaceTemps);
 		     TempsController controllerTemps = new TempsController(laPartie);
 		     PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps);
 		     CarteGUI interfaceCarte = new CarteGUI();
