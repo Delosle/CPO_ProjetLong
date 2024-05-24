@@ -6,18 +6,21 @@ import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import n7simulator.controller.TempsController;
 
 /**
  * 
  */
 public class PilotageGUI extends JPanel {
 
-	/**
-	 * 
+	/** Créer la vue du pilotage
+	 * @param interfaceTemps l'interface de gestion du temps
 	 */
-	public PilotageGUI() {
+	public PilotageGUI(TempsGUI interfaceTemps, TempsController controllerTemps) {
 		this.setBackground(Color.white);
 		this.setLayout(new GridBagLayout());
 		
@@ -43,9 +46,12 @@ public class PilotageGUI extends JPanel {
 		// On ajoute le temps
 		contraintes.weighty = 1.0;
 		contraintes.gridy = 2;
-		caseCourante = new JLabel();
-		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
-		this.add(caseCourante, contraintes);
+		JPanel zoneTemps = new JPanel();
+		zoneTemps.setLayout(new BoxLayout(zoneTemps, BoxLayout.Y_AXIS));
+		zoneTemps.setBorder(BorderFactory.createLineBorder(Color.black));
+		zoneTemps.add(interfaceTemps);
+		zoneTemps.add(controllerTemps);
+		this.add(zoneTemps, contraintes);
 		
 	}
 
