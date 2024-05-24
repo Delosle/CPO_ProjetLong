@@ -57,6 +57,7 @@ public class N7Frame extends JFrame {
 		// On définit la taille de la carte et on l'ajoute
 		Integer carteLargeur = this.getWidth() * 3 / 4;
 		interfaceCarte.setSize(carteLargeur, this.getHeight());
+		interfaceCarte.creerBatiments(this);
 		this.interfaceCarte = interfaceCarte;
 		grilleFond.add(interfaceCarte, contraintes);
 		
@@ -79,5 +80,14 @@ public class N7Frame extends JFrame {
 	 */
 	public void ajouterLayer(Component element, Integer numLayer) {
 		layeredPanel.add(element, numLayer);
+	}
+	
+	/** Retirer un élément au JLayeredPane
+	 * @param element L'élément à retirer
+	 */
+	public void retirerLayer(Component element) {
+		layeredPanel.remove(element);
+		layeredPanel.revalidate();
+		layeredPanel.repaint();
 	}
 }
