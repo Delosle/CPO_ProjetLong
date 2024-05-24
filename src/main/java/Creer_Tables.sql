@@ -6,12 +6,13 @@ CREATE TABLE prof (
     niveau INTEGER,
     taux_horaire_minute INTEGER,
     id_matiere INTEGER,
-    FOREIGN KEY id_matiere REFERENCES matiere(id_matiere)
+    FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere)
 );
 
 -- Crée une table pour les matières
 CREATE TABLE matiere (
     id_matiere INTEGER PRIMARY KEY,
+    nom TEXT,
     bonheur INTEGER,
     pedagogie INTEGER
 );
@@ -103,4 +104,23 @@ INSERT INTO RepasCrous (id_repas, qualite, prix) VALUES
 -- Insère des données dans la table ValDebPartie
 INSERT INTO ValDebPartie (prof, NbEleve, Argent, Bonheur, Pedagogie, dateDeb) 
 VALUES (0, 10, 1500, 50, 50, '2024-09-01');
+
+
+
+-- Insérer des données dans la table matiere
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (1, 'Mathématiques', 8, 9);
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (2, 'Physique', 7, 8);
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (3, 'Chimie', 9, 7);
+
+-- Insérer des données dans la table prof
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (1, 'Dupont', 'Jean', 5, 30, 1);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (2, 'Martin', 'Sophie', 4, 28, 2);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (3, 'Bernard', 'Pierre', 3, 25, 3);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (4, 'Petit', 'Marie', 2, 22, 1);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (5, 'Durand', 'Luc', 1, 20, 2);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (6, 'Leroy', 'Emma', 4, 29, 3);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (7, 'Moreau', 'David', 5, 30, 1);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (8, 'Simon', 'Chloe', 3, 24, 2);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (9, 'Michel', 'Lucas', 2, 21, 3);
+INSERT INTO prof (id_prof, nom, prenom, niveau, taux_horaire_minute, id_matiere) VALUES (10, 'Garcia', 'Julie', 1, 19, 1);
 
