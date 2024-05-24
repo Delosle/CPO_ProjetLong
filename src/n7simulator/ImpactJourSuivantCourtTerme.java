@@ -6,7 +6,7 @@ package n7simulator;
 public interface ImpactJourSuivantCourtTerme {
 
 	/**
-	 * Effectue les modifications court terme.
+	 * Effectue les modifications court terme. 
 	 */
 	public void effectuerImpactJourSuivantCourtTerme();
 	
