@@ -1,3 +1,22 @@
+-- Crée une table pour les professeurs
+CREATE TABLE prof (
+    id_prof INTEGER PRIMARY KEY,
+    nom TEXT,
+    prenom TEXT,
+    niveau INTEGER,
+    taux_horaire_minute INTEGER,
+    id_matiere INTEGER,
+    FOREIGN KEY id_matiere REFERENCES matiere(id_matiere)
+);
+
+-- Crée une table pour les matières
+CREATE TABLE matiere (
+    id_matiere INTEGER PRIMARY KEY,
+    bonheur INTEGER,
+    pedagogie INTEGER
+);
+
+
 -- Crée une table pour les événements réguliers
 CREATE TABLE evenement_regulier (
     id_eve_reg INTEGER PRIMARY KEY,
