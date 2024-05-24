@@ -9,7 +9,7 @@ import java.util.List;
 public class JourSuivant {
 
 	private List<ImpactJourSuivantCourtTerme> impactsCourtTerme;
-	private List<ImpactJourSuivantLongTerme> impactsLongTerme;
+	private List<ImpactJourSuivantLongTerme> impactsLongTerme; 
 	
 	/**
 	 * Constructeur.
