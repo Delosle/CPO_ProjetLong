@@ -18,8 +18,8 @@ public class BatimentC extends AbstractBatiment {
 	/** On créé le bâtiment C
 	 * @param laFrame la fenêtre dans laquelle s'affichera le bâtiment
 	 */
-	public BatimentC(N7Frame laFrame) {
-		super(laFrame);
+	public BatimentC(N7Frame laFrame, JPanel contenu) {
+		super(laFrame, contenu);
 	}
 
 	@Override
