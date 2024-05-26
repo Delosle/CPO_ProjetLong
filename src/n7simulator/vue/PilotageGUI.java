@@ -9,6 +9,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import n7simulator.vue.jauges.JaugesPannel;
+
 /**
  * 
  */
@@ -30,6 +32,7 @@ public class PilotageGUI extends JPanel {
 		contraintes.weighty = 1.0;
 		contraintes.gridy = 0;
 		JLabel caseCourante = new JLabel();
+		JaugesPannel = new JaugesPannel(10, 5, 2000);
 		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.add(caseCourante, contraintes);
 		

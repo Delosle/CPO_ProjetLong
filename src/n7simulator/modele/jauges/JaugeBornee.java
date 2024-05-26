@@ -16,7 +16,7 @@ public class JaugeBornee extends Jauge {
      * @param initValue la valeur initiale de la jauge
      */
     public JaugeBornee(String nom, int initValue){
-        super(nom,initValue);
+        super(nom, initValue);
     }
 
     /**
@@ -29,7 +29,7 @@ public class JaugeBornee extends Jauge {
     
     @Override
     public void ajouter(int valeur){
-        if(super.valeur + valeur >= BORNE_MAX) super.valeur = BORNE_MAX;
+        if(super.getValue() + valeur >= BORNE_MAX) super.ajouter(BORNE_MAX - super.getValue());
         else super.ajouter(valeur);
     }
 
