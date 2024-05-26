@@ -1,5 +1,6 @@
 package n7simulator.vue;
 
+import n7simulator.vue.jauges.*;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -32,7 +33,8 @@ public class PilotageGUI extends JPanel {
 		contraintes.weighty = 1.0;
 		contraintes.gridy = 0;
 		JLabel caseCourante = new JLabel();
-		JaugesPannel = new JaugesPannel(10, 5, 2000);
+		JaugesPannel jauges = new JaugesPannel(10, 5, 0);
+		caseCourante.add(jauges);
 		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.add(caseCourante, contraintes);
 		
