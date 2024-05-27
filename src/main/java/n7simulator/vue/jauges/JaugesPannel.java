@@ -14,16 +14,16 @@ public class JaugesPannel extends JPanel{
     static final int LARGEUR_PANNEL = 500;
     static final int HAUTEUR_PANNEL = 240;
 
+    public ArgentGUI vueArgent;
+    public JaugeBorneeGUI vueBonheur;
+    public JaugeBorneeGUI vuePedagogie;
 
     public JaugesPannel(int initBonheur, int initPedagogie, int sommeInitiale) {
         setLayout(new GridLayout(3, 1));
-        Jauge argent = new Jauge("Argent", 50);
-        Jauge bonheur = new JaugeBornee("Bonheur");
-        Jauge pedagogie = new JaugeBornee("Pedagogie", 15);
-
-        ArgentGUI vueArgent = new ArgentGUI(argent.getNom(), argent.getValue());
-        JaugeBorneeGUI vueBonheur = new JaugeBorneeGUI(bonheur.getNom(), bonheur.getValue(), new Color(212, 0, 253));
-        JaugeBorneeGUI vuePedagogie = new JaugeBorneeGUI(pedagogie.getNom(), pedagogie.getValue(), Color.BLUE);
+        
+        vueArgent = new ArgentGUI("Argent", sommeInitiale);
+        vueBonheur = new JaugeBorneeGUI("Bonheur", 0, new Color(212, 0, 253));
+        vuePedagogie = new JaugeBorneeGUI("Pedagogie", 0, Color.BLUE);
 
         // .......... TO-DO............
         // Ajouter les controllers des jauges

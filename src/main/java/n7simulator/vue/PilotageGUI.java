@@ -21,7 +21,7 @@ public class PilotageGUI extends JPanel {
 	/** Créer la vue du pilotage
 	 * @param interfaceTemps l'interface de gestion du temps
 	 */
-	public PilotageGUI(TempsGUI interfaceTemps, TempsController controllerTemps) {
+	public PilotageGUI(TempsGUI interfaceTemps, TempsController controllerTemps, JaugesPannel jaugesGUI) {
 		this.setBackground(Color.white);
 		this.setLayout(new GridBagLayout());
 		
@@ -34,8 +34,7 @@ public class PilotageGUI extends JPanel {
 		contraintes.weighty = 1.0;
 		contraintes.gridy = 0;
 		JLabel caseCourante = new JLabel();
-		JaugesPannel jgesPannel = new JaugesPannel(10, 10, 500);
-		caseCourante.add(jgesPannel);
+		caseCourante.add(jaugesGUI);
 		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.add(caseCourante, contraintes);
 		

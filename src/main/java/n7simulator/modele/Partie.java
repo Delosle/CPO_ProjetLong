@@ -3,6 +3,9 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
+import n7simulator.modele.jauges.Jauge;
+import n7simulator.modele.jauges.JaugeBornee;
+
 /**
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
@@ -18,13 +21,22 @@ public class Partie extends Observable {
 	 * La date de la journée en cours pour la partie
 	 */
 	private LocalDate journeeEnCours;
+
+	public Jauge jaugeArgent;
 	
+	public Jauge jaugeBonheur;
+
+	public Jauge jaugePedagogie;
+
 	/**
 	 * Permet de creer une nouvelle partie sans partir d'une sauvegarde
 	 * Utilise donc les valeurs par defauts de debut de partie.
 	 */
 	public Partie() {
 		this.journeeEnCours = DATE_DEBUT;
+		jaugeArgent = new Jauge("Argent", 500);
+		jaugeBonheur = new JaugeBornee("Bonheur");
+		jaugePedagogie = new JaugeBornee("Pedagogie", 15);
 	}
 	
 	/**
