@@ -50,7 +50,9 @@ public final class Partie extends Observable {
 		
 		// TODO calcul lendemain :
 		// gainMax = nombreEleves / 5 --ex : 100 / 5 = 20
-		// ((jaugeBohneur + jaugePedagogie)*100/200) * gainMax / 100 
+		// totalJauges = (jaugeBohneur + jaugePegagogie) / 2
+		// si totalJauges >=25 : gain = totalJauges * gainMax / 100
+		// sinon : gain = (totalJauges * gainMax / 100) - gainMax
 	}
 	
 	/**
