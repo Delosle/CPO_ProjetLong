@@ -51,7 +51,7 @@ public final class Partie extends Observable {
 	 * @param exEleves le nombre d'élèves à désinscrire
 	 */
 	public void desinscrireEleves(int exEleves) {
-		nombreEleves += exEleves;
+		nombreEleves -= exEleves;
 		this.setChanged();
 		this.notifyObservers(this);
 	}
