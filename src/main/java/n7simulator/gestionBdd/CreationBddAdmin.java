@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 
-public class Creation_bdd_admin {
+public class CreationBddAdmin {
 
-    public void initialiser_BddAdmin() {
+    public static void initialiserBddAdmin() {
         Connection connection = null;
         try {
         	// Supprimer le fichier de base de données existant
@@ -49,7 +49,7 @@ public class Creation_bdd_admin {
     // Méthode pour lire le fichier SQL depuis les ressources
     private static String readSqlFile(String fileName) {
         StringBuilder sb = new StringBuilder();
-        try (InputStream inputStream = Creation_bdd_admin.class.getClassLoader().getResourceAsStream(fileName);
+        try (InputStream inputStream = CreationBddAdmin.class.getClassLoader().getResourceAsStream(fileName);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = reader.readLine()) != null) {
