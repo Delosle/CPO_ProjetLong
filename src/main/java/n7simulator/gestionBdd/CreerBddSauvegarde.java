@@ -5,12 +5,22 @@ import java.util.*;
 
 public class CreerBddSauvegarde {
 
-    public static void creerBddSauvegarde (String nomDePartie) throws PartieExisteDejaException {
-        verifierPartieExiste(nomDePartie);
-        Connection conn = creerBDD(nomDePartie);
+    /**
+     * Crée une base de données de sauvegarde pour une partie
+      * @param nomDePartie
+     * @throws PartieExisteDejaException
+     */
+    public static void creerBddSauvegarde (String nomDePartie) {
+        //verifierPartieExiste(nomDePartie);
+        Connection conn = creerBDD();
         creerTables(conn);
         fermerDatabase(conn);
     }
+
+    /**
+     * Vérifie si une partie existe déjà
+     * @param nomDePartie
+     * @throws PartieExisteDejaException
 
     private static void verifierPartieExiste(String nomDePartie) throws PartieExisteDejaException {
         List<String> fichiersNom = GestionBddSauvegarde.recupererNomsBddSauvegarde();
@@ -23,13 +33,19 @@ public class CreerBddSauvegarde {
                 throw new PartieExisteDejaException("La partie " + nomDePartie + " existe déjà");
             }
         }
-    }
+    }**/
 
-    private static Connection creerBDD(String nomDePartie) {
+    /**
+     * Crée une connexion à la base de données
+     * @param nomDePartie
+     * @return
+     */
+    private static Connection creerBDD() {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:src/main/resources/baseDeDonnee/SauvegardePartie_" + nomDePartie + ".db";
+            String url = "jdbc:sqlite:src/main/resources/baseDeDonnee/SauvegardePartie.db";
+            //String url = "jdbc:sqlite:src/main/resources/baseDeDonnee/SauvegardePartie_" + nomDePartie + ".db";
             // create a connection to the database src/main/resources/baseDeDonnee
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
@@ -38,22 +54,35 @@ public class CreerBddSauvegarde {
         return conn;
     }
 
+
+    /**
+     * Crée les tables de la base de données
+     * @param conn
+     */
     private static void creerTables(Connection conn) {
         Statement stmt = null;
         try {
             // Créer un objet Statement pour exécuter les requêtes SQL
             stmt = conn.createStatement();
 
+            // Commande SQL pour créer la table de sauvegarde des parties
+            String sqlSauvegardePartie = " CREATE TABLE SauvegardePartie (\n" +
+                    "    idPartieNom INTEGER PRIMARY KEY,\n" +
+                    "    nomPartie TEXT)";
+
+            // Exécuter la commande SQL
+            stmt.execute(sqlSauvegardePartie);
+
             // Commande SQL pour créer la table ProfEmbauches
             String sqlProfEmbauches = "CREATE TABLE ProfEmbauches " +
-                    "(idprof INTEGER PRIMARY KEY, salaire INTEGER, nbheure INTEGER)";
+                    "(idprof INTEGER PRIMARY KEY, salaire INTEGER, nbheure INTEGER, idPartieNom INTEGER REFERENCES Partie(idPartieNom));";
 
             // Exécuter la commande SQL
             stmt.execute(sqlProfEmbauches);
 
             // Commande SQL pour créer la table EvenementEnCours
             String sqlEvenementEnCours = " CREATE TABLE EvenementEnCours (" +
-                    "idEvenement INTEGER PRIMARY KEY, jourDebut DATE)";
+                    "idEvenement INTEGER PRIMARY KEY, jourDebut DATE, idPartieNom INTEGER REFERENCES Partie(idPartieNom));";
 
             // Exécuter la commande SQL
             stmt.execute(sqlEvenementEnCours);
@@ -69,8 +98,8 @@ public class CreerBddSauvegarde {
                     "    bonheur INT,\n" +
                     "    pedagogie INT,\n" +
                     "    idQualiteRepasCrous INT,\n" +
-                    "    prixVenteRepascrous FLOAT\n" +
-                    ");\n";
+                    "    prixVenteRepascrous FLOAT,\n" +
+                    "idPartieNom INTEGER REFERENCES Partie(idPartieNom));\n";
 
             // Exécuter la commande SQL
             stmt.execute(sqlpartie);
@@ -88,6 +117,10 @@ public class CreerBddSauvegarde {
         }
     }
 
+    /**
+     * Ferme la connexion à la base de données
+     * @param conn
+     */
     private static void fermerDatabase(Connection conn) {
         try {
             if (conn != null) {

@@ -1,32 +1,17 @@
 package n7simulator.gestionBdd;
 import java.io.*;
 import java.sql.*;
-import java.util.*;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+
 
     public class GestionBddSauvegarde {
 
-import java.util.HashMap;
-import java.util.Map;
-
-        public class Main {
-            public static void main(String[] args) {
-                // Créer un nouveau HashMap
-                Map<String, Integer> monDictionnaire = new HashMap<>();
-
-                // Ajouter des éléments au HashMap
-                monDictionnaire.put("un", 1);
-                monDictionnaire.put("deux", 2);
-                monDictionnaire.put("trois", 3);
-
-                // Accéder à un élément du HashMap
-                int valeur = monDictionnaire.get("deux"); // valeur est maintenant 2
-
-                // Parcourir le HashMap
-                for (Map.Entry<String, Integer> entry : monDictionnaire.entrySet()) {
-                    System.out.println("Clé : " + entry.getKey() + ", Valeur : " + entry.getValue());
-                }
-            }
-        }
+        /**
+         * Récupère les noms des fichiers de base de données de sauvegarde
+         * @return : la liste des noms des fichiers
 
         public static List<String> recupererNomsBddSauvegarde() {
             // Spécifiez le chemin du répertoire
@@ -54,36 +39,7 @@ import java.util.Map;
 
             // Renvoyez la liste des noms de fichiers
             return listeFichier;
-        }
-
-        public static Map recupererInfoBddSauvegarde(String nomBdd) {
-            // Créez un HashMap pour stocker les informations
-            Map<String, Object> infoBdd = new HashMap<>();
-
-            // Spécifiez le chemin du fichier de base de données
-            String cheminBdd = "src/main/resources/baseDeDonnee/" + nomBdd;
-
-            // Créez un objet File pour le fichier de base de données
-            File fichierBdd = new File(cheminBdd);
-
-            // Vérifiez si le fichier existe
-            if (fichierBdd.exists()) {
-                // Obtenez la taille du fichier
-                long taille = fichierBdd.length();
-
-                // Obtenez la date de dernière modification du fichier
-                long derniereModif = fichierBdd.lastModified();
-
-                // Ajoutez les informations au HashMap
-                infoBdd.put("Taille", taille);
-                infoBdd.put("Dernière modification", derniereModif);
-            } else {
-                System.out.println("Le fichier de base de données n'existe pas");
-            }
-
-            // Renvoyez le HashMap contenant les informations
-            return infoBdd;
-        }
+        }*/
 
 
         /**
@@ -91,8 +47,8 @@ import java.util.Map;
          * @return : la connexion
          * @throws SQLException : si la connexion echoue
          */
-        private static Connection getDBConnexion(String nomBdd) throws SQLException {
-            return DriverManager.getConnection("jdbc:sqlite:src/main/resources/baseDeDonnee/" + nomBdd + ".db");
+        private static Connection getDBConnexion() throws SQLException {
+            return DriverManager.getConnection("jdbc:sqlite:src/main/resources/baseDeDonnee/SauvegardePartie.db");
         }
 
         /**
@@ -117,5 +73,78 @@ import java.util.Map;
             if (connexion != null) {
                 connexion.close();
             }
+        }
+
+
+
+        public static Map recupererInfoBddSauvegarde(int idPartie) {
+            // Créez un HashMap pour stocker les informations
+            Map<String, Object> infoBdd = new HashMap<>();
+            try {
+                Connection conn = getDBConnexion();
+                String requeteTable1 = "SELECT * FROM ProfEmbauches WHERE idPartieNom = " + idPartie;
+                infoBdd = peuplerDico (conn, requeteTable1, infoBdd);
+                String requeteTable2 = "SELECT * FROM EvenementEnCours WHERE idPartieNom = " + idPartie;
+                infoBdd = peuplerDico (conn, requeteTable2, infoBdd);
+                String requeteTable3 = "SELECT * FROM Partie WHERE idPartieNom = " + idPartie;
+                infoBdd = peuplerDico (conn, requeteTable3, infoBdd);
+                closeDBConnexion(conn);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            // Renvoyez le HashMap contenant les informations
+            return infoBdd;
+        }
+
+
+        private static Map peuplerDico (Connection conn, String query, Map infoBdd) {
+            try {
+                ResultSet result = effectuerRequete(query, conn);
+                System.out.println( result.getMetaData().getColumnCount());
+                if (result.next()) {
+                    int columnCount = result.getMetaData().getColumnCount();
+                    System.out.println(columnCount);
+                    for (int i = 1; i <= columnCount; i++) {
+
+                        String columnName = result.getMetaData().getColumnName(i);
+                        Object value = result.getObject(i);
+                        infoBdd.put(columnName, value);
+                    }
+                }
+                result.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            return infoBdd;
+        }
+
+        /**
+         * Récupère les noms des parties sauvegardées
+         * @return : la liste des noms des parties sauvegardées
+         * @throws SQLException : si la requête échoue
+         */
+        public static ArrayList<String> recupererNomPartie() {
+            String query = "SELECT idPartieNom, nomPartie FROM SauvegardePartie";
+            ArrayList<String> nomPartie = new ArrayList<String>();
+            Connection conn = null;
+            try {
+                conn = getDBConnexion ();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try (ResultSet result = effectuerRequete(query, conn)) {
+                while (result.next()) {
+                    nomPartie.add(result.getString("nomPartie"));
+                }
+                result.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                closeDBConnexion(conn);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return nomPartie;
         }
 }
