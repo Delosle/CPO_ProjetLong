@@ -1,22 +1,36 @@
+package n7simulator.gestionBdd;
 import java.sql.*;
+import java.util.*;
 
-public class Creer_bdd_sauvegarde {
 
-    public static void main(String[] args) {
-        String nomDePartie = args[0];
-        Connection conn = null;
-        ///String nomDePartie = partie_;
-        conn = creerBDD(nomDePartie);
+public class CreerBddSauvegarde {
+
+    public static void creerBddSauvegarde (String nomDePartie) throws PartieExisteDejaException {
+        verifierPartieExiste(nomDePartie);
+        Connection conn = creerBDD(nomDePartie);
         creerTables(conn);
         fermerDatabase(conn);
+    }
+
+    private static void verifierPartieExiste(String nomDePartie) throws PartieExisteDejaException {
+        List<String> fichiersNom = GestionBddSauvegarde.recupererNomsBddSauvegarde();
+        String nomBdd = "SauvegardePartie_" + nomDePartie + ".db";
+        System.out.println(nomBdd);
+        for (String fichierNom : fichiersNom) {
+            System.out.println(fichierNom);
+            if (nomBdd.equals(fichierNom)) {
+                //throw new IllegalArgumentException("La partie existe déjà");
+                throw new PartieExisteDejaException("La partie " + nomDePartie + " existe déjà");
+            }
+        }
     }
 
     private static Connection creerBDD(String nomDePartie) {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:src/main/resources/baseDeDonnee/sauvegarde_partie_" + nomDePartie + ".db";
-            // create a connection to the database
+            String url = "jdbc:sqlite:src/main/resources/baseDeDonnee/SauvegardePartie_" + nomDePartie + ".db";
+            // create a connection to the database src/main/resources/baseDeDonnee
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -9,9 +9,9 @@ import java.sql.Statement;
 /**
  * Classe permettant d'effectuer des requêtes à la base de données
  */
-public class DatabaseConnection {
+public class DatabaseConnection (String nomBdd) {
 	// emplacement du fichier database admin
-    private static final String DB_URL = "jdbc:sqlite:src/main/java/my_database.db";
+    private static final String DB_URL = "jdbc:sqlite:src/main/resources/baseDeDonnee/admin.db";
 
     private DatabaseConnection() {}
     
