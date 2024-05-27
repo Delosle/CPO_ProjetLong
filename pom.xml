@@ -14,7 +14,7 @@
                 <source>11</source> <!-- Spécifiez la version de Java source -->
                 <target>21</target> <!-- Spécifiez la version de Java cible -->
                 <fork>true</fork> <!-- Utiliser un processus distinct pour le compilateur -->
-                <executable>/home/banzet/Downloads/jdk-22.0.1/bin/javac</executable> <!-- Chemin vers le compilateur Java du JDK -->
+                <executable>/a completer/Downloads/jdk-22.0.1/bin/javac</executable> <!-- Chemin vers le compilateur Java du JDK -->
             </configuration>
         </plugin>
     </plugins>
