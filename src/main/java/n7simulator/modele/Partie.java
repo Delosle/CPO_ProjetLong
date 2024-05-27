@@ -3,6 +3,8 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
+import n7simulator.db.ValDebPartieDAO;
+
 /**
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
@@ -13,7 +15,7 @@ public final class Partie extends Observable {
 	/**
 	 * Le nombre d'élèves inscrits à l'N7.
 	 */
-	private int nombreEleves = 100;
+	private int nombreEleves;
 	
 	private Partie() {}
 	
@@ -24,6 +26,7 @@ public final class Partie extends Observable {
 	public static Partie getInstance() {
 		if (instance == null) {
 			instance = new Partie();
+			ValDebPartieDAO.initialiserDonneesDebutPartie();
 		}
 		return instance;
 	}
@@ -44,6 +47,10 @@ public final class Partie extends Observable {
 		nombreEleves += nouveauxEleves;
 		this.setChanged();
 		this.notifyObservers(this);
+		
+		// TODO calcul lendemain :
+		// gainMax = nombreEleves / 5 --ex : 100 / 5 = 20
+		// ((jaugeBohneur + jaugePedagogie)*100/200) * gainMax / 100 
 	}
 	
 	/**
