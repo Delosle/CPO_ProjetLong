@@ -14,7 +14,7 @@
                 <source>11</source> <!-- Spécifiez la version de Java source -->
                 <target>21</target> <!-- Spécifiez la version de Java cible -->
                 <fork>true</fork> <!-- Utiliser un processus distinct pour le compilateur -->
-                <executable>/home/n7student/Téléchargements/jdk-22.0.1/bin/javac</executable> <!-- Chemin vers le compilateur Java du JDK -->
+                <executable>/home/simo/Téléchargements/jdk-22_linux-x64_bin/jdk-22.0.1/bin/javac</executable> <!-- Chemin vers le compilateur Java du JDK -->
             </configuration>
         </plugin>
     </plugins>
