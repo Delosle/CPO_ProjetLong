@@ -18,9 +18,6 @@ public class Creer_bdd_sauvegarde {
             String url = "jdbc:sqlite:src/main/java/sauvegarde_partie_" + nomDePartie + ".db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
-
-            System.out.println("Connection to SQLite has been established.");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -81,7 +78,6 @@ public class Creer_bdd_sauvegarde {
         try {
             if (conn != null) {
                 conn.close();
-                System.out.println("Connection to SQLite has been closed.");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
