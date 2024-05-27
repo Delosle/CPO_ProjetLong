@@ -15,7 +15,7 @@ public class Creer_bdd_sauvegarde {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:src/main/java/sauvegarde_partie_" + nomDePartie + ".db";
+            String url = "jdbc:src/main/resources/baseDeDonnee/sauvegarde_partie_" + nomDePartie + ".db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {

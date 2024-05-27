@@ -17,7 +17,7 @@ public class CreationBddAdmin {
 		try {
 			// La bdd ne doit pas être modifié, il est donc préférable de supprimer
 			// le fichier de base de données s'il existe
-			File dbFichier = new File("admin.db");
+			File dbFichier = new File("src/main/resources/baseDeDonnee/admin.db");
 			if (dbFichier.exists()) {
 				dbFichier.delete();
 			}
@@ -25,7 +25,7 @@ public class CreationBddAdmin {
 			// Charger la classe de driver SQLite
 			Class.forName("org.sqlite.JDBC");
 			// Établir une connexion à la base de données nommée admin.bd
-			connection = DriverManager.getConnection("jdbc:sqlite:admin.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/baseDeDonnee/admin.db");
 
 			// Créer et peupler la base de données admin
 			CreerPeuplerDatabase(connection);
