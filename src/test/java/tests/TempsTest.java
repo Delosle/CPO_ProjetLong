@@ -1,4 +1,4 @@
-package n7simulator.modele.tests;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 

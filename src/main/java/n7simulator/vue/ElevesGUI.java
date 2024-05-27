@@ -1,5 +1,6 @@
 package n7simulator.vue;
 
+import java.awt.FlowLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -22,6 +23,7 @@ public class ElevesGUI extends JPanel implements Observer {
 	 * Constructeur.
 	 */
 	public ElevesGUI() {
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		afficheurNombreEleves = new JLabel(formatNombreEleves(Partie.getInstance().getNombreEleves()));
 		this.add(afficheurNombreEleves);
 	}

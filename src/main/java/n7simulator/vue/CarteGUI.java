@@ -81,9 +81,7 @@ public class CarteGUI extends JPanel {
 		batimentC.afficherSurCarte(this);
 		
 		// Batiment Admin
-		ElevesGUI elevesVue = new ElevesGUI();
-		Partie.getInstance().addObserver(elevesVue);
-		batimentAdmin = new BatimentAdmin(laFrame, elevesVue);
+		batimentAdmin = new BatimentAdmin(laFrame, new BatimentAdminGUI());
 		batimentAdmin.afficherSurCarte(this);
 	}
 
