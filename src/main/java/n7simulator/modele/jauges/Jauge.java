@@ -1,10 +1,13 @@
 package n7simulator.modele.jauges;
+
+import java.util.Observable;
+
 /**
  * Cette classe définit la structure générale des jauges
  * pour notre simulateur de l'N7; la valeur d'une jauge ne peut etre
  * inférieure à zéro.
  */
-public class Jauge {
+public class Jauge extends Observable{
     /**
      * Le nom de la jauge.
      */
@@ -55,6 +58,8 @@ public class Jauge {
      */
     public void ajouter(int valeur){
         this.valeur += this.valeur + valeur > 0 ? valeur : -this.valeur;
+        setChanged();
+        notifyObservers(this.valeur);
     }
 
     @Override
