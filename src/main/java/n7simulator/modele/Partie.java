@@ -3,7 +3,11 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
+
 import n7simulator.db.ValDebPartieDAO;
+
+import n7simulator.modele.jauges.Jauge;
+import n7simulator.modele.jauges.JaugeBornee;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -15,17 +19,35 @@ public final class Partie extends Observable {
 	/**
 	 * Le nombre d'élèves inscrits à l'N7.
 	 */
-	private int nombreEleves;
+	private static int nombreEleves;
+
+	/**
+	 * La jauge d'argent
+	 */
+	private static Jauge jaugeArgent;
+	
+	/**
+	 * La jauge de Bonheur;
+	 */
+	private static Jauge jaugeBonheur;
+
+	/**
+	 * La jauge de Pédagigie
+	 */
+	private static Jauge jaugePedagogie;
 	
 	private Partie() {}
 	
 	/**
 	 * Permet de récupérer la partie.
-	 * @return
+	 * @return la partie
 	 */
 	public static Partie getInstance() {
 		if (instance == null) {
 			instance = new Partie();
+			jaugeArgent = new Jauge("Argent");
+			jaugeBonheur = new JaugeBornee("Bonheur");
+			jaugePedagogie = new JaugeBornee("Pedagogie");
 			ValDebPartieDAO.initialiserDonneesDebutPartie();
 		}
 		return instance;
@@ -63,5 +85,29 @@ public final class Partie extends Observable {
 		nombreEleves -= exEleves;
 		this.setChanged();
 		this.notifyObservers(this);
+	}
+
+	/**
+	 * Obtenir la jauge Argent
+	 * @return la jauge d'argent
+	 */
+	public Jauge getJaugeArgent(){
+		return jaugeArgent;
+	}
+
+	/**
+	 * Obtenir la jauge de Bonheur
+	 * @return la jauge de Bonheur
+	 */
+	public Jauge getJaugeBonheur(){
+		return jaugeBonheur;
+	}
+
+	/**
+	 * Obtenir la jauge de Pédagogie
+	 * @return la jauge de Pédagogie
+	 */
+	public Jauge getJaugePedagogie(){
+		return jaugePedagogie;
 	}
 }
