@@ -3,53 +3,108 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
+import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.jauges.Jauge;
+import n7simulator.modele.jauges.JaugeBornee;
+
 /**
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
  */
-public class Partie extends Observable {
+public final class Partie extends Observable {
+	
+	private static Partie instance;
+	/**
+	 * Le nombre d'élèves inscrits à l'N7.
+	 */
+	private static int nombreEleves;
+
+	/**
+	 * La jauge d'argent
+	 */
+	private static Jauge jaugeArgent;
 	
 	/**
-	 * La date par defaut du début du jeu.
+	 * La jauge de Bonheur;
 	 */
-	private static final LocalDate DATE_DEBUT = LocalDate.of(2024, 9, 1);
+	private static Jauge jaugeBonheur;
+
+	/**
+	 * La jauge de Pédagigie
+	 */
+	private static Jauge jaugePedagogie;
+	
+	private Partie() {}
 	
 	/**
-	 * La date de la journée en cours pour la partie
+	 * Permet de récupérer la partie.
+	 * @return la partie
 	 */
-	private LocalDate journeeEnCours;
-	
-	/**
-	 * Permet de creer une nouvelle partie sans partir d'une sauvegarde
-	 * Utilise donc les valeurs par defauts de debut de partie.
-	 */
-	public Partie() {
-		this.journeeEnCours = DATE_DEBUT;
+	public static Partie getInstance() {
+		if (instance == null) {
+			instance = new Partie();
+			jaugeArgent = new Jauge("Argent");
+			jaugeBonheur = new JaugeBornee("Bonheur");
+			jaugePedagogie = new JaugeBornee("Pedagogie");
+		}
+		return instance;
 	}
 	
 	/**
-	 * Permet de creer une partie à partir des données sauvegardées.
-	 * @param dateEnCoursSauvegarde : la date de la journée en cours pour la partie
+	 * Obtenir le nombre d'élèves inscrits à l'N7.
+	 * @return le nombre d'élèves inscrits.
 	 */
-	public Partie(LocalDate dateEnCoursSauvegarde) {
-		this.journeeEnCours = dateEnCoursSauvegarde;
+	public int getNombreEleves() {
+		return nombreEleves;
 	}
 	
 	/**
-	 * Passer au jour suivant en incrementant la date d'un jour.
+	 * Permet d'inscrire de nouveaux élèves.
+	 * @param nouveauxEleves le nombre d'élèves à inscrire
 	 */
-	public void incrementJournee() {
-		this.journeeEnCours = this.journeeEnCours.plusDays(1);
+	public void inscrireEleves(int nouveauxEleves) {
+		nombreEleves += nouveauxEleves;
+		this.setChanged();
+		this.notifyObservers(this);
+		
+		// TODO calcul lendemain :
+		// gainMax = nombreEleves / 5 --ex : 100 / 5 = 20
+		// totalJauges = (jaugeBohneur + jaugePegagogie) / 2
+		// si totalJauges >=25 : gain = totalJauges * gainMax / 100
+		// sinon : gain = (totalJauges * gainMax / 100) - gainMax
+	}
+	
+	/**
+	 * Permet de désinscrire de nouveaux élèves.
+	 * @param exEleves le nombre d'élèves à désinscrire
+	 */
+	public void desinscrireEleves(int exEleves) {
+		nombreEleves -= exEleves;
 		this.setChanged();
 		this.notifyObservers(this);
 	}
-	
-	
+
 	/**
-	 * Obtenir la date de la journee en cours pour la partie.
-	 * @return la date de la journee en cours
+	 * Obtenir la jauge Argent
+	 * @return la jauge d'argent
 	 */
-	public LocalDate getJourneeEnCours() {
-		return this.journeeEnCours;
+	public Jauge getJaugeArgent(){
+		return jaugeArgent;
+	}
+
+	/**
+	 * Obtenir la jauge de Bonheur
+	 * @return la jauge de Bonheur
+	 */
+	public Jauge getJaugeBonheur(){
+		return jaugeBonheur;
+	}
+
+	/**
+	 * Obtenir la jauge de Pédagogie
+	 * @return la jauge de Pédagogie
+	 */
+	public Jauge getJaugePedagogie(){
+		return jaugePedagogie;
 	}
 }

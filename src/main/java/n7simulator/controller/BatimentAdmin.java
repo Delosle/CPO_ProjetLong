@@ -18,8 +18,8 @@ public class BatimentAdmin extends AbstractBatiment {
 	/** On créé le bâtiment Admin
 	 * @param laFrame la fenêtre dans laquelle s'affichera le bâtiment
 	 */
-	public BatimentAdmin(N7Frame laFrame) {
-		super(laFrame);
+	public BatimentAdmin(N7Frame laFrame, JPanel contenu) {
+		super(laFrame, contenu);
 	}
 
 	@Override
