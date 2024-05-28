@@ -7,7 +7,7 @@ import java.util.*;
 
 public class JaugeBorneeGUI extends JPanel implements Observer {
     private static int LARGEUR_PANNEL = 480;
-    private static int HAUTEUR_PANNEL = 75;
+    private static int HAUTEUR_PANNEL = 80;
     private static int LARGEUR_BARMAX = 350;
     private static int HAUTER_BARMAX = 40;
     
@@ -67,9 +67,8 @@ public class JaugeBorneeGUI extends JPanel implements Observer {
                 g.fillRect(0, 0, largBar, HAUTER_BARMAX);
             }
         };
-        bareValue.setPreferredSize(new Dimension(LARGEUR_BARMAX+10, HAUTER_BARMAX+5));
+        bareValue.setPreferredSize(new Dimension(LARGEUR_BARMAX+5, HAUTER_BARMAX));
         
-
         // Créer le JLabel pour la valeur
         valeurLabel = new JLabel("" + initValue);
         valeurLabel.setForeground(couleur);
@@ -78,7 +77,7 @@ public class JaugeBorneeGUI extends JPanel implements Observer {
         valuesPanel.add(bareValue, BorderLayout.EAST);
         
         // Ajout de la valeur à l'est
-        valuesPanel.add(valeurLabel, BorderLayout.CENTER);
+        valuesPanel.add(valeurLabel, BorderLayout.WEST);
         
         add(valuesPanel, BorderLayout.CENTER);
        

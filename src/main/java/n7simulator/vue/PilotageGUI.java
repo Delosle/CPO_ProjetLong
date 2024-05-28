@@ -1,5 +1,6 @@
 package n7simulator.vue;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import n7simulator.controller.TempsController;
 import n7simulator.vue.jauges.JaugesPannel;
@@ -34,8 +36,11 @@ public class PilotageGUI extends JPanel {
 		contraintes.weighty = 1.0;
 		contraintes.gridy = 0;
 		JLabel caseCourante = new JLabel();
-		caseCourante.add(jaugesGUI);
 		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		// Ajouter jaugesGUI à caseCourante
+		caseCourante.setLayout(new BorderLayout());
+		caseCourante.add(jaugesGUI, BorderLayout.WEST);
 		this.add(caseCourante, contraintes);
 		
 		// On ajoute l'élément médiant

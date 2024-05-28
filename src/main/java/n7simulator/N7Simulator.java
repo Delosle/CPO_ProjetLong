@@ -15,11 +15,15 @@ public class N7Simulator {
 			TempsController controllerTemps = new TempsController(laPartie);
 
 			// Les jauges
-			Jauge argent = laPartie.jaugeArgent;
-			Jauge bonheur = laPartie.jaugeBonheur;
-			Jauge pedagogie = laPartie.jaugePedagogie;
+			Jauge argent = laPartie.getJaugeArgent();
+			Jauge bonheur = laPartie.getJaugeBonheur();
+			Jauge pedagogie = laPartie.getJaugePedagogie();
 
 			JaugesPannel jaugesPannel = new JaugesPannel(bonheur.getValue(), pedagogie.getValue(), argent.getValue());
+
+			argent.addObserver(jaugesPannel.getVueArgent());
+			bonheur.addObserver(jaugesPannel.getVueBonheur());
+			pedagogie.addObserver(jaugesPannel.getVuePedagogie());
 
 			PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel);
 			CarteGUI interfaceCarte = new CarteGUI();

@@ -22,11 +22,20 @@ public class Partie extends Observable {
 	 */
 	private LocalDate journeeEnCours;
 
-	public Jauge jaugeArgent;
+	/**
+	 * La jauge d'argent
+	 */
+	private Jauge jaugeArgent;
 	
-	public Jauge jaugeBonheur;
+	/**
+	 * La jauge de Bonheur;
+	 */
+	private Jauge jaugeBonheur;
 
-	public Jauge jaugePedagogie;
+	/**
+	 * La jauge de Pédagigie
+	 */
+	private Jauge jaugePedagogie;
 
 	/**
 	 * Permet de creer une nouvelle partie sans partir d'une sauvegarde
@@ -63,5 +72,29 @@ public class Partie extends Observable {
 	 */
 	public LocalDate getJourneeEnCours() {
 		return this.journeeEnCours;
+	}
+
+	/**
+	 * Obtenir la jauge Argent
+	 * @return la jauge d'argent
+	 */
+	public Jauge getJaugeArgent(){
+		return jaugeArgent;
+	}
+
+	/**
+	 * Obtenir la jauge de Bonheur
+	 * @return la jauge de Bonheur
+	 */
+	public Jauge getJaugeBonheur(){
+		return jaugeBonheur;
+	}
+
+	/**
+	 * Obtenir la jauge de Pédagogie
+	 * @return la jauge de Pédagogie
+	 */
+	public Jauge getJaugePedagogie(){
+		return jaugePedagogie;
 	}
 }
