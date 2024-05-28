@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import n7simulator.db.ProfesseurDAO;
+import n7simulator.database.ProfesseurDAO;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 

@@ -1,4 +1,4 @@
-package n7simulator.gestionBdd;
+package n7simulator.database;
 import java.io.*;
 import java.sql.*;
 import java.util.List;

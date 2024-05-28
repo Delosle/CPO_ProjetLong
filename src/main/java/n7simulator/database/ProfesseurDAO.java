@@ -1,4 +1,4 @@
-package n7simulator.db;
+package n7simulator.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

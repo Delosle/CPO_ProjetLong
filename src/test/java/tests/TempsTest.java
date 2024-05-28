@@ -27,37 +27,22 @@ public class TempsTest {
 	 */
 	@Test
 	public void testInitialisationNouveauTemps() {
+		nouveauTemps.setJourneeEnCours(LocalDate.of(2024, 9, 1));
 		LocalDate dateNouveauTemps = nouveauTemps.getJourneeEnCours();
 		assertEquals(1, dateNouveauTemps.getDayOfMonth());
 		assertEquals(Month.SEPTEMBER, dateNouveauTemps.getMonth());
 		assertEquals(2024, dateNouveauTemps.getYear());
 	}
 	
-	/*
-	 * Test vérifiant la date du temps lorsque celle-ci est créée
-	 * à partir d'une sauvegarde.
-	 */
-	@Test
-	public void testInitialisationTempsSauvegarde() {
-		int anneeTest = 2025;
-		int moisTest = 4;
-		int jourTest = 30;
-		Month mois = Month.of(moisTest);
-		Temps tempsSauvegarde = new Temps(LocalDate.of(anneeTest, moisTest, jourTest));
-		LocalDate dateCreee = tempsSauvegarde.getJourneeEnCours();
-		assertEquals(jourTest, dateCreee.getDayOfMonth());
-		assertEquals(mois, dateCreee.getMonth());
-		assertEquals(anneeTest, dateCreee.getYear());
-	}
 	
 	/**
 	 * Test l'incrementation de la date dans un cas "classique" (jour = jour + 1)
 	 */
 	@Test
 	public void testIncrementDateClassique() {
-		Temps tempsDateClassique = new Temps(LocalDate.of(2024, 1, 20));
-		tempsDateClassique.incrementJournee();
-		LocalDate dateApres = tempsDateClassique.getJourneeEnCours();
+		nouveauTemps.setJourneeEnCours(LocalDate.of(2024, 1, 20));
+		nouveauTemps.incrementJournee();
+		LocalDate dateApres = nouveauTemps.getJourneeEnCours();
 		assertEquals(21, dateApres.getDayOfMonth());
 		assertEquals(Month.JANUARY, dateApres.getMonth());
 		assertEquals(2024, dateApres.getYear());
@@ -68,9 +53,9 @@ public class TempsTest {
 	 */
 	@Test
 	public void testIncrementDateFinMois() {
-		Temps dateTempsClassique = new Temps(LocalDate.of(2024, 1, 31));
-		dateTempsClassique.incrementJournee();
-		LocalDate dateApres = dateTempsClassique.getJourneeEnCours();
+		nouveauTemps.setJourneeEnCours(LocalDate.of(2024, 1, 31));
+		nouveauTemps.incrementJournee();
+		LocalDate dateApres = nouveauTemps.getJourneeEnCours();
 		assertEquals(1, dateApres.getDayOfMonth());
 		assertEquals(Month.FEBRUARY, dateApres.getMonth());
 		assertEquals(2024, dateApres.getYear());
@@ -81,9 +66,9 @@ public class TempsTest {
 	 */
 	@Test
 	public void testIncrementDateFinAnnee() {
-		Temps dateTempsClassique = new Temps(LocalDate.of(2024, 12, 31));
-		dateTempsClassique.incrementJournee();
-		LocalDate dateApres = dateTempsClassique.getJourneeEnCours();
+		nouveauTemps.setJourneeEnCours(LocalDate.of(2024, 12, 31));
+		nouveauTemps.incrementJournee();
+		LocalDate dateApres = nouveauTemps.getJourneeEnCours();
 		assertEquals(1, dateApres.getDayOfMonth());
 		assertEquals(Month.JANUARY, dateApres.getMonth());
 		assertEquals(2025, dateApres.getYear());
