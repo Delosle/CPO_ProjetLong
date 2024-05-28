@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import n7simulator.modele.Partie;
 import java.sql.Connection;
-import n7simulator.db.DatabaseConnection;
+import n7simulator.database.DatabaseConnection;
 
 public class Evenement_Irregu extends Evenement{
     private LocalDate dateApparition;
