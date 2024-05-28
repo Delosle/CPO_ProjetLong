@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.controller.*;
+import n7simulator.modele.Partie;
 
 /**
  * 
@@ -67,13 +68,20 @@ public class CarteGUI extends JPanel {
 	 * @param laFrame la fenêtre dans laquelle on place les bâtiments
 	 */
 	public void creerBatiments(N7Frame laFrame) {
-		batimentA = new BatimentA(laFrame);
+		// Batiment A
+		batimentA = new BatimentA(laFrame, new JPanel());
 		batimentA.afficherSurCarte(this);
-		batimentB = new BatimentB(laFrame);
+		
+		// Batiment B
+		batimentB = new BatimentB(laFrame, new JPanel());
 		batimentB.afficherSurCarte(this);
-		batimentC = new BatimentC(laFrame);
+		
+		// Batiment C
+		batimentC = new BatimentC(laFrame, new JPanel());
 		batimentC.afficherSurCarte(this);
-		batimentAdmin = new BatimentAdmin(laFrame);
+		
+		// Batiment Admin
+		batimentAdmin = new BatimentAdmin(laFrame, new BatimentAdminGUI());
 		batimentAdmin.afficherSurCarte(this);
 	}
 
