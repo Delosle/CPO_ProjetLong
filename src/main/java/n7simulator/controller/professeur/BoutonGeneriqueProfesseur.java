@@ -25,9 +25,9 @@ import n7simulator.modele.professeur.Professeur;
 public abstract class BoutonGeneriqueProfesseur extends JButton {
 
 	// Le professeur étant modifié.
-	Professeur professeur;
+	protected Professeur professeur;
 	// La gestion des professeurs.
-	GestionProfesseurs gestionProfesseurs;
+	protected GestionProfesseurs gestionProfesseurs;
 
 	/**
 	 * Obtenir un bouton de modification d'un professeur.
@@ -106,7 +106,7 @@ public abstract class BoutonGeneriqueProfesseur extends JButton {
 			panel.add(spinnerNbHeures);
 
 			// Afficher la boite de dialogue
-			int result = JOptionPane.showConfirmDialog(null, panel, "Confirmation du salaire",
+			int result = JOptionPane.showConfirmDialog(null, panel, "Gestion du contrat",
 					JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
 			// Implémentation des modifications

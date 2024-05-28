@@ -15,6 +15,9 @@ public class Professeur extends Observable {
 	// Le prénom du professeur
 	private String prenom;
 
+	// La description du professeur
+	private String description;
+
 	// Le salaire actuel (choisi par le joueur) du professeur
 	// unité : €/h
 	private int salaireActuel;
@@ -40,17 +43,20 @@ public class Professeur extends Observable {
 	 * professeur n'est pas embauché (= début de la partie). Par defaut le
 	 * salaireActuel = salaireMin (= début de la partie).
 	 * 
-	 * @param id         : l'id du professeur en base de données
-	 * @param nom        : le nom du professeur
-	 * @param prenom     : le prenom du professeur
-	 * @param matiere    : la matiere enseignée par le professeur
-	 * @param niveau     : le niveau du professeur
-	 * @param salaireMin : le salaire minimum imposé par le professeur
+	 * @param id          : l'id du professeur en base de données
+	 * @param nom         : le nom du professeur
+	 * @param prenom      : le prenom du professeur
+	 * @param description : la description du professeur
+	 * @param matiere     : la matiere enseignée par le professeur
+	 * @param niveau      : le niveau du professeur
+	 * @param salaireMin  : le salaire minimum imposé par le professeur
 	 */
-	public Professeur(int id, String nom, String prenom, Matiere matiere, String niveau, int salaireMin) {
+	public Professeur(int id, String nom, String prenom, String description, Matiere matiere, String niveau,
+			int salaireMin) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.description = description;
 		this.salaireMin = salaireMin;
 		this.salaireActuel = salaireMin;
 		this.matiere = matiere;
@@ -84,6 +90,14 @@ public class Professeur extends Observable {
 	 */
 	public String getPrenom() {
 		return prenom;
+	}
+	
+	/**
+	 * Récupérer la description du professeur
+	 * @return : la description du professeur
+	 */
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**

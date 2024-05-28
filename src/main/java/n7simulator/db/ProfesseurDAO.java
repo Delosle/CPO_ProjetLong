@@ -43,11 +43,12 @@ public class ProfesseurDAO {
 				String nom = resultDB.getString("nom");
 				String prenom = resultDB.getString("prenom");
 				String niveau = resultDB.getString("niveau");
-				int tauxHoraireMin = resultDB.getInt("taux_horaire_minute");
+				String description = resultDB.getString("description");
+				int tauxHoraireMin = resultDB.getInt("taux_horaire_min");
 				int idMatiere = resultDB.getInt("id_matiere");
 
 				Matiere matiere = matieres.get(idMatiere);
-				Professeur prof = new Professeur(idProf, nom, prenom, matiere, niveau, tauxHoraireMin);
+				Professeur prof = new Professeur(idProf, nom, prenom, description, matiere, niveau, tauxHoraireMin);
 
 				professeurs.add(prof);
 			}

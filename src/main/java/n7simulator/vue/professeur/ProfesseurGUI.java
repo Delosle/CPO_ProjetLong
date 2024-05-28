@@ -54,18 +54,19 @@ public class ProfesseurGUI extends JLabel implements Observer {
 	 */
 	private String getTextProfesseur(boolean estEmbauche) {
 		StringBuilder htmlBuilder = new StringBuilder();
-		htmlBuilder.append("<html><p style='text-align: justify;text-align: left;'>").append("Nom : ")
+		htmlBuilder.append("<html><p style='width: 600px; text-align: justify'>").append("<span style='color: #115c2c;'> Nom : </span>")
 				.append(professeur.getPrenom()).append(" ").append(professeur.getNom()).append("<br>")
-				.append("Matière enseignée : ").append(professeur.getMatiere().getNom()).append("<br>")
-				.append("Apport pédagogique de la matière : ")
-				.append(creerJaugePedagogie(professeur.getMatiere().getPedagogie())).append("<br>")
-				.append("Salaire minimum : ").append(professeur.getSalaireMin()).append(" €/heure");
+				.append("<span style='color: #115c2c;'>Salaire minimum : </span>").append(professeur.getSalaireMin()).append(" €/heure").append("<br>")
+				.append("<span style='color: #115c2c;'>Matière enseignée : </span>").append(professeur.getMatiere().getNom()).append("<br><br>")
+				.append("<span style='color: #115c2c;'>Description : </span>").append(professeur.getDescription()).append("<br><br>")
+				.append("<span style='color: #115c2c;'>Apport pédagogique de la matière : </span>")
+				.append(creerJaugePedagogie(professeur.getMatiere().getPedagogie())).append("");
 
 		// affichage des informations du contrat (salaire, nb heures) si le professeur
 		// est embauché
 		if (estEmbauche) {
-			htmlBuilder.append("<br>Salaire actuel : ").append(professeur.getSalaireActuel()).append("€/heure<br>")
-					.append("Nombre d'heures travaillées par jour : ").append(professeur.getNbHeuresTravaillees())
+			htmlBuilder.append("<br><span style='color: #d94d07;'>Salaire actuel : </span>").append(professeur.getSalaireActuel()).append("€/heure<br>")
+					.append("<span style='color: #d94d07;'>Nombre d'heures travaillées par jour : </span>").append(professeur.getNbHeuresTravaillees())
 					.append("h");
 		}
 		htmlBuilder.append("</p></html>");

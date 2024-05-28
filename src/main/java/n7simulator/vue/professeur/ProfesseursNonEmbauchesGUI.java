@@ -38,6 +38,8 @@ public class ProfesseursNonEmbauchesGUI extends ListeProfesseursGUI {
 
 	@Override
 	protected void afficherListeProfesseurs() {
+		this.add(Box.createRigidArea(new Dimension(0, 20)));
+		this.add(new JSeparator());
 		for (Professeur professeur : this.professeursNonEmbauches) {
 			this.add(new ProfesseurGUI(professeur, false));
 			this.add(new BoutonChoixProfesseur(professeur, gestionProfesseurs));
@@ -55,7 +57,7 @@ public class ProfesseursNonEmbauchesGUI extends ListeProfesseursGUI {
 	@Override
 	protected void setDescription() {
 		JLabel descriptionLabel = new JLabel("<html><p style='width: 600px; text-align: justify;'>"
-				+ "Voici la liste des professeurs que vous pouvez embaucher. Lorsque vous embauchez un professeur, vous devez le payer de manière journalière en fonction de son salaire et du nombre d'heure que vous choisissez. Attention, chaque professeur a un salaire minimum imposé."
+				+ "Voici la liste des professeurs que vous pouvez embaucher. Lorsque vous embauchez un professeur, vous devez le payer de manière journalière en fonction de son salaire et du nombre d'heure que vous choisissez. Attention, chaque professeur a un salaire minimum imposé. La description de chacun vous donne un indice concernant son impact sur votre école."
 				+ "</p></html>");
 		this.add(descriptionLabel);
 
