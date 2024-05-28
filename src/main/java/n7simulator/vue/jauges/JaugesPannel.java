@@ -1,15 +1,10 @@
 package n7simulator.vue.jauges;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import n7simulator.modele.jauges.Jauge;
-import n7simulator.modele.jauges.JaugeBornee;
 
 public class JaugesPannel extends JPanel{
     static final int LARGEUR_PANNEL = 500;
@@ -32,8 +27,8 @@ public class JaugesPannel extends JPanel{
         setLayout(new GridLayout(3, 1));
         
         vueArgent = new ArgentGUI("Argent", sommeInitiale);
-        vueBonheur = new JaugeBorneeGUI("Bonheur", 0, new Color(212, 0, 253));
-        vuePedagogie = new JaugeBorneeGUI("Pedagogie", 0, Color.BLUE);
+        vueBonheur = new JaugeBorneeGUI("Bonheur", initBonheur, new Color(212, 0, 253));
+        vuePedagogie = new JaugeBorneeGUI("Pedagogie", initPedagogie, Color.BLUE);
 
         // .......... TO-DO............
         // Ajouter les controllers des jauges
