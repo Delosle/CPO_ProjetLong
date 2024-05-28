@@ -31,7 +31,7 @@ public class Professeur extends Observable {
 
 	// Le niveau de compétence/d'enseignement du professeur
 	// (permet de calculer l'apport pédagogique)
-	private String niveau;
+	private int niveau;
 
 	// Le nombre d'heures travaillées par jour par le professeur en fonction du
 	// contrat
@@ -51,7 +51,7 @@ public class Professeur extends Observable {
 	 * @param niveau      : le niveau du professeur
 	 * @param salaireMin  : le salaire minimum imposé par le professeur
 	 */
-	public Professeur(int id, String nom, String prenom, String description, Matiere matiere, String niveau,
+	public Professeur(int id, String nom, String prenom, String description, Matiere matiere, int niveau,
 			int salaireMin) {
 		this.id = id;
 		this.nom = nom;
@@ -141,7 +141,7 @@ public class Professeur extends Observable {
 	 * 
 	 * @return : le niveau du professeur
 	 */
-	public String getNiveau() {
+	public int getNiveau() {
 		return this.niveau;
 	}
 

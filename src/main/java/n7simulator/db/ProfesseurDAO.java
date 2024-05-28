@@ -42,7 +42,7 @@ public class ProfesseurDAO {
 				int idProf = resultDB.getInt("id_prof");
 				String nom = resultDB.getString("nom");
 				String prenom = resultDB.getString("prenom");
-				String niveau = resultDB.getString("niveau");
+				int niveau = resultDB.getInt("niveau");
 				String description = resultDB.getString("description");
 				int tauxHoraireMin = resultDB.getInt("taux_horaire_min");
 				int idMatiere = resultDB.getInt("id_matiere");
