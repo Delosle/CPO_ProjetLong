@@ -1,5 +1,8 @@
 # CPO_ProjetLong
 
+
+
+Placer votre JDK à la racine du projet, donc sous le dossier CPO_ProjetLong
 # Pour une installation maven correcte : 
 Faire un pull 
 
@@ -8,9 +11,7 @@ Sur eclipse, allez dans "File" --> "Import" --> "General" --> "Projects from Fol
 Selectionner le dossier CPO_ProjetLong 
 Allez dans le fichier pom.xml
 
-Sur la première ligne : Allez tout à droite et accepter le download
-
-Ligne 17 : changer le chemin d'acces vers le JDK afin qu'il soit conforme à votre arborescence 
+Sur la première ligne : Allez tout à droite et accepter le download ci nécessaire 
 
 Faire un clic droit sur le projet --> Maven --> Update Project 
 Selectionnez "Force update of Snapshots/Releases"
