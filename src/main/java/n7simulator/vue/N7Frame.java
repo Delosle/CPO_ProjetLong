@@ -90,4 +90,13 @@ public class N7Frame extends JFrame {
 		layeredPanel.revalidate();
 		layeredPanel.repaint();
 	}
+/*
+	public void ajouterEvenement(Evenement e){
+		vueTemp = new EventGUI(e);
+		layeredPanel.add(vueTemp);
+		JPanel vuePerma=vueTemp.getPermanent();
+		mediant
+	}
+	*/
+
 }
