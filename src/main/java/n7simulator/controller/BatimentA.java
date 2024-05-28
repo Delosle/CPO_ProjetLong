@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.vue.CarteGUI;
+import n7simulator.vue.ElevesGUI;
 import n7simulator.vue.N7Frame;
 
 /**
