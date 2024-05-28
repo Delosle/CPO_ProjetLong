@@ -1,4 +1,8 @@
 package n7simulator.gestionBdd;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.*;
 
@@ -6,38 +10,7 @@ import java.util.*;
 public class CreerBddSauvegarde {
 
     /**
-     * Crée une base de données de sauvegarde pour une partie
-      * @param nomDePartie
-     * @throws PartieExisteDejaException
-     */
-    public static void creerBddSauvegarde (String nomDePartie) {
-        //verifierPartieExiste(nomDePartie);
-        Connection conn = creerBDD();
-        creerTables(conn);
-        fermerDatabase(conn);
-    }
-
-    /**
-     * Vérifie si une partie existe déjà
-     * @param nomDePartie
-     * @throws PartieExisteDejaException
-
-    private static void verifierPartieExiste(String nomDePartie) throws PartieExisteDejaException {
-        List<String> fichiersNom = GestionBddSauvegarde.recupererNomsBddSauvegarde();
-        String nomBdd = "SauvegardePartie_" + nomDePartie + ".db";
-        System.out.println(nomBdd);
-        for (String fichierNom : fichiersNom) {
-            System.out.println(fichierNom);
-            if (nomBdd.equals(fichierNom)) {
-                //throw new IllegalArgumentException("La partie existe déjà");
-                throw new PartieExisteDejaException("La partie " + nomDePartie + " existe déjà");
-            }
-        }
-    }**/
-
-    /**
      * Crée une connexion à la base de données
-     * @param nomDePartie
      * @return
      */
     private static Connection creerBDD() {
@@ -55,79 +28,85 @@ public class CreerBddSauvegarde {
     }
 
 
-    /**
-     * Crée les tables de la base de données
-     * @param conn
-     */
-    private static void creerTables(Connection conn) {
-        Statement stmt = null;
+    public static void initialiserBddSauvegarde(String nomDePartie) {
+        Connection connection = null;
         try {
-            // Créer un objet Statement pour exécuter les requêtes SQL
-            stmt = conn.createStatement();
-
-            // Commande SQL pour créer la table de sauvegarde des parties
-            String sqlSauvegardePartie = " CREATE TABLE SauvegardePartie (\n" +
-                    "    idPartieNom INTEGER PRIMARY KEY,\n" +
-                    "    nomPartie TEXT)";
-
-            // Exécuter la commande SQL
-            stmt.execute(sqlSauvegardePartie);
-
-            // Commande SQL pour créer la table ProfEmbauches
-            String sqlProfEmbauches = "CREATE TABLE ProfEmbauches " +
-                    "(idprof INTEGER PRIMARY KEY, salaire INTEGER, nbheure INTEGER, idPartieNom INTEGER REFERENCES Partie(idPartieNom));";
-
-            // Exécuter la commande SQL
-            stmt.execute(sqlProfEmbauches);
-
-            // Commande SQL pour créer la table EvenementEnCours
-            String sqlEvenementEnCours = " CREATE TABLE EvenementEnCours (" +
-                    "idEvenement INTEGER PRIMARY KEY, jourDebut DATE, idPartieNom INTEGER REFERENCES Partie(idPartieNom));";
-
-            // Exécuter la commande SQL
-            stmt.execute(sqlEvenementEnCours);
-
-            // Commande SQL pour créer la table partie
-            String sqlpartie = " CREATE TABLE Partie (\n" +
-                    "    id INTEGER PRIMARY KEY,\n" +
-                    "    nomPartie TEXT,\n" +
-                    "    estPerdue BOOLEAN,\n" +
-                    "    nbJours INT,\n" +
-                    "    nbEleves INT,\n" +
-                    "    argent FLOAT,\n" +
-                    "    bonheur INT,\n" +
-                    "    pedagogie INT,\n" +
-                    "    idQualiteRepasCrous INT,\n" +
-                    "    prixVenteRepascrous FLOAT,\n" +
-                    "idPartieNom INTEGER REFERENCES Partie(idPartieNom));\n";
-
-            // Exécuter la commande SQL
-            stmt.execute(sqlpartie);
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
+            // La bdd ne doit pas être modifié, il est donc préférable de supprimer
+            // le fichier de base de données s'il existe
+            File dbFichier = new File("src/main/resources/baseDeDonnee/SauvegardePartie.db");
+            if (!dbFichier.exists()) {
+                // Charger la classe de driver SQLite
+                Connection conn = creerBDD();
+                // Créer et peupler la base de données admin
+                try {
+                    CreerPeuplerDatabase(conn);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (conn != null) {
+                            conn.close();
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
             }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+
     /**
-     * Ferme la connexion à la base de données
-     * @param conn
+     * Lire le fichier SQL depuis /main/ressources et le renvoyer sous forme de String
+     * @param fileName
+     * @return contenu du .sql sous forme d'une grande chaine de caractère
      */
-    private static void fermerDatabase(Connection conn) {
-        try {
-            if (conn != null) {
-                conn.close();
+    private static String readSqlFile(String fileName) {
+        StringBuilder sqlString = new StringBuilder();
+        // try avec ressources : permet de savoir que ces ressources seront fermées à la fin du try
+        // InputStream : obtient le flux d'entrée
+        // BufferedReader : permet de lire des caractères
+        try (InputStream inputStream = CreationBddAdmin.class.getClassLoader().getResourceAsStream(fileName);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            // Lit chaque ligne du fichier sql jusqu'à ce qu'il n'y en ait plus
+            while ((line = reader.readLine()) != null) {
+                sqlString.append(line);
+                sqlString.append("\n");
             }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sqlString.toString();
+    }
+
+    /**
+     * Permet de lire le .sql et de remplir notre bdd admin avec les requêtes
+     * @param connection
+     */
+    private static void CreerPeuplerDatabase(Connection connection) {
+        try {
+            // Lire le fichier SQL
+            String sql = readSqlFile("Creer_Tables_Sauvegarde.sql");
+
+            // Exécuter les requêtes SQL
+            Statement statement = connection.createStatement();
+            // tableau où chaque case est une requête
+            String[] requetes = sql.split(";");
+
+            // parcours les requêtes et les exécutes
+            for (String requete : requetes) {
+                if (requete.trim().length() > 0) {
+                    statement.execute(requete.trim() + ";");
+                }
+            }
+
+            // Ferme les ressources
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -10,39 +10,6 @@ import java.util.ArrayList;
     public class GestionBddSauvegarde {
 
         /**
-         * Récupère les noms des fichiers de base de données de sauvegarde
-         * @return : la liste des noms des fichiers
-
-        public static List<String> recupererNomsBddSauvegarde() {
-            // Spécifiez le chemin du répertoire
-            File repertoire = new File("src/main/resources/baseDeDonnee");
-
-            // Créez un filtre pour ne sélectionner que les fichiers commençant par "SauvegardePartie_"
-            FilenameFilter filtre = (dir, name) -> name.startsWith("SauvegardePartie_");
-
-            // Obtenez tous les fichiers du répertoire qui satisfont le filtre
-            File[] fichiers = repertoire.listFiles(filtre);
-
-            // Créez une liste pour stocker les noms des fichiers
-            List<String> listeFichier = new ArrayList<>();
-
-            // Vérifiez si le répertoire est vide
-            if (fichiers != null && fichiers.length > 0) {
-                // Parcourez tous les fichiers
-                for (File fichier : fichiers) {
-                    // Ajoutez le nom du fichier à la liste
-                    listeFichier.add(fichier.getName());
-                }
-            } else {
-                System.out.println("Le répertoire est vide ou le chemin n'est pas un répertoire");
-            }
-
-            // Renvoyez la liste des noms de fichiers
-            return listeFichier;
-        }*/
-
-
-        /**
          * Effectue une connexion a la base de données admin
          * @return : la connexion
          * @throws SQLException : si la connexion echoue
@@ -82,12 +49,20 @@ import java.util.ArrayList;
             Map<String, Object> infoBdd = new HashMap<>();
             try {
                 Connection conn = getDBConnexion();
+                // Récupération des données de la table ProfEmbauches
                 String requeteTable1 = "SELECT * FROM ProfEmbauches WHERE idPartieNom = " + idPartie;
-                infoBdd = peuplerDico (conn, requeteTable1, infoBdd);
+                Map<String, Object> tableProfEmbauches = peuplerDico(conn, requeteTable1);
+                infoBdd.put("ProfEmbauches", tableProfEmbauches);
+
+                // Récupération des données de la table EvenementEnCours
                 String requeteTable2 = "SELECT * FROM EvenementEnCours WHERE idPartieNom = " + idPartie;
-                infoBdd = peuplerDico (conn, requeteTable2, infoBdd);
+                Map<String, Object> tableEvenementEnCours = peuplerDico(conn, requeteTable2);
+                infoBdd.put("EvenementEnCours", tableEvenementEnCours);
+
+                // Récupération des données de la table Partie
                 String requeteTable3 = "SELECT * FROM Partie WHERE idPartieNom = " + idPartie;
-                infoBdd = peuplerDico (conn, requeteTable3, infoBdd);
+                Map<String, Object> tablePartie = peuplerDico(conn, requeteTable3);
+                infoBdd.put("Partie", tablePartie);
                 closeDBConnexion(conn);
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -97,25 +72,23 @@ import java.util.ArrayList;
         }
 
 
-        private static Map peuplerDico (Connection conn, String query, Map infoBdd) {
+        private static Map peuplerDico (Connection conn, String query) {
+            Map<String, Object> infoTable = new HashMap<>();
             try {
                 ResultSet result = effectuerRequete(query, conn);
-                System.out.println( result.getMetaData().getColumnCount());
                 if (result.next()) {
                     int columnCount = result.getMetaData().getColumnCount();
-                    System.out.println(columnCount);
                     for (int i = 1; i <= columnCount; i++) {
-
                         String columnName = result.getMetaData().getColumnName(i);
                         Object value = result.getObject(i);
-                        infoBdd.put(columnName, value);
+                        infoTable.put(columnName, value);
                     }
                 }
                 result.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-            return infoBdd;
+            return infoTable;
         }
 
         /**
