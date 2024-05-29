@@ -79,10 +79,12 @@ public final class Partie extends Observable {
 	
 	/**
 	 * Permet de désinscrire de nouveaux élèves.
+	 * Cas limites : si nombreEleves < 0 après désinscription,
+	 * on set nombreEleves = 0.
 	 * @param exEleves le nombre d'élèves à désinscrire
 	 */
 	public void desinscrireEleves(int exEleves) {
-		nombreEleves -= exEleves;
+		nombreEleves = nombreEleves - exEleves < 0 ? 0 : nombreEleves - exEleves;
 		this.setChanged();
 		this.notifyObservers(this);
 	}
