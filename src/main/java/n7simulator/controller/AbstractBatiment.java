@@ -54,6 +54,9 @@ public abstract class AbstractBatiment extends JPanel implements InterfaceBatime
 		
 		// On fait en sorte que l'on puisse scroller pour voir toutes les actions sur le bâtiment
 		JScrollPane scrollable = new JScrollPane(contenuBatiment);
+		scrollable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Désactiver le défilement horizontal
+		scrollable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); // Activer le défilement vertical
+        
 		contenuBatiment.setAutoscrolls(true);
 		Integer batimentHauteur = (int)height * 8 / 10;
 		scrollable.setPreferredSize(new Dimension((int)batimentLargeur, batimentHauteur));

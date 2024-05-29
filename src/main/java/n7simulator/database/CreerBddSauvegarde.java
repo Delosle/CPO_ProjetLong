@@ -1,4 +1,4 @@
-package n7simulator.gestionBdd;
+package n7simulator.database;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -28,7 +28,7 @@ public class CreerBddSauvegarde {
     }
 
 
-    public static void initialiserBddSauvegarde(String nomDePartie) {
+    public static void initialiserBddSauvegarde() {
         Connection connection = null;
         try {
             // La bdd ne doit pas être modifié, il est donc préférable de supprimer

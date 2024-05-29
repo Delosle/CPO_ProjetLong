@@ -1,4 +1,4 @@
-package n7simulator.gestionBdd;
+package n7simulator.database;
 
 import java.io.BufferedReader;
 import java.io.File;

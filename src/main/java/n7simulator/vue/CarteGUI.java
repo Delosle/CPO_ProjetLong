@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.controller.*;
+import n7simulator.modele.professeur.Professeur;
+import n7simulator.vue.professeur.GestionProfesseursGUI;
+
 import n7simulator.modele.Partie;
 
 /**
@@ -73,13 +76,13 @@ public class CarteGUI extends JPanel {
 		batimentA.afficherSurCarte(this);
 		
 		// Batiment B
-		batimentB = new BatimentB(laFrame, new JPanel());
+		batimentB = new BatimentB(laFrame, new GestionProfesseursGUI());
 		batimentB.afficherSurCarte(this);
 		
 		// Batiment C
 		batimentC = new BatimentC(laFrame, new JPanel());
 		batimentC.afficherSurCarte(this);
-		
+
 		// Batiment Admin
 		batimentAdmin = new BatimentAdmin(laFrame, new BatimentAdminGUI());
 		batimentAdmin.afficherSurCarte(this);

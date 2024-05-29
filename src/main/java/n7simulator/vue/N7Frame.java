@@ -32,7 +32,7 @@ public class N7Frame extends JFrame {
 	public N7Frame(CarteGUI interfaceCarte, PilotageGUI interfacePilotage){
 		// On créé la fenêtre globale
 		super("N7Simulator");
-		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
@@ -92,4 +92,5 @@ public class N7Frame extends JFrame {
 		layeredPanel.revalidate();
 		layeredPanel.repaint();
 	}
+
 }
