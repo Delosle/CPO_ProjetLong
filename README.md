@@ -1,7 +1,6 @@
 # CPO_ProjetLong
-<<<<<<< HEAD
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Delosle_CPO_ProjetLong&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Delosle_CPO_ProjetLong)
-=======
 
 # Telecharger le JDK
 
@@ -36,4 +35,3 @@ Selectionnez "Force update of Snapshots/Releases"
 OK 
 
 Votre projet est prêt :)
->>>>>>> eb2fcf142394519aa37b90642e00f83c25536d09
