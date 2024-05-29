@@ -3,6 +3,7 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
+import n7simulator.ImpactJourSuivantCourtTerme;
 import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
@@ -11,7 +12,7 @@ import n7simulator.modele.jauges.JaugeBornee;
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
  */
-public final class Partie extends Observable {
+public final class Partie extends Observable implements ImpactJourSuivantCourtTerme {
 	
 	private static Partie instance;
 	/**
@@ -60,28 +61,20 @@ public final class Partie extends Observable {
 	
 	/**
 	 * Permet d'inscrire de nouveaux élèves.
-	 * @param nouveauxEleves le nombre d'élèves à inscrire
+	 * @param nbEleves les nouveaux élèves
 	 */
-	public void inscrireEleves(int nouveauxEleves) {
-		nombreEleves += nouveauxEleves;
+	public void inscrireEleves(int nbEleves) {
+		nombreEleves += nbEleves;
 		this.setChanged();
 		this.notifyObservers(this);
-		
-		// TODO calcul lendemain :
-		// gainMax = nombreEleves / 5 --ex : 100 / 5 = 20
-		// totalJauges = (jaugeBohneur + jaugePegagogie) / 2
-		// si totalJauges >=25 : gain = totalJauges * gainMax / 100
-		// sinon : gain = (totalJauges * gainMax / 100) - gainMax
 	}
 	
 	/**
-	 * Permet de désinscrire de nouveaux élèves.
-	 * Cas limites : si nombreEleves < 0 après désinscription,
-	 * on set nombreEleves = 0.
-	 * @param exEleves le nombre d'élèves à désinscrire
+	 * Permet de désinscrire des élèves.
+	 * @param nbEleves 
 	 */
-	public void desinscrireEleves(int exEleves) {
-		nombreEleves = nombreEleves - exEleves < 0 ? 0 : nombreEleves - exEleves;
+	public void desinscrireEleves(int nbEleves) {
+		nombreEleves = nombreEleves - nbEleves < 0 ? 0 : nombreEleves - nbEleves;
 		this.setChanged();
 		this.notifyObservers(this);
 	}
@@ -109,4 +102,24 @@ public final class Partie extends Observable {
 	public Jauge getJaugePedagogie(){
 		return jaugePedagogie;
 	}
+
+	@Override
+	public void effectuerImpactJourSuivantCourtTerme() {
+		// Nombre élèves
+		int gainMax = nombreEleves / 5;
+		int totalJauges = (jaugeBonheur.getValue() + jaugePedagogie.getValue()) / 2;
+		int gain = totalJauges * gainMax / 100;
+		
+		if (totalJauges >= 25) {
+			inscrireEleves(gain);
+		} else {
+			desinscrireEleves(-(gain - gainMax));
+		}
+		
+		// Notification de l'observer
+		this.setChanged();
+		this.notifyObservers(this);
+	}
+	
+	
 }

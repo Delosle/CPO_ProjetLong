@@ -28,7 +28,7 @@ public class TempsController extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			temps.incrementJournee();
-			Partie.getInstance().inscrireEleves(10);
+			Partie.getInstance().effectuerImpactJourSuivantCourtTerme();
 		}
 	}
 }
