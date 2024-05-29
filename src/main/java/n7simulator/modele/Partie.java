@@ -3,9 +3,7 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
-
-import n7simulator.db.ValDebPartieDAO;
-
+import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 
@@ -48,7 +46,6 @@ public final class Partie extends Observable {
 			jaugeArgent = new Jauge("Argent");
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
-			ValDebPartieDAO.initialiserDonneesDebutPartie();
 		}
 		return instance;
 	}

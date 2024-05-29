@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import n7simulator.controller.TempsController;
 import n7simulator.vue.jauges.JaugesPannel;
+import n7simulator.vue.temps.TempsGUI;
 
 /**
  * 

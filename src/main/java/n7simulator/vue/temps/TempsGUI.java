@@ -1,5 +1,6 @@
-package n7simulator.vue;
+package n7simulator.vue.temps;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,8 +22,8 @@ public class TempsGUI extends JPanel implements Observer {
 	
 	private JLabel afficheurJourEnCours;
 	
-	public TempsGUI(Temps partie) {
-		String dateAffichage = formatJourneeEnCours(partie.getJourneeEnCours());
+	public TempsGUI(Temps temps) {
+		String dateAffichage = formatJourneeEnCours(temps.getJourneeEnCours());
 		this.afficheurJourEnCours = new JLabel(dateAffichage);
 		this.add(afficheurJourEnCours);
 	}

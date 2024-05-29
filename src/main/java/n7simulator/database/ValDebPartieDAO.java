@@ -1,8 +1,12 @@
-package n7simulator.db;
+package n7simulator.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +15,7 @@ import java.util.Map;
 import javax.xml.crypto.Data;
 
 import n7simulator.modele.Partie;
+import n7simulator.modele.Temps;
 
 /**
  * Classe permettant d'accéder aux données concernant les valeurs de début de partie
@@ -21,7 +26,7 @@ public class ValDebPartieDAO {
 	/**
 	 * Récupère les valeurs en base de données et set les données de la partie.
 	 */
-	public static void initialiserDonneesDebutPartie() {
+	public static void initialiserDonneesDebutPartie(Temps temps) {
 		
 		Partie partie = Partie.getInstance();		
 		Connection connexionDB = null;
@@ -40,6 +45,11 @@ public class ValDebPartieDAO {
 				partie.getJaugeArgent().ajouter(resultDB.getInt("Argent"));
 				partie.getJaugeBonheur().ajouter(resultDB.getInt("Bonheur"));
 				partie.getJaugePedagogie().ajouter(resultDB.getInt("Pedagogie"));
+				
+				//transformation de la date
+				//java.sql.Date sqlDate = resultDB.getDate("dateDeb");
+				String dateString = resultDB.getString("dateDeb");
+				temps.setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			}
 
 		} catch (SQLException e) {

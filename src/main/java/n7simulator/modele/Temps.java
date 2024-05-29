@@ -9,28 +9,15 @@ import java.util.Observable;
 public class Temps extends Observable {
 	
 	/**
-	 * La date par defaut du début du jeu.
-	 */
-	private static final LocalDate DATE_DEBUT = LocalDate.of(2024, 9, 1);
-	
-	/**
 	 * La date de la journée en cours pour la partie.
 	 */
 	private LocalDate journeeEnCours;
 	
 	/**
 	 * Permet de creer un nouvel objet Temps.
+	 * @param dateDebut : la date de debut de la partie
 	 */
 	public Temps() {
-		this.journeeEnCours = DATE_DEBUT;
-	}
-	
-	/**
-	 * Permet de creer un objet Temps à partir d'une date sauvegardée.
-	 * @param dateEnCoursSauvegarde : la date de la journée en cours pour la partie
-	 */
-	public Temps(LocalDate dateEnCoursSauvegarde) {
-		this.journeeEnCours = dateEnCoursSauvegarde;
 	}
 	
 	/**
@@ -49,5 +36,9 @@ public class Temps extends Observable {
 	 */
 	public LocalDate getJourneeEnCours() {
 		return this.journeeEnCours;
+	}
+	
+	public void setJourneeEnCours(LocalDate dateEnCours) {
+		this.journeeEnCours = dateEnCours;
 	}
 }

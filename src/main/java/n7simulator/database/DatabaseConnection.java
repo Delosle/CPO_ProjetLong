@@ -1,4 +1,4 @@
-package n7simulator.db;
+package n7simulator.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import java.sql.Statement;
  */
 public class DatabaseConnection {
 	// emplacement du fichier database admin
-    private static final String DB_URL = "jdbc:sqlite:src/main/java/my_database.db";
+    private static final String DB_URL = "jdbc:sqlite:src/main/resources/baseDeDonnee/admin.db";
 
     private DatabaseConnection() {}
     
