@@ -11,7 +11,7 @@ public class JaugeBornee extends Jauge {
     public static final int BORNE_MAX = 100;
 
     /**
-     * Initialiser une jauge
+     * Initialiser une jauge bornée avec pour valeur initile 0
      * @param nom le nom de la jauge bornée
      */
     public JaugeBornee(String nom){
@@ -26,7 +26,6 @@ public class JaugeBornee extends Jauge {
 
     @Override
     public String toString() {
-        
         return this.getNom() + " : " + getValue() + " / " + JaugeBornee.BORNE_MAX;
     }
 }
