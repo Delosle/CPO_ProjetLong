@@ -22,6 +22,7 @@ public class TesterBd {
     }**/
     public static void main(String[] args) {
         CreationBddAdmin.initialiserBddAdmin();
+        System.out.println(CreerBddSauvegarde.verifierCreationTables());
     }
 
     public static Map<String, Map<String, Object>> peuplerDico() {

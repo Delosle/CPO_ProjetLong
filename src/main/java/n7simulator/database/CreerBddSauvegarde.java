@@ -41,4 +41,42 @@ public class CreerBddSauvegarde {
             e.printStackTrace();
         }
     }
+
+    public static boolean verifierCreationTables (){
+        Connection connection = null;
+        boolean tableCreer = false;
+        try {
+            // Charger la classe de driver SQLite
+            Class.forName("org.sqlite.JDBC");
+            // Établir une connexion à la base de données nommée admin.bd
+            connection = CreationBddUtilitaire.creerBDD("src/main/resources/baseDeDonnee/admin.db");
+            // Créer et peupler la base de données admin
+            List<String> nomTable = new ArrayList<>();
+            nomTable.add("Partie");
+            nomTable.add("EvenementEnCours");
+            nomTable.add("ProfEmbauches");
+            try {
+                for (String table : nomTable) {
+                    ResultSet result = null;
+                    result = DatabaseConnection.effectuerRequete("SELECT name FROM sqlite_master WHERE type='table' AND name='" + table + "';", connection);
+                    if (result == null) {
+                        tableCreer = false;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally { // pour être sûr de fermer les ressources
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return tableCreer;
+    }
 }
