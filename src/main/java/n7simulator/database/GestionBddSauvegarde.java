@@ -42,9 +42,9 @@ public class GestionBddSauvegarde {
         }
     }
 
-    public static Map recupererInfoBddSauvegarde(int idPartie) {
+    public static Map<String, Map<String, Object>> recupererInfoBddSauvegarde(int idPartie) {
         // Créez un HashMap pour stocker les informations
-        Map<String, Object> infoBdd = new HashMap<>();
+        Map<String, Map<String, Object>> infoBdd = new HashMap<>();
         try {
             Connection conn = getDBConnexion();
             // Récupération des données de la table ProfEmbauches
@@ -130,24 +130,91 @@ public class GestionBddSauvegarde {
         return true;
     }
 
-    /**public static void sauvegarderDonnee (Map<String, Object> donnee) {
+    private  static Object[] recupererIdPartie(String nomPartie, Connection conn) {
+        int maxidPartie = 0;
+        boolean existeDeja = false;
+        try {
+            if (nomPartieDisponible(nomPartie)) {
+                maxidPartie = effectuerRequete("SELECT MAX(idPartie) as maxId FROM Partie;", conn).getInt("maxId");
+                maxidPartie++;
+            }
+        } catch (PartieExisteDejaException e) {
+            try {
+                maxidPartie = effectuerRequete("SELECT idPartie FROM Partie WHERE nomPartie ='" + nomPartie + "';", conn).getInt("idPartie");
+                existeDeja = true;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new Object[]{maxidPartie, existeDeja};
+    }
+
+    /**
+     *  Sauvegarde les données de la partie
+     *  Mettre la clé primaire de la table en premier dans la map
+     *  correspond à chaque table
+     *  Exemple :
+     * @param data
+     * @param nomPartie
+     */
+    public static void sauvegarderDonnee(Map<String, Map<String, Object>> data, String nomPartie) {
         Connection conn = null;
+        int maxidPartie = 0;
+        boolean existeDeja = false;
         try {
             conn = getDBConnexion();
-            int maxidPartie = effectuerRequete("SELECT MAX(idPartie) AS maxId FROM Partie", conn).getInt("maxId");
-            int maxidProfEmbauches = effectuerRequete("SELECT MAX(idprof) AS maxId FROM ProfEmbauches", conn).getInt("maxId");
-            int maxidEvenementEnCours = effectuerRequete("SELECT MAX(idEvenement) AS maxId FROM EvenementEnCours", conn).getInt("maxId");
-            String ajoutTable1 = "INSERT INTO Partie (idPartie, nomPartie, estPerdue, nbJours, nbEleves, argent, bonheur, pedagogie, idQualiteRepasCrous, prixVenteRepascrous) " +
-                    "VALUES ('" maxidPartie + + "')";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Object[] idPartie = recupererIdPartie(nomPartie, conn);
+            maxidPartie = (int) idPartie[0];
+            existeDeja = (boolean) idPartie[1];
+            try { //essayer de se connecter à la base de données
+                for (Map.Entry<String, Map<String, Object>> entry : data.entrySet()) {  //pour chaque table
+                    String tableName = entry.getKey(); //recupérer le nom de la table
+                    Map<String, Object> tableData = entry.getValue(); //recupérer les données de la table
+                    StringBuilder columns = new StringBuilder();
+                    StringBuilder values = new StringBuilder();
+                    boolean isFirst = true;
+                    String clePrimaire =""; //cle primaire de la table
+                    for (Map.Entry<String, Object> field : tableData.entrySet()) {
+                        columns.append(field.getKey()).append(", ");
+                        if (isFirst) {
+                            values.append(maxidPartie).append(", ");
+                            isFirst = false;
+                            clePrimaire = field.getKey();
+                        } else {
+                            values.append("'").append(field.getValue()).append("', ");
+                        }
+                    }
+                    columns.delete(columns.length() - 2, columns.length());
+                    values.delete(values.length() - 2, values.length());
+                    String query;
+                    if (existeDeja) {
+                        String value = "";
+                        for (Map.Entry<String, Object> field : tableData.entrySet()) {
+                            value = value + field.getKey() + " = '" + field.getValue() + "',";
+                        }
+                        value = value.substring(0, value.length() - 1);
+                        query = "UPDATE " + tableName + " SET " + value + " WHERE " + clePrimaire + " = " + maxidPartie + ";";
+                    } else {
+                        query = "INSERT INTO " + tableName + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";;
+                    }
+                    Statement statement = conn.createStatement();
+                    statement.executeUpdate(query);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             try {
-                closeDBConnexion(conn);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
-
-    }**/
+    }
 }
