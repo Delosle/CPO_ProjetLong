@@ -21,8 +21,25 @@ public class TesterBd {
         //GestionBddSauvegarde.sauvegarderDonnee(testSauvegarde, "Partie1");
     }**/
     public static void main(String[] args) {
+        //test création bdd admin
         CreationBddAdmin.initialiserBddAdmin();
         System.out.println(CreerBddSauvegarde.verifierCreationTables());
+        Map<String, Map<String, Object>> testSauvegarde = new HashMap<>();
+        testSauvegarde = peuplerDico();
+        //test de sauvegarderDonnee
+        GestionBddSauvegarde.sauvegarderDonnee(testSauvegarde, "Partie1");
+
+        //test de recupererInfoBddSauvegarde
+        Map<String, Map<String, Object>> infoBdd = new HashMap<>();
+        infoBdd =  GestionBddSauvegarde.recupererInfoBddSauvegarde (1);
+        for (Map.Entry<String, Map<String, Object>> entry : infoBdd.entrySet()) {  //pour chaque table
+            String tableName = entry.getKey(); //recupérer le nom de la table
+            System.out.println("Table : " + tableName);
+            for (Map.Entry<String, Object> field : entry.getValue().entrySet()) {
+                System.out.println(field.getKey() + " : " + field.getValue());
+            }
+        }
+
     }
 
     public static Map<String, Map<String, Object>> peuplerDico() {

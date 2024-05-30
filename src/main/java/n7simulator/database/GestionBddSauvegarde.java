@@ -1,10 +1,7 @@
 package n7simulator.database;
 import java.io.*;
 import java.sql.*;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class GestionBddSauvegarde {
@@ -31,6 +28,18 @@ public class GestionBddSauvegarde {
         return statement.executeQuery(query);
     }
 
+    /** Exécute une requête de mise à jour (INSERT, UPDATE, DELETE)
+     * @param query : la requête SQL
+     * @param connexion : la connexion à la base de données
+     * @throws SQLException : si la requête échoue
+     */
+    private static void effectuerMiseAJour(String query, Connection connexion) throws SQLException {
+        try (Statement statement = connexion.createStatement()) {
+            statement.setQueryTimeout(30);
+            statement.executeUpdate(query);
+        }
+    }
+
     /**
      * Permet de fermer une connexion à la base de données
      * @param connexion : la connexion qui doit être fermée
@@ -42,25 +51,20 @@ public class GestionBddSauvegarde {
         }
     }
 
+    /**
+     * Récupère les informations de la base de données SauvegardePartie
+     * @param idPartie : l'identifiant de la partie
+     * @return : les informations de la base de données
+     */
     public static Map<String, Map<String, Object>> recupererInfoBddSauvegarde(int idPartie) {
         // Créez un HashMap pour stocker les informations
         Map<String, Map<String, Object>> infoBdd = new HashMap<>();
-        try {
-            Connection conn = getDBConnexion();
-            // Récupération des données de la table ProfEmbauches
-            String requeteTable1 = "SELECT * FROM ProfEmbauches WHERE idPartie = " + idPartie;
-            Map<String, Object> tableProfEmbauches = peuplerDico(conn, requeteTable1);
-            infoBdd.put("ProfEmbauches", tableProfEmbauches);
-
-            // Récupération des données de la table EvenementEnCours
-            String requeteTable2 = "SELECT * FROM EvenementEnCours WHERE idPartie = " + idPartie;
-            Map<String, Object> tableEvenementEnCours = peuplerDico(conn, requeteTable2);
-            infoBdd.put("EvenementEnCours", tableEvenementEnCours);
-
-            // Récupération des données de la table Partie
-            String requeteTable3 = "SELECT * FROM Partie WHERE idPartie = " + idPartie;
-            Map<String, Object> tablePartie = peuplerDico(conn, requeteTable3);
-            infoBdd.put("Partie", tablePartie);
+        try (Connection conn = getDBConnexion()){;
+            List<String> tables = Arrays.asList("ProfEmbauches", "EvenementEnCours", "Partie");
+            for (String table : tables) {
+                String query = "SELECT * FROM " + table + " WHERE idPartie = " + idPartie;
+                infoBdd.put(table, peuplerDico(conn, query));
+            }
             closeDBConnexion(conn);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -69,7 +73,12 @@ public class GestionBddSauvegarde {
         return infoBdd;
     }
 
-
+    /**
+     * Peuple un dictionnaire avec les informations de la base de données
+     * @param conn : la connexion à la base de données
+     * @param query : la requête SQL
+     * @return : les informations de la base de données
+     */
     private static Map peuplerDico (Connection conn, String query) {
         Map<String, Object> infoTable = new HashMap<>();
         try {
@@ -119,6 +128,12 @@ public class GestionBddSauvegarde {
         return nomPartie;
     }
 
+    /**
+     * Vérifie si le nom de la partie est disponible
+     * @param nomPartie : le nom de la partie
+     * @return : true si le nom de la partie est disponible, false sinon
+     * @throws PartieExisteDejaException : si la partie existe déjà
+     */
     public static boolean nomPartieDisponible(String nomPartie) throws PartieExisteDejaException {
         ArrayList<String> listNomPartie = new ArrayList<String>();
         listNomPartie = recupererNomPartie();
@@ -130,6 +145,12 @@ public class GestionBddSauvegarde {
         return true;
     }
 
+    /**
+     * Récupère l'identifiant de la partie
+     * @param nomPartie : le nom de la partie
+     * @param conn : la connexion à la base de données
+     * @return : l'identifiant de la partie
+     */
     private  static Object[] recupererIdPartie(String nomPartie, Connection conn) {
         int maxidPartie = 0;
         boolean existeDeja = false;
@@ -161,14 +182,12 @@ public class GestionBddSauvegarde {
      */
     public static void sauvegarderDonnee(Map<String, Map<String, Object>> data, String nomPartie) {
         Connection conn = null;
-        int maxidPartie = 0;
-        boolean existeDeja = false;
         try {
             conn = getDBConnexion();
             Object[] idPartie = recupererIdPartie(nomPartie, conn);
-            maxidPartie = (int) idPartie[0];
-            existeDeja = (boolean) idPartie[1];
-            try { //essayer de se connecter à la base de données
+            int maxidPartie = (int) idPartie[0];
+            boolean existeDeja = (boolean) idPartie[1];
+
                 for (Map.Entry<String, Map<String, Object>> entry : data.entrySet()) {  //pour chaque table
                     String tableName = entry.getKey(); //recupérer le nom de la table
                     Map<String, Object> tableData = entry.getValue(); //recupérer les données de la table
@@ -176,6 +195,7 @@ public class GestionBddSauvegarde {
                     StringBuilder values = new StringBuilder();
                     boolean isFirst = true;
                     String clePrimaire =""; //cle primaire de la table
+
                     for (Map.Entry<String, Object> field : tableData.entrySet()) {
                         columns.append(field.getKey()).append(", ");
                         if (isFirst) {
@@ -189,22 +209,19 @@ public class GestionBddSauvegarde {
                     columns.delete(columns.length() - 2, columns.length());
                     values.delete(values.length() - 2, values.length());
                     String query;
+
                     if (existeDeja) {
-                        String value = "";
+                        StringBuilder updateValues = new StringBuilder();
                         for (Map.Entry<String, Object> field : tableData.entrySet()) {
-                            value = value + field.getKey() + " = '" + field.getValue() + "',";
+                            updateValues.append(field.getKey()).append(" = '").append(field.getValue()).append("', ");
                         }
-                        value = value.substring(0, value.length() - 1);
-                        query = "UPDATE " + tableName + " SET " + value + " WHERE " + clePrimaire + " = " + maxidPartie + ";";
+                        updateValues.setLength(updateValues.length() - 2); // Supprime la dernière virgule et espace
+                        query = "UPDATE " + tableName + " SET " + updateValues + " WHERE " + clePrimaire + " = " + maxidPartie + ";";
                     } else {
                         query = "INSERT INTO " + tableName + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";;
                     }
-                    Statement statement = conn.createStatement();
-                    statement.executeUpdate(query);
+                    effectuerMiseAJour(query, conn);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
