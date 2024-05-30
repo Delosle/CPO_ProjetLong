@@ -4,20 +4,12 @@ import java.sql.*;
 
 public class TesterBd {
 
-    public static void main(String[] args) {
-        /**List<String> fichiersNom = GestionBddSauvegarde.recupererNomsBddSauvegarde();
-         for (String fichierNom : fichiersNom) {
-         System.out.println(fichierNom);
-         }**/
+    /**public static void main(String[] args) {
         CreerBddSauvegarde.initialiserBddSauvegarde();
         Map<String, Map<String, Object>> infoBdd = new HashMap<>();
         infoBdd =  GestionBddSauvegarde.recupererInfoBddSauvegarde (1);
         for (Map.Entry<String, Map<String, Object>> entry : infoBdd.entrySet()) {  //pour chaque table
             String tableName = entry.getKey(); //recupérer le nom de la table
-            /**Map<String, Object> tableData = entry.getValue(); //recupérer les données de la table
-            for (Map.Entry<String, Object> field : tableData.entrySet()) {
-                System.out.println(field.getKey() + " " + field.getValue());
-            }**/
         }
         Map<String, Map<String, Object>> testSauvegarde = new HashMap<>();
         testSauvegarde = peuplerDico();
@@ -26,7 +18,10 @@ public class TesterBd {
         } catch (PartieExisteDejaException e) {
             System.out.println(e.getMessage());
         }
-        GestionBddSauvegarde.sauvegarderDonnee(testSauvegarde, "Partie1");
+        //GestionBddSauvegarde.sauvegarderDonnee(testSauvegarde, "Partie1");
+    }**/
+    public static void main(String[] args) {
+        CreationBddAdmin.initialiserBddAdmin();
     }
 
     public static Map<String, Map<String, Object>> peuplerDico() {
