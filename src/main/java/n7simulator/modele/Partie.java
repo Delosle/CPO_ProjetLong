@@ -1,6 +1,5 @@
 package n7simulator.modele;
 
-import java.time.LocalDate;
 import java.util.Observable;
 
 import n7simulator.ImpactJourSuivantCourtTerme;
@@ -12,7 +11,7 @@ import n7simulator.modele.jauges.JaugeBornee;
  * Classe modélisant une partie du jeu N7Simulator.
  * La partie peut être chargée à partir d'une sauvegarde, ou 
  */
-public final class Partie extends Observable implements ImpactJourSuivantCourtTerme {
+public final class Partie extends Observable {
 	
 	private static Partie instance;
 	/**
@@ -102,24 +101,19 @@ public final class Partie extends Observable implements ImpactJourSuivantCourtTe
 	public Jauge getJaugePedagogie(){
 		return jaugePedagogie;
 	}
-
-	@Override
-	public void effectuerImpactJourSuivantCourtTerme() {
-		// Nombre élèves
-		int gainMax = nombreEleves / 5;
+	
+	private void inscriptionsElevesJourSuivant() {
+		// TODO set limite nombre élèves ?
+		int gainMax = nombreEleves / (nombreEleves < 200 ? 5 : 50);		
 		int totalJauges = (jaugeBonheur.getValue() + jaugePedagogie.getValue()) / 2;
 		int gain = totalJauges * gainMax / 100;
 		
 		if (totalJauges >= 25) {
 			inscrireEleves(gain);
 		} else {
-			desinscrireEleves(-(gain - gainMax));
-		}
-		
-		// Notification de l'observer
-		this.setChanged();
-		this.notifyObservers(this);
-	}
-	
-	
+			gain = gain - gainMax;
+			gain = gain > 0 ? gain : ( -gain);
+			desinscrireEleves(gain);
+		}		
+	}	
 }
