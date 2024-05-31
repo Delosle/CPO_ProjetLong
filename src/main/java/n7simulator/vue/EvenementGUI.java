@@ -123,13 +123,24 @@ public class EvenementGUI extends JPanel {
 
     public JPanel getPermanent(){
         JPanel miniPanel = new JPanel();
-        miniPanel.setLayout(new GridLayout(1, 2));
+        GridLayout gridLayout = new GridLayout(1, 2);
+        gridLayout.setHgap(20);
+        miniPanel.setLayout(gridLayout);
+
         JLabel titre = new JLabel(this.titre);
         JPanel zone_Impacts = new JPanel();
         zone_Impacts.setLayout(new GridLayout(1, 3));
-        zone_Impacts.add(new JLabel("" + this.impactBonheur));
-        zone_Impacts.add(new JLabel("" + this.impactPedagogie));
+
+        JLabel impactBonheurText = new JLabel("" + this.impactBonheur);
+        impactBonheurText.setForeground(new Color(212, 0, 253));
+
+        JLabel impactPedagogieText = new JLabel("" + this.impactPedagogie);
+        impactPedagogieText.setForeground(Color.BLUE);
+
+        zone_Impacts.add(impactBonheurText);
+        zone_Impacts.add(impactPedagogieText);
         zone_Impacts.add(new JLabel("" + this.impactArgent));
+
         miniPanel.add(titre);
         miniPanel.add(zone_Impacts);
 

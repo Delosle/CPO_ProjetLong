@@ -1,10 +1,6 @@
 package n7simulator.vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
+import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,7 +17,7 @@ import n7simulator.vue.temps.TempsGUI;
  */
 public class PilotageGUI extends JPanel {
 
-	private EventHistoryGUI eventHistoryGUI = new EventHistoryGUI();
+	private EventHistoryGUI eventHistoryGUI;
 
 	/** Créer la vue du pilotage
 	 * @param interfaceTemps l'interface de gestion du temps
@@ -49,14 +45,19 @@ public class PilotageGUI extends JPanel {
 		// On ajoute l'élément médiant
 		contraintes.weighty = 2.0;
 		contraintes.gridy = 1;
-		caseCourante = new JLabel();
-		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
+		//caseCourante = new JLabel();
+		//caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// On ajoute EventHistoryGUI a l'element median
-		this.eventHistoryGUI = eventHistoryGUI;
-		caseCourante.add(this.eventHistoryGUI);
+		JPanel median = new JPanel();
+		median.setLayout(new BorderLayout());
+		median.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		median.add(eventHistoryGUI, BorderLayout.CENTER);
 		//eventHistoryGUI.adjustSizeToParent();
-		this.add(caseCourante, contraintes);
+		add(median, contraintes);
+		this.eventHistoryGUI = eventHistoryGUI;
+
 
 
 		
@@ -74,6 +75,7 @@ public class PilotageGUI extends JPanel {
 
 	public void enregistrerEvent(JPanel event) {
 		eventHistoryGUI.addEvent(event);
+
 	}
 
 }
