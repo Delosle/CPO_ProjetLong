@@ -38,9 +38,9 @@ CREATE TABLE evenement_regulier (
 CREATE TABLE evenement_irregulier (
     id_eve_irre INTEGER PRIMARY KEY,
     description TEXT,
-    impactBonheurPos INTEGER,
-    impactArgentPos INTEGER,
-    impactPedagogiePos INTEGER,
+    impactBonheur INTEGER,
+    impactArgent INTEGER,
+    impactPedagogie INTEGER,
     titre TEXT,
     frequence INTEGER,
     bonus BOOLEAN
@@ -81,18 +81,28 @@ VALUES
 (10, 'Imposer au joueur de payer un repas pour le personnel pour le challenger et le mettre en difficulté.', 0, -20, 0, 'Repas pour le Personnel', 90, '2024-06-01', 0, 0, 0);
 
 -- Insère des données dans la table evenement_irregulier
-INSERT INTO evenement_irregulier (id_eve_irre, description, impactBonheurPos, impactArgentPos, impactPedagogiePos, Titre, frequence, bonus)
+INSERT INTO evenement_irregulier (id_eve_irre, description, impactBonheur, impactArgent, impactPedagogie, Titre, frequence, bonus)
 VALUES 
-(1, 'Imposer des grèves des enseignants pour challenger l’utilisateur et ajouter des difficultés dans le jeu.', -15, 0, 0, 'Grèves des Enseignants', 1, FALSE),
-(2, 'Des événements aléatoires arrivent pour rendre plus intéressant le jeu.', 0, 0, 0, 'Événements Aléatoires', 1, FALSE),
-(3, 'Annuler la livraison de chocolatine pour faire baisser la jauge de bonheur.', -10, 0, 0, 'Annulation Livraison Chocolatine', 1, FALSE),
-(4, 'Créer une livraison gratuite de chocolatine pour faire augmenter le bonheur des élèves.', 10, 0, 0, 'Livraison Gratuite Chocolatine', 1, TRUE),
-(5, 'Créer une invasion de canard pour faire augmenter la jauge de bonheur.', 15, 0, 0, 'Invasion de Canard', 1, TRUE),
-(6, 'Faire intervenir des mauvais professeurs pour faire baisser la jauge de pédagogie.', 0, 0, -10, 'Mauvais Professeurs', 1, FALSE),
-(7, 'Faire intervenir des bons professeurs pour faire augmenter la jauge de pédagogie.', 0, 0, 10, 'Bons Professeurs', 1, TRUE),
-(8, 'Créer une invasion de punaise pour challenger le joueur.', 0, 0, 0, 'Invasion de Punaise', 1, FALSE),
-(9, 'Créer des soirées pour faire augmenter le bonheur des élèves.', 20, 0, 0, 'Soirées Étudiantes', 1, TRUE),
-(10, 'Créer des dysfonctions (équipement qui cassent) pour challenger le joueur.', -10, 0, 0, 'Dysfonctions Équipements', 1, FALSE);
+(1, 'Les enseignants sont en grève pour protester contre l absentéisme rampant et la pénurie chronique de tampons pour effacer les tableaux à craie. Fatigués de jongler entre classes désertes et tableaux illisibles, ils réclament des soutions pour redonner vie à leurs salles de classe!.', -15, 0, 0, 'Grèves des Enseignants', -10, 0, -10, 'Grèves des Enseignants', 1, FALSE),
+(2, 'Nous regrettons de vous informer que notre livraison de chocolatines est retardée pour une raison aussi insolite qu inattendue : notre camion a été attaqué par une bande de singes farceurs en chemin vers Chocolatville !
+
+L annulation de la livraison des chocolatines au foyer de l école a plongé les étudiants dans une tristesse collective. Privés de leur douce pause gourmande, l humeur générale a chuté, transformant les sourires en soupirs. Les chocolatines étant la clé du bonheur matinal, l impact se fait ressentir dans tout l établissement.', -10, 50, 0, 'Annulation Livraison Chocolatine', 1, FALSE),
+(3, 'En cette période où le stress des études peut parfois sembler pesant, nous avons une délicieuse surprise pour vous ! Pour vous remercier de votre engagement et de votre fidélité, nous avons le plaisir d annoncer une journée spéciale de livraison gratuite de chocolatines, rien que pour vous !', 10, 50, 0, 'Livraison Gratuite Chocolatine', 1, TRUE),
+(4, 'Chers membres de la communauté,
+
+Nous vous informons avec une pointe d humour mais aussi de sérieux qu une invasion de canards a été repérée à la Rivière des MFEE ! Ces adorables mais envahissants palmipèdes semblent être à la recherche d un point d eau paisible où se rafraîchir, et notre rivière semble être leur nouvelle destination favorite.', 15, 0, -5, 'ALERTE : Invasion de Canards à la Rivière des MFEE !d', 1, TRUE),
+(5, 'Manque de chance : vous avez engagé un professeur incompétent. 
+
+Il arrive 30 minutes après le début du cours et ne donne qu un seul exercice à faire pendant toute l heure. Une fois que les étudiants l ont terminé, il se cache derrière son ordinateur.', 0, 0, -10, 'Mauvais Professeurs', 1, FALSE),
+(6, 'Chanceux d avoir engagé un excellent professeur ! Il arrive à l heure, donne des explications claires et variées, et engage les étudiants dans des activités enrichissantes tout au long du cours. Il est attentif aux besoins individuels des élèves et reste disponible pour les aider après la classe. En résumé, il incarne l excellence pédagogique', 0, 0, 10, 'Bons Professeurs', 1, TRUE),
+(7, 'Une invasion de punaises a plongé l école dans le chaos et l inconfort. Les salles de classe et les couloirs sont infestés, perturbant les activités quotidiennes. Les élèves et le personnel sont constamment sur leurs gardes, craignant les piqûres et l agitation causée par ces insectes indésirables. Cette situation désagréable nécessite une intervention immédiate pour rétablir un environnement d apprentissage sain et sûr.', 1, FALSE),
+(8, 'Venez célébrer avec nous lors d une soirée étudiante sensationnelle avec des invités spéciaux de renom : Patrick Sébastien et Sébastien Patoche ! Préparez-vous à être émerveillés par des performances incroyables, des chansons entraînantes et des sketchs hilarants qui vous feront rire aux éclats toute la nuit.
+
+Mais ce n est pas tout ! Nous réservons également une surprise spéciale qui ajoutera une touche magique à cette soirée déjà inoubliable. Attendez-vous à des moments de pur plaisir et d excitation alors que nous vous offrons une expérience unique que vous n'êtes pas prêts d'oublier.', 20, 0, 0, 'Soirées Étudiantes', 1, TRUE),
+(9, 'Lors du lancement d une simulation par l un de nos étudiants, un ordinateur a malheureusement pris feu. Nous sommes reconnaissants que l incident ait été rapidement maîtrisé et que seul l ordinateur ait été endommagé.', -10, 0, 0, 'Dysfonctions Équipements', 1, FALSE);
+(10, 'Nous vous informons qu un incident malheureux s est produit récemment impliquant une chaise défectueuse, ayant entraîné une légère blessure pour l un de nos élèves. Nous tenons à présenter nos excuses les plus sincères pour cet incident et à assurer à tous notre engagement envers la sécurité et le bien-être de nos étudiants.
+
+En signe de notre regret pour cet incident et pour compenser l inconfort causé, nous nous engageons à remplacer la chaise défectueuse par une nouvelle et sûre. De plus, nous offrirons à l élève concerné un Mars en guise de geste d excuse pour cet incident regrettable. ', -10, 0, 0, 'Dysfonctions Équipements', 1, FALSE);
 
 
 -- Insère des données dans la table RepasCrous
