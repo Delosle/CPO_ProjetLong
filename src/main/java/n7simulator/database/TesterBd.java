@@ -22,8 +22,8 @@ public class TesterBd {
     }**/
     public static void main(String[] args) {
         //test création bdd admin
-        CreationBddAdmin.initialiserBddAdmin();
-        System.out.println(CreerBddSauvegarde.verifierCreationTables());
+        System.out.println(CreerBddSauvegarde.initialiserBddSauvegarde());
+        //System.out.println(CreerBddSauvegarde.verifierCreationTables());
         Map<String, Map<String, Object>> testSauvegarde = new HashMap<>();
         testSauvegarde = peuplerDico();
         //test de sauvegarderDonnee

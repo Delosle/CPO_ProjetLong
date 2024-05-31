@@ -13,7 +13,7 @@ public class CreerBddSauvegarde {
     /**
      * Permet d'initialiser la base de données SauvegardePartie
      */
-    public static void initialiserBddSauvegarde() {
+    public static boolean initialiserBddSauvegarde() {
         Connection connection = null;
         try {
             // La bdd ne doit pas être modifié, il est donc préférable de supprimer
@@ -40,11 +40,12 @@ public class CreerBddSauvegarde {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return verifierCreationTables();
     }
 
-    public static boolean verifierCreationTables (){
+    private static boolean verifierCreationTables (){
         Connection connection = null;
-        boolean tableCreer = false;
+        boolean tableCreer = true;
         try {
             // Charger la classe de driver SQLite
             Class.forName("org.sqlite.JDBC");
