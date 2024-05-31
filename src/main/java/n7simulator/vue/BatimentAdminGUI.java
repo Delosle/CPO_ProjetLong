@@ -23,6 +23,9 @@ public class BatimentAdminGUI extends JPanel {
 		ElevesGUI elevesVue = new ElevesGUI();
 		Partie.getInstance().addObserver(elevesVue);
 		this.add(elevesVue);	
+		
+		CrousGUI crousVue = new CrousGUI();
+		this.add(crousVue);
 	}
 	
 }
