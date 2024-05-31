@@ -12,14 +12,14 @@ public class EventHistoryGUI extends JPanel{
 
     public EventHistoryGUI() {
 
-        setPreferredSize(new Dimension(LARGEUR_PANNEL, this.getPreferredSize().height));
-        JScrollPane scrollPane = new JScrollPane(eventHistory);
+        //setPreferredSize(new Dimension(LARGEUR_PANNEL, this.getPreferredSize().height));
+        //JScrollPane scrollPane = new JScrollPane(eventHistory);
 
         eventHistory.setLayout(new BoxLayout(eventHistory, BoxLayout.Y_AXIS));
         eventHistory.setBorder(BorderFactory.createTitledBorder("Historique des événements"));
         eventHistory.add(Box.createVerticalGlue());
-
-        this.add(scrollPane);
+        add(eventHistory);
+        //this.add(scrollPane);
 
     }
 

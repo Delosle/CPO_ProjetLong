@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class EvenementGUI extends JPanel {
     private String titre;
@@ -13,6 +14,7 @@ public class EvenementGUI extends JPanel {
     private int impactBonheur;
     private int impactArgent;
     private int impactPedagogie;
+
 
     private N7Frame n7Frame;
     private PilotageGUI pilotageGUI;
@@ -24,6 +26,7 @@ public class EvenementGUI extends JPanel {
         this.impactBonheur = evenement.getImpactBonheur();
         this.impactArgent = evenement.getImpactArgent();
         this.impactPedagogie = evenement.getImpactPedagogie();
+
 
         this.n7Frame = n7Frame;
 
@@ -120,6 +123,16 @@ public class EvenementGUI extends JPanel {
 
     public JPanel getPermanent(){
         JPanel miniPanel = new JPanel();
+        miniPanel.setLayout(new GridLayout(1, 2));
+        JLabel titre = new JLabel(this.titre);
+        JPanel zone_Impacts = new JPanel();
+        zone_Impacts.setLayout(new GridLayout(1, 3));
+        zone_Impacts.add(new JLabel("" + this.impactBonheur));
+        zone_Impacts.add(new JLabel("" + this.impactPedagogie));
+        zone_Impacts.add(new JLabel("" + this.impactArgent));
+        miniPanel.add(titre);
+        miniPanel.add(zone_Impacts);
+
         return miniPanel;
     }
 }

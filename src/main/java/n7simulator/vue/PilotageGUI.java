@@ -55,7 +55,7 @@ public class PilotageGUI extends JPanel {
 		// On ajoute EventHistoryGUI a l'element median
 		this.eventHistoryGUI = eventHistoryGUI;
 		caseCourante.add(this.eventHistoryGUI);
-		eventHistoryGUI.adjustSizeToParent();
+		//eventHistoryGUI.adjustSizeToParent();
 		this.add(caseCourante, contraintes);
 
 

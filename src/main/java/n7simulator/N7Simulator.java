@@ -42,6 +42,5 @@ public class N7Simulator {
 		LocalDate date = LocalDate.of(2020, 1, 1);
 		Evenement eventTest = new Evenement_Irregu(1, date);
 		fenetre.ajouterEvenement(eventTest);
-
 	}
 }
