@@ -21,10 +21,12 @@ import n7simulator.vue.temps.TempsGUI;
  */
 public class PilotageGUI extends JPanel {
 
+	private EventHistoryGUI eventHistoryGUI = new EventHistoryGUI();
+
 	/** Créer la vue du pilotage
 	 * @param interfaceTemps l'interface de gestion du temps
 	 */
-	public PilotageGUI(TempsGUI interfaceTemps, TempsController controllerTemps, JaugesPannel jaugesGUI) {
+	public PilotageGUI(TempsGUI interfaceTemps, TempsController controllerTemps, JaugesPannel jaugesGUI, EventHistoryGUI eventHistoryGUI) {
 		this.setBackground(Color.white);
 		this.setLayout(new GridBagLayout());
 		
@@ -49,7 +51,14 @@ public class PilotageGUI extends JPanel {
 		contraintes.gridy = 1;
 		caseCourante = new JLabel();
 		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
+
+		// On ajoute EventHistoryGUI a l'element median
+		this.eventHistoryGUI = eventHistoryGUI;
+		caseCourante.add(this.eventHistoryGUI);
+		eventHistoryGUI.adjustSizeToParent();
 		this.add(caseCourante, contraintes);
+
+
 		
 		// On ajoute le temps
 		contraintes.weighty = 1.0;
@@ -61,6 +70,10 @@ public class PilotageGUI extends JPanel {
 		zoneTemps.add(controllerTemps);
 		this.add(zoneTemps, contraintes);
 		
+	}
+
+	public void enregistrerEvent(JPanel event) {
+		eventHistoryGUI.addEvent(event);
 	}
 
 }
