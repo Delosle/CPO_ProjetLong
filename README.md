@@ -36,4 +36,3 @@ Selectionnez "Force update of Snapshots/Releases"
 OK 
 
 Votre projet est prêt :)
->>>>>>> eb2fcf142394519aa37b90642e00f83c25536d09
