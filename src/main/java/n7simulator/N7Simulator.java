@@ -1,6 +1,8 @@
 package n7simulator;
 
 import n7simulator.modele.*;
+import n7simulator.modele.Evenements.Evenement;
+import n7simulator.modele.Evenements.Evenement_Irregu;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.vue.*;
@@ -10,6 +12,8 @@ import n7simulator.controller.*;
 import n7simulator.database.CreationBddAdmin;
 import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
+
+import java.time.LocalDate;
 
 public class N7Simulator {
 	public static void main(String[] args) {
@@ -32,8 +36,13 @@ public class N7Simulator {
 		bonheur.addObserver(jaugesPannel.getVueBonheur());
 		pedagogie.addObserver(jaugesPannel.getVuePedagogie());
 
-		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel);
+		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel, new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
 		N7Frame fenetre = new N7Frame(interfaceCarte, interfacePilotage);
+
+		LocalDate date = LocalDate.of(2020, 1, 1);
+		Evenement eventTest = new Evenement_Irregu(1, date);
+		fenetre.ajouterEvenement(eventTest);
+		fenetre.ajouterEvenement(new Evenement_Irregu(2, date.plusDays(1)));
 	}
 }
