@@ -74,7 +74,6 @@ public class EvenementGUI extends JFrame {
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                n7Frame.retirerLayer(EvenementGUI.this);
                 pilotageGUI.enregistrerEvent(getPermanent());
             }
         });
