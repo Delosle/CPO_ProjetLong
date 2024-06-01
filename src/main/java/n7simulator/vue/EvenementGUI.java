@@ -71,13 +71,6 @@ public class EvenementGUI extends JFrame {
         closeButton.setBorderPainted(false); // Supprimer la bordure du bouton
         closeButton.setHorizontalAlignment(SwingConstants.RIGHT);
         closeButton.setForeground(Color.RED);
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                n7Frame.retirerLayer(EvenementGUI.this);
-                pilotageGUI.enregistrerEvent(getPermanent());
-            }
-        });
 
         JPanel panelVide = new JPanel();
 
@@ -128,7 +121,7 @@ public class EvenementGUI extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("oqsjdoqksjdqlskdn");
+                pilotageGUI.enregistrerEvent(getPermanent());
             };
 
         });
