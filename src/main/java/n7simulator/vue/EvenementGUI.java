@@ -17,8 +17,6 @@ public class EvenementGUI extends JFrame {
     private int impactArgent;
     private int impactPedagogie;
 
-
-    private N7Frame n7Frame;
     private PilotageGUI pilotageGUI;
 
     private JPanel mainPanel = new JPanel();
@@ -26,7 +24,7 @@ public class EvenementGUI extends JFrame {
         return mainPanel;
     }
 
-    public EvenementGUI(Evenement evenement, N7Frame n7Frame, PilotageGUI pilotageGUI) {
+    public EvenementGUI(Evenement evenement, PilotageGUI pilotageGUI) {
 
 
         // On recupere les valeurs de l'evenement a afficher
@@ -36,9 +34,6 @@ public class EvenementGUI extends JFrame {
         this.impactArgent = evenement.getImpactArgent();
         this.impactPedagogie = evenement.getImpactPedagogie();
 
-
-
-        this.n7Frame = n7Frame;
 
         this.pilotageGUI = pilotageGUI;
         // On recupere les dimensions de l'ecran

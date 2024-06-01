@@ -9,6 +9,7 @@ import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.Evenements.Evenement_Irregu;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
+import n7simulator.vue.PilotageGUI;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -67,11 +68,12 @@ public final class Partie extends Observable {
 	}
 
 
-	public void genererEvenementIrregulier() {
+	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
 		for (int idEvenement : listeEvenement) {
 			System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
+			new EvenementGUI (evenement, pilote);
 		}
 	}
 

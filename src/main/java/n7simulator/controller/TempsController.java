@@ -29,7 +29,7 @@ public class TempsController extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			temps.incrementJournee();
 			Partie.getInstance().inscrireEleves(10);
-			Partie.getInstance().genererEvenementIrregulier();
+			Partie.getInstance().genererEvenementIrregulier(getParent());
 		}
 	}
 }
