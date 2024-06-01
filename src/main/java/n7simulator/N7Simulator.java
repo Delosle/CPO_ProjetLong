@@ -14,12 +14,15 @@ import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class N7Simulator {
+
+
 	public static void main(String[] args) {
 		//CreationBddAdmin.initialiserBddAdmin(); //pensez à décommenter cette ligne pour initialiser la base de données
 		Partie laPartie = Partie.getInstance();
-		Temps temps = laPartie.getTemps();;
+		Temps temps = laPartie.getTemps();
 		ValDebPartieDAO.initialiserDonneesDebutPartie(temps);
 		TempsGUI interfaceTemps = new TempsGUI(temps);
 		temps.addObserver(interfaceTemps);
@@ -31,7 +34,7 @@ public class N7Simulator {
 		Jauge pedagogie = laPartie.getJaugePedagogie();
 
 		JaugesPannel jaugesPannel = new JaugesPannel(bonheur.getValue(), pedagogie.getValue(), argent.getValue());
-
+		ApparitionEvenementIrregulier gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
 		argent.addObserver(jaugesPannel.getVueArgent());
 		bonheur.addObserver(jaugesPannel.getVueBonheur());
 		pedagogie.addObserver(jaugesPannel.getVuePedagogie());
@@ -40,9 +43,6 @@ public class N7Simulator {
 		CarteGUI interfaceCarte = new CarteGUI();
 		N7Frame fenetre = new N7Frame(interfaceCarte, interfacePilotage);
 
-		LocalDate date = LocalDate.of(2020, 1, 1);
-		Evenement eventTest = new Evenement_Irregu(1, date);
-		fenetre.ajouterEvenement(eventTest);
-		fenetre.ajouterEvenement(new Evenement_Irregu(2, date.plusDays(1)));
 	}
+
 }

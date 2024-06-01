@@ -43,9 +43,10 @@ public final class Partie extends Observable {
 	private static Temps temps;
 
 	/**
-	 * Le gestionnaire d'événements irréguliers
+	 * Gestionnaire des événements irréguliers
 	 */
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
+
 	
 	private Partie() {}
 	
@@ -65,13 +66,15 @@ public final class Partie extends Observable {
 		return instance;
 	}
 
+
 	public void genererEvenementIrregulier() {
-		List <Integer> evenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		for (int i = 0; i < evenement.size(); i++) {
-			System.out.println(evenement.get(i));
-			Evenement_Irregu evenementIrregulier = new Evenement_Irregu(evenement.get(i), temps.getJourneeEnCours());
+		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
+		for (int idEvenement : listeEvenement) {
+			System.out.println("Evenement Irregulier : " + idEvenement);
+			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
 		}
 	}
+
 
 	/**
 	 * Obtenir le nombre d'élèves inscrits à l'N7.
@@ -131,7 +134,8 @@ public final class Partie extends Observable {
 		return jaugePedagogie;
 	}
 
-	public  Temps getTemps() {
+	public Temps getTemps() {
 		return temps;
 	}
+
 }
