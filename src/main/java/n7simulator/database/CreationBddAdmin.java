@@ -27,7 +27,7 @@ public class CreationBddAdmin {
 			// Établir une connexion à la base de données nommée admin.bd
 			connection = CreationBddUtilitaire.creerBDD("src/main/resources/baseDeDonnee/admin.db");
 			// Créer et peupler la base de données admin
-			CreationBddUtilitaire.creerPeuplerDatabase(connection, "Creer_Tables.sql");
+			CreationBddUtilitaire.creerPeuplerDatabase(connection, "src/main/resources/Creer_Tables.sql");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally { // pour être sûr de fermer les ressources

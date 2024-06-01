@@ -1,9 +1,12 @@
 package n7simulator.modele;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Observable;
 
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.Evenements.Evenement_Irregu;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 
@@ -33,6 +36,16 @@ public final class Partie extends Observable {
 	 * La jauge de Pédagigie
 	 */
 	private static Jauge jaugePedagogie;
+
+	/**
+	 * Le temps de la partie
+	 */
+	private static Temps temps;
+
+	/**
+	 * Le gestionnaire d'événements irréguliers
+	 */
+	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
 	
 	private Partie() {}
 	
@@ -46,10 +59,20 @@ public final class Partie extends Observable {
 			jaugeArgent = new Jauge("Argent");
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
+			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
+			temps = new Temps();
 		}
 		return instance;
 	}
-	
+
+	public void genererEvenementIrregulier() {
+		List <Integer> evenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
+		for (int i = 0; i < evenement.size(); i++) {
+			System.out.println(evenement.get(i));
+			Evenement_Irregu evenementIrregulier = new Evenement_Irregu(evenement.get(i), temps.getJourneeEnCours());
+		}
+	}
+
 	/**
 	 * Obtenir le nombre d'élèves inscrits à l'N7.
 	 * @return le nombre d'élèves inscrits.
@@ -106,5 +129,9 @@ public final class Partie extends Observable {
 	 */
 	public Jauge getJaugePedagogie(){
 		return jaugePedagogie;
+	}
+
+	public  Temps getTemps() {
+		return temps;
 	}
 }

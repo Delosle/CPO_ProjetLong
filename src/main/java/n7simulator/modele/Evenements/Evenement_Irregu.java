@@ -28,8 +28,8 @@ public class Evenement_Irregu extends Evenement{
             connexion = DatabaseConnection.getDBConnexion();
 
             /*récupération des informations de l'événement*/
-            String query = "SELECT Titre, description, impactBonheurPos, impactArgentPos, " +
-                    "impactPedagogiePos, bonus " +
+            String query = "SELECT Titre, description, impactBonheur, impactArgent, " +
+                    "impactPedagogie, bonus " +
                     "FROM evenement_irregulier " +
                     "WHERE id_eve_irre = " + id;
 
@@ -38,9 +38,9 @@ public class Evenement_Irregu extends Evenement{
             while (resultDB.next()) {
                 titre = resultDB.getString("Titre");
                 description = resultDB.getString("description");
-                impactBonheur = resultDB.getInt("impactBonheurPos");
-                impactArgent = resultDB.getInt("impactArgentPos");
-                impactPedagogie = resultDB.getInt("impactPedagogiePos");
+                impactBonheur = resultDB.getInt("impactBonheur");
+                impactArgent = resultDB.getInt("impactArgent");
+                impactPedagogie = resultDB.getInt("impactPedagogie");
                 bonus = resultDB.getBoolean("bonus");
             }
 

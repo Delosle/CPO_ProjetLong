@@ -9,13 +9,14 @@ import n7simulator.vue.temps.TempsGUI;
 import n7simulator.controller.*;
 import n7simulator.database.CreationBddAdmin;
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
 
 public class N7Simulator {
 	public static void main(String[] args) {
-		CreationBddAdmin.initialiserBddAdmin();
-		Temps temps = new Temps();
-		ValDebPartieDAO.initialiserDonneesDebutPartie(temps);
+		//CreationBddAdmin.initialiserBddAdmin(); //pensez à décommenter cette ligne pour initialiser la base de données
 		Partie laPartie = Partie.getInstance();
+		Temps temps = laPartie.getTemps();;
+		ValDebPartieDAO.initialiserDonneesDebutPartie(temps);
 		TempsGUI interfaceTemps = new TempsGUI(temps);
 		temps.addObserver(interfaceTemps);
 		TempsController controllerTemps = new TempsController(temps);

@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
 
+import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.Evenements.Evenement_Irregu;
+
 /**
  * Controller permettant de modifier la date de la journée en cours.
  * Contient un bouton "Jour Suivant".
@@ -29,6 +32,7 @@ public class TempsController extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			temps.incrementJournee();
 			Partie.getInstance().inscrireEleves(10);
+			Partie.getInstance().genererEvenementIrregulier();
 		}
 	}
 }

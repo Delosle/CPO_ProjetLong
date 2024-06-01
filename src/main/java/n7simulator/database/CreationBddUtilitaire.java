@@ -22,6 +22,10 @@ public class CreationBddUtilitaire {
 
     public static String readSqlFile(String fileName) {
         StringBuilder sqlString = new StringBuilder();
+        System.out.println("Loading SQL file: " + fileName);
+        File dbFichier = new File(fileName);
+        if (dbFichier.exists()) {
+        }
         try (InputStream inputStream = CreationBddUtilitaire.class.getClassLoader().getResourceAsStream(fileName);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
