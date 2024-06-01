@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import n7simulator.modele.Evenements.Evenement;
 import n7simulator.modele.Partie;
 
 /**
@@ -91,6 +92,12 @@ public class N7Frame extends JFrame {
 		layeredPanel.remove(element);
 		layeredPanel.revalidate();
 		layeredPanel.repaint();
+	}
+
+	public void ajouterEvenement(Evenement event){
+		EvenementGUI vueTemp = new EvenementGUI(event, this, interfacePilotage);
+		ajouterLayer(vueTemp, JLayeredPane.PALETTE_LAYER);
+
 	}
 
 }
