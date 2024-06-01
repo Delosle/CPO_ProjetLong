@@ -6,9 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 
-public class EvenementGUI extends JPanel {
+public class EvenementGUI extends JFrame {
     private String titre;
     private String description;
     private int impactBonheur;
@@ -19,13 +21,21 @@ public class EvenementGUI extends JPanel {
     private N7Frame n7Frame;
     private PilotageGUI pilotageGUI;
 
-    public EvenementGUI(Evenement evenement, N7Frame n7Frame, PilotageGUI pilotageGUI){
+    private JPanel mainPanel = new JPanel();
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public EvenementGUI(Evenement evenement, N7Frame n7Frame, PilotageGUI pilotageGUI) {
+
+
         // On recupere les valeurs de l'evenement a afficher
         this.titre = evenement.getTitre();
         this.description = evenement.getDescription();
         this.impactBonheur = evenement.getImpactBonheur();
         this.impactArgent = evenement.getImpactArgent();
         this.impactPedagogie = evenement.getImpactPedagogie();
+
 
 
         this.n7Frame = n7Frame;
@@ -101,24 +111,32 @@ public class EvenementGUI extends JPanel {
 
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
-        setLayout(gridbag);
+        mainPanel.setLayout(gridbag);
 
         c.fill = GridBagConstraints.BOTH;
         c.weightx=1.0;
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridbag.setConstraints(panelVide, c);
-        add(panelVide);
+        mainPanel.add(panelVide);
 
         c.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(closeButton, c);
-        add(closeButton);
+        mainPanel.add(closeButton);
 
         c.gridwidth = 1;
         c.weighty = 1.0;
         gridbag.setConstraints(miniZone, c);
-        add(miniZone);
+        mainPanel.add(miniZone);
 
+        add(mainPanel);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("oqsjdoqksjdqlskdn");
+            };
+
+        });
     }
 
     public JPanel getPermanent(){

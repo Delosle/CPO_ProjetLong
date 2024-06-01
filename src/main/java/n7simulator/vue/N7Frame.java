@@ -96,7 +96,8 @@ public class N7Frame extends JFrame {
 
 	public void ajouterEvenement(Evenement event){
 		EvenementGUI vueTemp = new EvenementGUI(event, this, interfacePilotage);
-		ajouterLayer(vueTemp, JLayeredPane.PALETTE_LAYER);
+		vueTemp.setVisible(true);
+	//	ajouterLayer(vueTemp, JLayeredPane.PALETTE_LAYER);
 
 	}
 
