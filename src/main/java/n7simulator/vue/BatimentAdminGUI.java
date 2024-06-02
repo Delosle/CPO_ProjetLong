@@ -22,7 +22,7 @@ public class BatimentAdminGUI extends JPanel {
 		// Vue élève
 		ElevesGUI elevesVue = new ElevesGUI();
 		Partie.getInstance().addObserver(elevesVue);
-		this.add(elevesVue);	
+		this.add(elevesVue);
 	}
 	
 }
