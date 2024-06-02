@@ -69,16 +69,17 @@ CREATE TABLE ValDebPartie (
 -- Insère des données dans la table evenement_regulier
 INSERT INTO evenement_regulier (id_eve_reg, description, impactBonheurPos, impactArgentPos, impactPedagogiePos, Titre, periode, debut, impactBonheurNeg, impactArgentNeg, impactPedagogieNeg)
 VALUES 
-(1, 'Générer des séminaires et conférences pour augmenter le bonheur et le niveau de pédagogie des étudiants.', 10, 0, 15, 'Séminaires et Conférences', 30, '2024-06-01', 0, 0, 0),
-(2, 'Organiser le show des clubs pour augmenter le bonheur des étudiants.', 20, 0, 0, 'Show des Clubs', 60, '2024-06-01', 0, 0, 0),
+(1, 'Les étudiants ont la possibilité d assister à des séminaires et conférences pour élargir leurs connaissances, découvrir de nouveaux domaines d intérêt et interagir avec des experts. Les sujets abordés peuvent inclure des avancées technologiques, des présentations de recherche et des questions sociales. Participer à ces événements offre aux étudiants l opportunité d améliorer leurs compétences en réseautage, de développer leur compréhension des sujets présentés et de potentiellement découvrir de nouvelles passions et opportunités de carrière.', 10, 0, 15, 'Séminaires et Conférences', 30, '2024-06-01', 0, 0, -10),
+(2, 'L école organise un événement mettant en vedette les clubs et associations étudiants. Les étudiants découvrent la diversité des activités extracurriculaires sur le campus, avec chaque club présentant ses activités et ses objectifs. C est une opportunité pour les étudiants d explorer de nouvelles passions, de trouver des communautés d intérêt et de s impliquer dans la vie étudiante, renforçant ainsi leurs réseaux sociaux et leurs compétences en leadership.', 20, 0, 0, 'Show des Clubs', 60, '2024-06-01', -15, 0, 0),
 (3, 'Inscrire de nouveaux élèves pour augmenter la jauge d’argent.', 0, 50, 0, 'Inscription Nouveaux Élèves', 90, '2024-06-01', 0, 0, 0),
-(4, 'Organiser des rencontres avec des entreprises pour augmenter le bonheur des étudiants.', 15, 0, 0, 'Rencontres Entreprises', 120, '2024-06-01', 0, 0, 0),
-(5, 'Organiser des compétitions sportives pour augmenter le bonheur des étudiants.', 25, 0, 0, 'Compétitions Sportives', 180, '2024-06-01', 0, 0, 0),
-(6, 'Nettoyer les locaux pour rendre les locaux plus propres et augmenter le bonheur général.', 10, 0, 0, 'Nettoyage des Locaux', 30, '2024-06-01', 0, 0, 0),
-(7, 'Choisir si je participe aux campagnes des listes pour modifier le bonheur de mes élèves.', 5, 0, 0, 'Campagnes des Listes', 365, '2024-06-01', -5, 0, 0),
-(8, 'Choisir si je fais un repas de Noël pour modifier le bonheur des élèves et du personnel.', 15, 0, 0, 'Repas de Noël', 365, '2024-12-01', 0, 0, 0),
-(9, 'Mettre à disposition des après-midi sport pour les élèves pour augmenter leur bien-être (bonheur).', 20, 0, 0, 'Après-midi Sportifs', 30, '2024-06-01', 0, 0, 0),
-(10, 'Imposer au joueur de payer un repas pour le personnel pour le challenger et le mettre en difficulté.', 0, -20, 0, 'Repas pour le Personnel', 90, '2024-06-01', 0, 0, 0);
+(4, 'L université organise une rencontre avec des représentants d entreprises locales et nationales. Les étudiants auront l opportunité de rencontrer des professionnels de différents secteurs, d en apprendre davantage sur les opportunités de stages, d emplois à temps partiel et de carrière. Cet événement offre aux étudiants la possibilité de développer leurs réseaux professionnels, de découvrir les exigences du marché du travail et d explorer des chemins de carrière potentiels. Participer à cette rencontre peut aider les étudiants à établir des contacts précieux et à prendre des décisions éclairées concernant leur avenir professionnel.', 15, -10, 0, 'Rencontres Entreprises', 120, '2024-06-01', -5, 0, -5),
+(5, 'Organiser des compétitions sportives pour promouvoir le bien-être et le bonheur des étudiants. Ces événements incluent divers sports tels que le football, le basket-ball, le volley-ball, et bien d autres, permettant aux étudiants de participer et de s amuser tout en restant actifs. En plus de favoriser une vie saine, ces compétitions renforcent l esprit de camaraderie et de communauté sur le campus. Les étudiants peuvent ainsi se détendre, se divertir et créer des souvenirs inoubliables avec leurs camarades.', 25, -10, 0, 'Compétitions Sportives', 180, '2024-06-01', -15, 0, 10),
+(6, 'Organisee une journée de nettoyage des locaux pour rendre le campus plus propre et agréable. Les étudiants, le personnel et les enseignants sont invités à participer ensemble à cette initiative. En plus d améliorer l environnement de vie et d étude, cet événement renforce la communauté et la fierté collective. Un campus propre contribue au bien-être général et au bonheur de tous.', 10, -10, 10, 'Nettoyage des Locaux', 30, '2024-06-01', -10, 5, -5),
+(7, 'Les étudiants doivent décider s ils veulent participer aux campagnes des listes, tradition importante des écoles d ingénieurs. Ces campagnes incluent des activités et des événements visant à promouvoir les listes candidates pour les bureaux des étudiants. Participer à ces campagnes peut renforcer la cohésion de groupe, améliorer le bonheur des élèves et dynamiser la vie étudiante sur le campus. C est une occasion de s engager, de s amuser et de contribuer à l animation de la communauté universitaire.', 5, 0, 0, 'Campagnes des Listes', 365, '2024-06-01', -5, 0, 0),
+(8, 'Choisir si je fais un repas de Noël pour modifier le bonheur des élèves et du personnel.', 20, -5, -10, 'Repas de Noël', 365, '2024-12-01', -15, 0, 10*******),
+(9, 'L université propose des après-midi sportifs pour améliorer le bien-être des étudiants. En acceptant, les étudiants peuvent participer à divers sports comme le football, le basketball, le yoga et le jogging. Ces activités aident à rester actifs, à réduire le stress et à socialiser dans un cadre détendu..', 20, 0, 0, 'Après-midi Sportifs', 30, '2024-06-01', -10, 0, 5),
+(10, 'L université propose aux étudiants de payer un repas pour le personnel. En acceptant, l étudiant montre sa reconnaissance envers le personnel, ce qui peut améliorer le moral et renforcer les relations sur le campus. Cependant, cette décision impactera leur budget personnel, les mettant ainsi en difficulté financière. Refuser signifie conserver ses ressources financières, mais ne pas profiter de cette opportunité pour montrer sa gratitude.', 0, -20, 0, 'Repas pour le Personnel', 90, '2024-06-01', -10, 5, 0);
+
 
 -- Insère des données dans la table evenement_irregulier
 INSERT INTO evenement_irregulier (id_eve_irre, description, impactBonheur, impactArgent, impactPedagogie, Titre, frequence, bonus)
@@ -119,8 +120,8 @@ VALUES (0, 10, 1500, 50, 50, '2024-09-01');
 
 -- Insérer des données dans la table matiere
 INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (1, 'Informatique', 8, 9);
-INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (2, 'Physique', 7, 8);
-INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (3, 'Mathématiques', 9, 7);
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (2, 'Anglais', 7, 6);
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (3, 'Réseau', 9, 7);
 INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (4, 'Communication', 5, 5);
 
 -- Insérer des données dans la table prof
