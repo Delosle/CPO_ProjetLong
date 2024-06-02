@@ -17,6 +17,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import n7simulator.controller.CrousController;
+
 /**
  * 
  */
@@ -42,26 +44,25 @@ public class CrousGUI extends JPanel implements Observer {
 
 		this.add(new JLabel("CROUS : "));
 		
-		JPanel contenu = new JPanel();
+		JPanel contenu = new JPanel(new GridLayout(1,2));
 		
 		JPanel informations = new JPanel(new GridLayout(2,1));
 		
-		JPanel qualiteRepas = new JPanel(new FlowLayout());
+		JPanel qualiteRepas = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		qualiteRepas.add(new JLabel("Qualité du repas : "));
 		labelQualite = new JLabel(qualite.toString());
 		qualiteRepas.add(labelQualite);
-		informations.add(qualiteRepas, BorderLayout.WEST);
+		informations.add(qualiteRepas);
 		
-		JPanel panelRevente = new JPanel();
+		JPanel panelRevente = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panelRevente.add(new JLabel("Prix de revente du repas : "));
 		labelRevente = new JLabel(prixRevente.toString());
 		panelRevente.add(labelRevente);
 		informations.add(panelRevente);
-
-		contenu.setAlignmentX(LEFT_ALIGNMENT);
-		contenu.setBackground(Color.red);
 		
-		contenu.add(informations);
+		contenu.add(informations, BorderLayout.WEST);
+		
+		contenu.add(CrousController.getBoutonOuverture(), BorderLayout.EAST);
 
 		this.add(contenu);
 		

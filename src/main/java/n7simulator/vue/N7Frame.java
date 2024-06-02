@@ -26,10 +26,12 @@ public class N7Frame extends JFrame {
 	
 	private JLayeredPane layeredPanel;
 	
+	private static N7Frame instance;
+	
 	/**
 	 * 
 	 */
-	public N7Frame(CarteGUI interfaceCarte, PilotageGUI interfacePilotage){
+	private N7Frame(CarteGUI interfaceCarte, PilotageGUI interfacePilotage){
 		// On créé la fenêtre globale
 		super("N7Simulator");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
@@ -76,6 +78,13 @@ public class N7Frame extends JFrame {
 		this.setVisible(true);
 	}
 
+	public static N7Frame getInstance(CarteGUI interfaceCarte, PilotageGUI interfacePilotage) {
+		if (instance == null) {
+			instance = new N7Frame(interfaceCarte, interfacePilotage);
+		}
+		return instance;
+	}
+	
 	/** Ajouter un élément au JLayeredPane
 	 * @param element L'élément à placer dans un layer
 	 * @param numLayer Le numéro du layer
