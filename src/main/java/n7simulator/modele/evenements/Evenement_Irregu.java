@@ -1,4 +1,4 @@
-package n7simulator.modele.Evenements;
+package n7simulator.modele.evenements;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,6 @@ public class Evenement_Irregu extends Evenement{
      * @param id l'identifiant de l'événement
      * @param dateApparition la date d'apparition de l'événement
      */
-
     public Evenement_Irregu(int id, LocalDate dateApparition){
         super(id);
 
@@ -35,6 +34,7 @@ public class Evenement_Irregu extends Evenement{
 
             ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexion);
 
+            // récupération des informations de l'événement
             while (resultDB.next()) {
                 titre = resultDB.getString("Titre");
                 description = resultDB.getString("description");

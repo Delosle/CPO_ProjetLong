@@ -1,4 +1,4 @@
-package n7simulator.vue;
+package n7simulator.vue.Evenement;
 
 import n7simulator.modele.Evenements.Evenement;
 
@@ -10,6 +10,9 @@ public class EventHistoryGUI extends JPanel{
     static final int LARGEUR_PANNEL = 50;
     JPanel eventHistory = new JPanel();
 
+    /**
+     * Constructeur
+     */
     public EventHistoryGUI() {
         JScrollPane scrollPane = new JScrollPane(eventHistory);
         eventHistory.setLayout(new BoxLayout(eventHistory, BoxLayout.Y_AXIS));
@@ -21,24 +24,16 @@ public class EventHistoryGUI extends JPanel{
 
     }
 
+    /**
+     * Ajoute un événement à l'historique
+     * @param event l'événement à ajouter
+     */
+
     public void addEvent(JPanel event) {
-
         eventHistory.add(event, 0);
-        eventHistory.add(Box.createRigidArea(new Dimension(0, 10)));
-        eventHistory.revalidate();
-        eventHistory.repaint();
-
+        this.revalidate();
+        this.repaint();
     }
 
-    /*
-    public void adjustSizeToParent() {
-        Container parent = this.getParent();
-        if (parent != null) {
-            Dimension parentSize = parent.getSize();
-            this.setPreferredSize(parentSize);
-            this.revalidate();
-        }
-    }
-    */
 
 }

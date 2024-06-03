@@ -6,9 +6,9 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import n7simulator.controller.TempsController;
+import n7simulator.vue.Evenement.EventHistoryGUI;
 import n7simulator.vue.jauges.JaugesPannel;
 import n7simulator.vue.temps.TempsGUI;
 
