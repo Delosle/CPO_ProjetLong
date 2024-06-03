@@ -1,4 +1,4 @@
-package n7simulator;
+package n7simulator.joursuivant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,25 @@ import java.util.List;
 /**
  * Classe qui permet d'effectuer tous les impacts pour le jour suivant.
  */
-public class JourSuivant {
+public final class JourSuivant {
 
-	private List<ImpactJourSuivantCourtTerme> impactsCourtTerme;
-	private List<ImpactJourSuivantLongTerme> impactsLongTerme; 
+	private static JourSuivant instance;
 	
+	private static List<ImpactJourSuivantCourtTerme> impactsCourtTerme;
+	private static List<ImpactJourSuivantLongTerme> impactsLongTerme; 
+
 	/**
-	 * Constructeur.
+	 * Contient l'instance de la classe.
+	 * @return l'instance de JourSui
 	 */
-	public JourSuivant() {
+	public static JourSuivant getInstance() {
+		if (instance == null) {
+			instance = new JourSuivant();
+		}
+		return instance;
+	}
+	
+	private JourSuivant() {
 		impactsCourtTerme = new ArrayList<ImpactJourSuivantCourtTerme>();
 		impactsLongTerme = new ArrayList<ImpactJourSuivantLongTerme>();
 	}
@@ -46,5 +56,13 @@ public class JourSuivant {
 		for (ImpactJourSuivantLongTerme impact : impactsLongTerme) {
 			impact.effectuerImpactJourSuivantLongTerme();
 		}
+	}
+	
+	/**
+	 * Permet de clearer le contenu des listes.
+	 */
+	public void reinitialiser() {
+		impactsCourtTerme.clear();
+		impactsLongTerme.clear();
 	}
 }

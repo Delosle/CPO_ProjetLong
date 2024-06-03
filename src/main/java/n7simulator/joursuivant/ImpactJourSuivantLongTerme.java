@@ -1,4 +1,4 @@
-package n7simulator;
+package n7simulator.joursuivant;
 
 /**
  * Interface pour les impacts jour suivant à long terme.
