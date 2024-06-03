@@ -1,20 +1,28 @@
 package n7simulator.modele;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+import n7simulator.ImpactJourSuivantCourtTerme;
+import n7simulator.JourSuivant;
 import n7simulator.database.DatabaseConnection;
 
-public class Crous extends Observable{
+public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
+	public static final String[] QUALITE_STR = {"Mauvaise", "Acceptable", "Bonne", "Très bonne", "Excellente"};
 	private static Crous instance;
 	private int qualite;
 	private double prixVente;
-
+	
 	private Crous(int qualite, double prixVente) {
 		this.qualite = qualite;
 		this.prixVente = prixVente;
+		// TODO : décommenter la ligne suivante pour ajouter l'impact quand on merge avec develop
+		//JourSuivant.getInstance().addImpactCourtTerme(this);
 	}
 	
 	/**
@@ -51,6 +59,7 @@ public class Crous extends Observable{
 	public double getMarge() {
 		Connection connexionDB = null;
 		double marge = 0;
+		int nbEleves = Partie.getInstance().getNombreEleves();
 		try {
 			// connexion à la base de données
 			connexionDB = DatabaseConnection.getDBConnexion();
@@ -69,7 +78,84 @@ public class Crous extends Observable{
 				e.printStackTrace();
 			}
 		}
-		return Math.round(marge * 100.0 ) / 100.0;
+		return Math.round(marge * 100.0 ) / 100.0 * nbEleves;
 	}
 	
+	public double getMarge(int indexQualite, double prixVente) {
+		int tempQualite = this.qualite;
+		double tempPrixVente = this.prixVente;
+		double valRetour;
+		try {
+			this.qualite = indexQualite;
+			this.prixVente = prixVente;
+			valRetour = getMarge();
+		} 
+		finally {
+			this.qualite = tempQualite;
+			this.prixVente = tempPrixVente;
+		}
+		return valRetour;
+	}
+	
+	public String[] getListeQualites() {
+		Connection connexionDB = null;
+		List<String> listeRetour = new ArrayList<String>();
+		try {
+			// connexion à la base de données
+			connexionDB = DatabaseConnection.getDBConnexion();
+			// requête à la base de données
+			String query = "SELECT * FROM RepasCrous";
+			ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
+			while (resultDB.next()) {
+				double prix = resultDB.getDouble("prix");
+				int indexQualite = resultDB.getInt("qualite");
+				listeRetour.add(QUALITE_STR[indexQualite - 1] + " : " + "%.2f".formatted(prix));
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("Erreur lors de la récupération des repas dans la base de données.");
+			e.printStackTrace();
+		} finally {
+			try {
+				DatabaseConnection.closeDBConnexion(connexionDB);
+			} catch (Exception e) {
+				System.err.println("Erreur lors de la fermeture de la connexion");
+				e.printStackTrace();
+			}
+		}
+		String[] retour = new String[listeRetour.size()];
+		for (int i = 0; i < listeRetour.size(); i ++) {
+			retour[i] = listeRetour.get(i);
+		}
+		return retour;
+	}
+
+	@Override
+	public void effectuerImpactJourSuivantCourtTerme() {
+		double marge = getMarge();
+		Partie.getInstance().getJaugeArgent().ajouter((int)marge);
+	}
+	
+	/* Problèmes : les try catch rendent le return difficile
+	private ResultSet utiliserBD(String query) {
+		Connection connexionDB = null;
+		ResultSet resultDB;
+		try {
+			// connexion à la base de données
+			connexionDB = DatabaseConnection.getDBConnexion();
+			resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
+			return resultDB;
+		} catch (SQLException e) {
+			System.err.println("Erreur lors de la récupération du prix d'achat des repas dans la base de données.");
+			e.printStackTrace();
+		} finally {
+			try {
+				DatabaseConnection.closeDBConnexion(connexionDB);
+			} catch (Exception e) {
+				System.err.println("Erreur lors de la fermeture de la connexion");
+				e.printStackTrace();
+			}
+		}
+	}
+	*/
 }

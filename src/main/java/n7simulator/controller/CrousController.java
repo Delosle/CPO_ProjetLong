@@ -25,6 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import n7simulator.modele.Partie;
+import n7simulator.modele.Crous;
 import n7simulator.vue.N7Frame;
 
 /**
@@ -39,8 +40,10 @@ public class CrousController extends JPanel {
 	private JLabel marge;
 	
 	public CrousController() {
-		// TODO : Récupérer l'instance du modèle de Crous
-		String[] options = {"Mauvaise : 1.10€", "Acceptable : 1.30€", "Bonne : 1.70€", "Très bonne : 2.00€"};
+		
+		Crous instanceCrous = Crous.getInstance(0, 0.00);
+		
+		String[] options = instanceCrous.getListeQualites();
 		
 		// Création du contenant qui va contenir les éléments du controller
 		JPanel contenant = new JPanel(new GridLayout(3,1));
@@ -86,7 +89,6 @@ public class CrousController extends JPanel {
 		spinnerPrixRevente.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
 				updateMarge();
 			}
 		});
@@ -113,10 +115,8 @@ public class CrousController extends JPanel {
 		contenant.add(prixRevente);
 		
 		// On modifie les valeurs
-		// TODO : placer la valeur de la qualité
-		selecteur.setSelectedIndex(2);
-		// TODO : placer la valeur du prix de revente
-		spinnerPrixRevente.setValue(1.05);
+		selecteur.setSelectedIndex(instanceCrous.getQualite());
+		spinnerPrixRevente.setValue(instanceCrous.getPrixVente());
 		
 		
 		// Afficher la boite de dialogue
@@ -125,18 +125,16 @@ public class CrousController extends JPanel {
 
 		// Implémentation des modifications
 		if (result == JOptionPane.OK_OPTION) {
-			// TODO : faire l'implémentation des modifications
+			instanceCrous.setQualite(selecteur.getSelectedIndex());
+			instanceCrous.setPrixVente((double)spinnerPrixRevente.getValue());
 		}
 		
 	}
 	
 	private void updateMarge() {
-		// TODO récupérer la liste des prix autrement svp
 		int indexQualite = selecteur.getSelectedIndex();
-		double[] listePrix = {1.10, 1.30, 1.70, 2.00};
 		Double prixRevente = (Double)spinnerPrixRevente.getValue();
-		int nbEleves = Partie.getInstance().getNombreEleves();
-		Double valeur = nbEleves * (prixRevente - listePrix[indexQualite]);
+		Double valeur = Crous.getInstance(0, 0.0).getMarge(indexQualite, prixRevente);
 		String text = "";
 		if (valeur > 0) {
 			text += "+ ";

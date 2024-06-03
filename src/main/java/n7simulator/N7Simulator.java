@@ -19,6 +19,7 @@ public class N7Simulator {
 		TempsGUI interfaceTemps = new TempsGUI(temps);
 		temps.addObserver(interfaceTemps);
 		TempsController controllerTemps = new TempsController(temps);
+		Crous leCrous = Crous.getInstance(1, 1.30);
 
 		// Les jauges
 		Jauge argent = laPartie.getJaugeArgent();
