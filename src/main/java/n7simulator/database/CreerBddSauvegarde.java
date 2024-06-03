@@ -23,7 +23,7 @@ public class CreerBddSauvegarde {
                 Connection conn = CreationBddUtilitaire.creerBDD("src/main/resources/baseDeDonnee/SauvegardePartie.db");
                 // Créer et peupler la base de données admin
                 try {
-                    CreationBddUtilitaire.creerPeuplerDatabase(conn, "src/main/resources/Creer_Tables_Sauvegarde.sql");
+                    CreationBddUtilitaire.creerPeuplerDatabase(conn, "Creer_Tables_Sauvegarde.sql");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
