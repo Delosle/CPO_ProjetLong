@@ -1,4 +1,4 @@
-package n7simulator.modele.Evenements;
+package n7simulator.modele.evenements;
 import n7simulator.modele.Partie;
 
 public abstract class Evenement{

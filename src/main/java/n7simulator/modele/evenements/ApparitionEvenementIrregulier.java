@@ -1,4 +1,4 @@
-package n7simulator.modele.Evenements;
+package n7simulator.modele.evenements;
 
 import java.sql.*;
 import java.util.*;
