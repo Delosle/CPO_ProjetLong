@@ -2,8 +2,8 @@ package n7simulator;
 
 import n7simulator.database.CreationBddAdmin;
 import n7simulator.modele.*;
-import n7simulator.modele.Evenements.Evenement;
-import n7simulator.modele.Evenements.Evenement_Irregu;
+import n7simulator.modele.evenements.Evenement;
+import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.vue.*;
 import n7simulator.vue.Evenement.EvenementGUI;
@@ -12,7 +12,7 @@ import n7simulator.vue.jauges.JaugesPannel;
 import n7simulator.vue.temps.TempsGUI;
 import n7simulator.controller.*;
 import n7simulator.database.ValDebPartieDAO;
-import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 
 import java.time.LocalDate;
 
