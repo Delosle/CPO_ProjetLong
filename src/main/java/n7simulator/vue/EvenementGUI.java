@@ -19,9 +19,9 @@ public class EvenementGUI extends JFrame {
 
     private PilotageGUI pilotageGUI;
 
-    private JPanel mainPanel = new JPanel();
-    public JPanel getMainPanel() {
-        return mainPanel;
+    private JPanel popupPanel = new JPanel();
+    public JPanel getpopupPanel() {
+        return popupPanel;
     }
 
     public EvenementGUI(Evenement evenement, PilotageGUI pilotageGUI) {
@@ -65,19 +65,14 @@ public class EvenementGUI extends JFrame {
         zone_Impacts.add(impactArgentText);
         zone_Impacts.add(impactPedagogieText);
 
-        JButton closeButton = new JButton("X");
-        closeButton.setPreferredSize(new Dimension(20, 20));
-        closeButton.setContentAreaFilled(false); // Rendre le bouton transparent
-        closeButton.setBorderPainted(false); // Supprimer la bordure du bouton
-        closeButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        closeButton.setForeground(Color.RED);
+
 
         JPanel panelVide = new JPanel();
 
-        JPanel miniZone = new JPanel();
+        JPanel popupPanel = new JPanel();
         GridBagLayout minigridBag = new GridBagLayout();
         GridBagConstraints mini_c = new GridBagConstraints();
-        miniZone.setLayout(minigridBag);
+        popupPanel.setLayout(minigridBag);
 
         mini_c.fill = GridBagConstraints.BOTH;
 
@@ -85,38 +80,19 @@ public class EvenementGUI extends JFrame {
         mini_c.gridy = 0;
         mini_c.weighty=0.25;
         minigridBag.setConstraints(partieTitre, mini_c);
-        miniZone.add(partieTitre);
+        popupPanel.add(partieTitre);
 
         mini_c.gridy = 1;
         mini_c.weighty=0.50;
         minigridBag.setConstraints(partieDescription, mini_c);
-        miniZone.add(partieDescription);
+        popupPanel.add(partieDescription);
 
         mini_c.gridy = 2;
         mini_c.weighty=0.3;
         minigridBag.setConstraints(zone_Impacts, mini_c);
-        miniZone.add(zone_Impacts);
+        popupPanel.add(zone_Impacts);
 
-        GridBagLayout gridbag = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-        mainPanel.setLayout(gridbag);
-
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx=1.0;
-        c.gridwidth = GridBagConstraints.RELATIVE;
-        gridbag.setConstraints(panelVide, c);
-        mainPanel.add(panelVide);
-
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        gridbag.setConstraints(closeButton, c);
-        mainPanel.add(closeButton);
-
-        c.gridwidth = 1;
-        c.weighty = 1.0;
-        gridbag.setConstraints(miniZone, c);
-        mainPanel.add(miniZone);
-
-        add(mainPanel);
+        add(popupPanel);
 
         addWindowListener(new WindowAdapter() {
             @Override
