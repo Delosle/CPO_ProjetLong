@@ -1,9 +1,9 @@
-package n7simulator;
+package joursuivant;
 
 /**
  * Interface pour les impacts jour suivant à court terme.
  */
-public interface ImpactJourSuivantCourtTerme {
+public interface ImpactJourSuivantCourtTerme extends ImpactJourSuivant {
 
 	/**
 	 * Effectue les modifications court terme. 

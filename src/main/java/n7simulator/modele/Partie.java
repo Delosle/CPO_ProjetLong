@@ -2,7 +2,6 @@ package n7simulator.modele;
 
 import java.util.Observable;
 
-import n7simulator.ImpactJourSuivantCourtTerme;
 import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
