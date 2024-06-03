@@ -57,6 +57,7 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 	}
 
 	public double getMarge() {
+		
 		Connection connexionDB = null;
 		double marge = 0;
 		int nbEleves = Partie.getInstance().getNombreEleves();
@@ -136,15 +137,15 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 		Partie.getInstance().getJaugeArgent().ajouter((int)marge);
 	}
 	
-	/* Problèmes : les try catch rendent le return difficile
-	private ResultSet utiliserBD(String query) {
+	/* Problème : le pointeur se ferme quand la connexion à la BD se ferme
+	private Object utiliserBD(String query) {
 		Connection connexionDB = null;
 		ResultSet resultDB;
 		try {
 			// connexion à la base de données
 			connexionDB = DatabaseConnection.getDBConnexion();
 			resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
-			return resultDB;
+			return resultDB.;
 		} catch (SQLException e) {
 			System.err.println("Erreur lors de la récupération du prix d'achat des repas dans la base de données.");
 			e.printStackTrace();
@@ -156,6 +157,8 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 				e.printStackTrace();
 			}
 		}
+		// Cet élément de return est juste pour tromper le compilateur
+		return new String("");
 	}
 	*/
 }
