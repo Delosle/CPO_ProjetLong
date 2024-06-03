@@ -1,8 +1,9 @@
 CREATE TABLE ProfEmbauches (
-    idprof INTEGER PRIMARY KEY,
+    idprof INTEGER,
     salaire INTEGER NOT NULL,
     nbheure INTEGER NOT NULL,
-    idPartie INTEGER NOT NULL  REFERENCES Partie(idPartie)
+    idPartie INTEGER NOT NULL  REFERENCES Partie(idPartie),
+    PRIMARY KEY (idprof, idPartie)
 );
 
 CREATE TABLE EvenementEnCours (
@@ -15,11 +16,11 @@ CREATE TABLE Partie (
     idPartie INTEGER PRIMARY KEY,
     nomPartie TEXT NOT NULL,
     estPerdue BOOLEAN NOT NULL,
-    nbJours INT NOT NULL,
+    dateEnCours DATE NOT NULL,
     nbEleves INT NOT NULL,
     argent FLOAT NOT NULL,
-    bonheur INT NOT NULL,
-    pedagogie INT NOT NULL,
+    bonheur FLOAT NOT NULL,
+    pedagogie FLOAT NOT NULL,
     idQualiteRepasCrous INT NOT NULL,
     prixVenteRepascrous FLOAT NOT NULL
 );
