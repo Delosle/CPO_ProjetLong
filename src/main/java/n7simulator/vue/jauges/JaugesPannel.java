@@ -7,7 +7,7 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 public class JaugesPannel extends JPanel{
-    static final int LARGEUR_PANNEL = 500;
+    static final int LARGEUR_PANNEL = 550;
     static final int HAUTEUR_PANNEL = 240;
 
     /**

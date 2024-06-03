@@ -5,18 +5,21 @@ import n7simulator.vue.repas.RepasFoyGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.border.*;
 
 public class RepasFoyVueControl extends JPanel {
 
-    public RepasFoyVueControl(RepasFoy repasFoy){
+    public RepasFoyVueControl(RepasFoy repasFoy, RepasFoyGUI vueRepas){
         super(new GridLayout(2, 1));
-        RepasFoyGUI vueRepas = new RepasFoyGUI(repasFoy.getNom(),repasFoy.getPrix(),repasFoy.getImage());
-        BoutonModifierPrix boutonModifierPrix = new BoutonModifierPrix(repasFoy);
-
+        setPreferredSize(new Dimension(500, 200));
         repasFoy.addObserver(vueRepas);
-
+        BoutonModifierPrix boutonModifierPrix = new BoutonModifierPrix(repasFoy);
+        JPanel panelMofierPrix = new JPanel();
+        panelMofierPrix.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+        panelMofierPrix.add(boutonModifierPrix);
         add(vueRepas);
-        add(boutonModifierPrix);
-
+        add(panelMofierPrix);
+        Border bottomBorder = new MatteBorder(0, 0, 2, 0, new Color(141, 111, 0));
+        setBorder(bottomBorder);
     }
 }

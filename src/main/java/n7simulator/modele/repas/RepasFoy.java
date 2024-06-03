@@ -51,7 +51,8 @@ public class RepasFoy extends Observable {
      */
     public void setPrix(double prix) {
         this.prix = prix;
-        notifyObservers(this.prix);
+        setChanged();
+        notifyObservers(prix);
     }
 
     public String getImage(){

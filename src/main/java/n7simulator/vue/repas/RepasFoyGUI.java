@@ -16,6 +16,7 @@ public class RepasFoyGUI extends JPanel implements Observer {
 
         //Affichage de l'image
         ImageIcon imageIcon = new ImageIcon("src/main/resources/images/"+image);
+        imageIcon = new ImageIcon(imageIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH));
         JLabel imageLabel = new JLabel(imageIcon);
         add(imageLabel);
 

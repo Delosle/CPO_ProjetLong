@@ -31,7 +31,7 @@ public class BoutonModifierPrix extends JButton {
                     +"<strong>"+ repasFoy.getNom()+ "</strong></html> ");
             panel.add(messageLabel);
 
-            JTextField newPrix = new JTextField(""+repasFoy.getPrix()+" €");
+            JTextField newPrix = new JTextField(""+repasFoy.getPrix());
             panel.add(newPrix);
             // Afficher la boite de dialogue
             int result = JOptionPane.showConfirmDialog(null, panel, "Modifier le prix",
@@ -45,13 +45,13 @@ public class BoutonModifierPrix extends JButton {
 
                 } catch (NumberFormatException e1) {
                     JOptionPane.showMessageDialog(null,
-                            "<html style='color: red;'>Veuillez saisir un montant valide pour le prix de "
-                                    + repasFoy.getNom()+ "</html>", "Erreur",
+                            "<html><font style='color: red;'>Veuillez saisir un montant valide pour le prix de "
+                                    + repasFoy.getNom()+ "</font></html>", "Erreur",
                             JOptionPane.INFORMATION_MESSAGE);
                 } catch (NullPointerException e1){
                     JOptionPane.showMessageDialog(null,
-                            "<html style='color: red;'>Aucun montant saisi "
-                                    + repasFoy.getNom()+ "</html>", "Erreur",
+                            "<html><font style='color: red;'>Aucun montant saisi "
+                                    + repasFoy.getNom()+ "</font></html>", "Erreur",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }

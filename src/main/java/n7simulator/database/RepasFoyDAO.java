@@ -1,6 +1,5 @@
 package n7simulator.database;
 
-import n7simulator.modele.professeur.Professeur;
 import n7simulator.modele.repas.RepasFoy;
 
 import java.sql.Connection;
@@ -9,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class repasFoyDAO {
+public class RepasFoyDAO {
 
     public static List<RepasFoy> getAllRepasFoy(){
 
@@ -22,6 +21,7 @@ public class repasFoyDAO {
             // requête à la base de données
             String query = "SELECT * FROM RepasFoy";
             ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
+            RepasFoy repasFoy;
 
             // parcours du résultat pour instancier les objets profs
             while (resultDB.next()) {
@@ -30,8 +30,7 @@ public class repasFoyDAO {
                 Double prixLimite = resultDB.getDouble("prixLimite");
                 String image = resultDB.getString("image");
 
-                RepasFoy repasFoy = new RepasFoy(nom, prix, prixLimite, image);
-
+                repasFoy = new RepasFoy(nom, prix, prixLimite, image);
                 repasFoys.add(repasFoy);
             }
 
