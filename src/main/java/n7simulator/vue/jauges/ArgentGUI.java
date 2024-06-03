@@ -1,11 +1,14 @@
 package n7simulator.vue.jauges;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import javax.swing.*;
 import n7simulator.modele.jauges.*;
 
 public class ArgentGUI extends JPanel implements Observer {
+	
+	private static final DecimalFormat df = new DecimalFormat("0.00");
     
     private JLabel valeur;
 
@@ -20,7 +23,7 @@ public class ArgentGUI extends JPanel implements Observer {
         setLayout(new GridLayout(2, 1));
         setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
         setPreferredSize(new Dimension(200, 45));
-        valeur = new JLabel(""+sommeInitiale+" €");
+        valeur = new JLabel(""+df.format(sommeInitiale)+" €");
         valeur.setForeground(new Color(141, 111, 0));
         add(new JLabel(nom));
         add(valeur);
@@ -28,8 +31,8 @@ public class ArgentGUI extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg){
-        Integer newSomme = (Integer) arg;
-        valeur.setText(""+newSomme+" €");
+        double newSomme = (double) arg;
+        valeur.setText(""+df.format(newSomme)+" €");
     }
 
 }
