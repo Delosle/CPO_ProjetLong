@@ -21,7 +21,6 @@ public class N7Simulator {
 
 	public static void main(String[] args) {
 
-
 		CreationBddAdmin.initialiserBddAdmin(); //pensez à décommenter cette ligne pour initialiser la base de données
 		Partie laPartie = Partie.getInstance();
 		Temps temps = laPartie.getTemps();
@@ -45,9 +44,6 @@ public class N7Simulator {
 		CarteGUI interfaceCarte = new CarteGUI();
 		N7Frame fenetre = new N7Frame(interfaceCarte, interfacePilotage);
 
-		Evenement evenement = new Evenement_Irregu(1, LocalDate.now());
-		EvenementGUI evenementGUI = new EvenementGUI(evenement, interfacePilotage);
-		evenementGUI.setVisible(true);
 	}
 
 }
