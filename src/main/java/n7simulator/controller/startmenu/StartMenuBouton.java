@@ -30,8 +30,6 @@ private class ActionDebutPartie implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		creationFormulairePartie();
-		System.out.println("données chargées");
-
 	}
 
 }

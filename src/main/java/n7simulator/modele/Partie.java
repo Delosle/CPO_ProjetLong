@@ -1,11 +1,16 @@
 package n7simulator.modele;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+import n7simulator.database.ProfesseurDAO;
 import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
+import n7simulator.modele.professeur.GestionProfesseurs;
+import n7simulator.modele.professeur.Professeur;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -14,10 +19,21 @@ import n7simulator.modele.jauges.JaugeBornee;
 public final class Partie extends Observable {
 	
 	private static Partie instance;
+	
 	/**
 	 * Le nombre d'élèves inscrits à l'N7.
 	 */
 	private static int nombreEleves;
+	
+	/**
+	 * Le nom de la partie (nom de la sauvegarde)
+	 */
+	private static String nomPartie;
+	
+	/**
+	 * La gestion des professeurs de la partie
+	 */
+	private static GestionProfesseurs gestionProfesseurs;
 
 	/**
 	 * La jauge d'argent
@@ -34,6 +50,8 @@ public final class Partie extends Observable {
 	 */
 	private static Jauge jaugePedagogie;
 	
+	private static Temps temps;
+	
 	private Partie() {}
 	
 	/**
@@ -46,8 +64,26 @@ public final class Partie extends Observable {
 			jaugeArgent = new Jauge("Argent");
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
+			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
+			temps = new Temps(LocalDate.now());
 		}
 		return instance;
+	}
+	
+	/**
+	 * Renseigner le nom de la partie (sauvegarde)
+	 * @param nomPartie : le nom de la partie
+	 */
+	public void initNomPartie(String initNomPartie) {
+		nomPartie = initNomPartie;
+	}
+	
+	/**
+	 * Obtenir le nom de la partie (sauvegarde)
+	 * @return : le nom de la partie
+	 */
+	public String getNomPartie() {
+		return nomPartie;
 	}
 	
 	/**
@@ -106,5 +142,17 @@ public final class Partie extends Observable {
 	 */
 	public Jauge getJaugePedagogie(){
 		return jaugePedagogie;
+	}
+	
+	/**
+	 * Obtenir la gestion des professeurs de la partie
+	 * @return : la gestion des professeurs de la partie
+	 */
+	public GestionProfesseurs getGestionProfesseurs() {
+		return gestionProfesseurs;
+	}
+	
+	public Temps getTemps() {
+		return temps;
 	}
 }

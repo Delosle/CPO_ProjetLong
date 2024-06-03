@@ -15,7 +15,7 @@ public class ArgentGUI extends JPanel implements Observer {
      * @param nom
      * @param sommeInitiale
      */
-    public ArgentGUI(String nom, int sommeInitiale){
+    public ArgentGUI(String nom, double sommeInitiale){
         super();
         setLayout(new GridLayout(2, 1));
         setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));

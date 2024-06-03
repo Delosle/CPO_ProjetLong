@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import n7simulator.modele.Partie;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 
@@ -18,26 +19,22 @@ import n7simulator.modele.professeur.Professeur;
 public abstract class ListeProfesseursGUI extends JPanel implements Observer {
 
 	// Objet permettant la gestion des professeurs embauchés ou non
-	GestionProfesseurs gestionProfesseurs;
+	protected GestionProfesseurs gestionProfesseurs;
 
 	// La liste des professeurs à afficher dans la vue
-	List<Professeur> professeursAffiches;
+	protected List<Professeur> professeursAffiches;
 
 	/**
 	 * Création de la vue générique
 	 * 
-	 * @param gestionProfesseurs : objet gestionnaire des professeurs
 	 */
-	protected ListeProfesseursGUI(GestionProfesseurs gestionProfesseurs) {
-		this.gestionProfesseurs = gestionProfesseurs;
+	protected ListeProfesseursGUI() {
+		this.gestionProfesseurs = Partie.getInstance().getGestionProfesseurs();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// Titre de l'onglet
 		this.setTitre();
-
-		// Description de l'onglet
-		this.setDescription();
 	}
 
 	/**

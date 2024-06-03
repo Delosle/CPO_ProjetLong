@@ -19,7 +19,7 @@ public class JaugeBornee extends Jauge {
     }
     
     @Override
-    public void ajouter(int valeur){
+    public void ajouter(double valeur){
         if(super.getValue() + valeur >= BORNE_MAX) super.ajouter(BORNE_MAX - super.getValue());
         else super.ajouter(valeur);
     }

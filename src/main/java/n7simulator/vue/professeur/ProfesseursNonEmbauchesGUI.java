@@ -27,12 +27,12 @@ public class ProfesseursNonEmbauchesGUI extends ListeProfesseursGUI {
 	/**
 	 * Creation de la vue des professeurs non embauches
 	 * 
-	 * @param gestionProfesseurs : l'objet permettant la gestion de tous les
-	 *                           professeurs
 	 */
 	public ProfesseursNonEmbauchesGUI(GestionProfesseurs gestionProfesseurs) {
-		super(gestionProfesseurs);
+		super();
 		this.professeursNonEmbauches = gestionProfesseurs.getProfesseursNonEmbauches();
+		// Description de l'onglet
+		this.setDescription();
 		this.afficherListeProfesseurs();
 	}
 
@@ -42,7 +42,7 @@ public class ProfesseursNonEmbauchesGUI extends ListeProfesseursGUI {
 		this.add(new JSeparator());
 		for (Professeur professeur : this.professeursNonEmbauches) {
 			this.add(new ProfesseurGUI(professeur, false));
-			this.add(new BoutonChoixProfesseur(professeur, gestionProfesseurs));
+			this.add(new BoutonChoixProfesseur(professeur));
 			this.add(Box.createRigidArea(new Dimension(0, 20)));// espacement
 			this.add(new JSeparator());// séparation entre les professeurs
 		}

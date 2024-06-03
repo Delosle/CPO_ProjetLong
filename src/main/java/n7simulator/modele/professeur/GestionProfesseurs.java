@@ -11,7 +11,7 @@ public class GestionProfesseurs extends Observable {
 	// liste des professeurs embauchés
 	private List<Professeur> professeursEmbauches;
 
-	// liste des professeurs non embauchés
+	// liste des professeurs non embauchés 
 	private List<Professeur> professeursNonEmbauches;
 
 	/**

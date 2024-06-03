@@ -48,27 +48,7 @@ public class StartMenuGUI extends JPanel {
 		// Crée et montre le JDialog personnalisé
 		final JDialog dialog = optionPane.createDialog("N7 Simulator");
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-//		// Ajout d'un ActionListener pour chaque bouton
-//		nouvellePartieBouton.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Code pour démarrer une nouvelle partie
-//				System.out.println("Nouvelle partie démarrée");
-//				dialog.dispose();
-//			}
-//		});
-//
-//		chargerPartieBouton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Code pour charger une partie existante
-//				System.out.println("Chargement de la partie");
-//				dialog.dispose();
-//			}
-//		});
-
+		
 		// Affichage de la boîte de dialogue
 		dialog.setVisible(true);
 	}

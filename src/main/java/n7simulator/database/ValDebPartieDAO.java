@@ -10,21 +10,21 @@ import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
 
 /**
- * Classe permettant d'accéder aux données concernant les valeurs de début de partie
- * dans la base de données
+ * Classe permettant d'accéder aux données concernant les valeurs de début de
+ * partie dans la base de données
  */
 public class ValDebPartieDAO {
 
-
-	public static void initialiserPartieSauvegardee(Temps temps, int idPartie) {
-		initialiserDonneesDebutPartie(temps);
-Connection connexionDB = null;
+	public static void initialiserPartieSauvegardee(int idPartie) {
+		initialiserDonneesDebutPartie();
+		Connection connexionDB = null;
 
 		try {
 			// connexion à la base de données
 			connexionDB = DatabaseConnection.getDBConnexion();
 		} catch (SQLException e) {
-			System.err.println("Erreur lors de la récupération des données de début de partie dans la base de données.");
+			System.err
+					.println("Erreur lors de la récupération des données de début de partie dans la base de données.");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -39,9 +39,10 @@ Connection connexionDB = null;
 	/**
 	 * Récupère les valeurs en base de données et set les données de la partie.
 	 */
-	public static void initialiserDonneesDebutPartie(Temps temps) {
+	public static void initialiserDonneesDebutPartie() {
 
 		Partie partie = Partie.getInstance();
+		Temps temps = partie.getTemps();
 		Connection connexionDB = null;
 
 		try {
@@ -59,13 +60,14 @@ Connection connexionDB = null;
 				partie.getJaugeBonheur().ajouter(resultDB.getInt("Bonheur"));
 				partie.getJaugePedagogie().ajouter(resultDB.getInt("Pedagogie"));
 
-				//transformation de la date
+				// transformation de la date
 				String dateString = resultDB.getString("dateDeb");
 				temps.setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			}
 
 		} catch (SQLException e) {
-			System.err.println("Erreur lors de la récupération des données de début de partie dans la base de données.");
+			System.err
+					.println("Erreur lors de la récupération des données de début de partie dans la base de données.");
 			e.printStackTrace();
 		} finally {
 			try {

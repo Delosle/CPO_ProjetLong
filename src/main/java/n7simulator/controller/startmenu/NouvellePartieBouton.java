@@ -15,8 +15,6 @@ public class NouvellePartieBouton extends StartMenuBouton {
 		new NouvellePartieFormulaire();
 		Window win = SwingUtilities.getWindowAncestor(this.getParent());
 		win.dispose();
-		System.out.println("nouvelle partie");
-
 	}
 
 }

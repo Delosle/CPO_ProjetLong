@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -12,8 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import n7simulator.N7Simulator;
 import n7simulator.database.GestionBddSauvegarde;
 import n7simulator.vue.startmenu.StartMenuGUI;
 
@@ -45,6 +48,7 @@ public class ChargementSauvegardeFormulaire extends JPanel {
 		            });
 		            this.add(button);
 		        }
+	        	
 	        }
 
 	        Object[] options = {"Retour"};
@@ -67,10 +71,10 @@ public class ChargementSauvegardeFormulaire extends JPanel {
 	        return GestionBddSauvegarde.recupererNomPartie();
 	    }
 
-	    private void loadBackupData(String backupName) {
-	        // Simuler le chargement des données de sauvegarde
-	        System.out.println("Chargement des données pour: " + backupName);
-	        // Vous pouvez ouvrir une nouvelle fenêtre ici ou afficher les données comme nécessaire
+	    private void loadBackupData(String nomPartie) {
+	    	Window win = SwingUtilities.getWindowAncestor(this.getParent());
+			win.dispose();
+	    	N7Simulator.initPartieChargee(nomPartie);
 	    }
 
 

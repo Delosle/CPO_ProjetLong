@@ -15,9 +15,6 @@ public class ChargerPartieBouton extends StartMenuBouton {
 		Window win = SwingUtilities.getWindowAncestor(this.getParent());
 		win.dispose();
 		new ChargementSauvegardeFormulaire();
-
-		System.out.println("charger");
-
 	}
 
 }
