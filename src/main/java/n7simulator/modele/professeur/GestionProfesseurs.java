@@ -3,11 +3,15 @@ package n7simulator.modele.professeur;
 import java.util.List;
 import java.util.Observable;
 
+import n7simulator.ImpactJourSuivantCourtTerme;
+import n7simulator.modele.Partie;
+import n7simulator.modele.jauges.Jauge;
+
 /**
  * Classe permettant la gestion des professeurs avec la distinction entre ceux
  * qui sont embauchés et ceux qui ne le sont pas.
  */
-public class GestionProfesseurs extends Observable {
+public class GestionProfesseurs extends Observable implements ImpactJourSuivantCourtTerme {
 	// liste des professeurs embauchés
 	private List<Professeur> professeursEmbauches;
 
@@ -66,6 +70,15 @@ public class GestionProfesseurs extends Observable {
 			professeursNonEmbauches.add(professeur);
 			this.setChanged();
 			this.notifyObservers(this);
+		}
+	}
+
+	@Override
+	public void effectuerImpactJourSuivantCourtTerme() {
+		// Paiement salaire profs
+		Jauge jaugeArgent =	Partie.getInstance().getJaugeArgent();
+		for (Professeur prof : professeursEmbauches) {
+			jaugeArgent.ajouter(-(prof.getNbHeuresTravaillees()*prof.getSalaireActuel()));
 		}
 	}
 
