@@ -22,7 +22,7 @@ public class N7Simulator {
 	public static void main(String[] args) {
 
 
-		CreationBddAdmin.initialiserBddAdmin(); //pensez à décommenter cette ligne pour initialiser la base de données
+		//CreationBddAdmin.initialiserBddAdmin(); //pensez à décommenter cette ligne pour initialiser la base de données
 		Partie laPartie = Partie.getInstance();
 		Temps temps = laPartie.getTemps();
 		ValDebPartieDAO.initialiserDonneesDebutPartie(temps);

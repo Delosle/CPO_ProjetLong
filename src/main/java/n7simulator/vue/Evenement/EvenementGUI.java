@@ -20,13 +20,19 @@ public class EvenementGUI extends JFrame {
 
     private PilotageGUI pilotageGUI;
 
+    private Panel panelChoix = new Panel();
     private JPanel popupPanel = new JPanel();
     public JPanel getpopupPanel() {
         return popupPanel;
     }
 
-    public EvenementGUI(Evenement evenement, PilotageGUI pilotageGUI) {
 
+    /**
+     * Constructeur
+     * @param evenement l'evenement a afficher
+     * @param pilotageGUI la fenetre de pilotage
+     */
+    public EvenementGUI(Evenement evenement, PilotageGUI pilotageGUI) {
 
         // On recupere les valeurs de l'evenement a afficher
         this.titre = evenement.getTitre();
@@ -37,6 +43,7 @@ public class EvenementGUI extends JFrame {
 
 
         this.pilotageGUI = pilotageGUI;
+
         // On recupere les dimensions de l'ecran
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -47,10 +54,19 @@ public class EvenementGUI extends JFrame {
         int popUpHauteur = (int)height * 1 / 2;
         setSize(popUpLargeur, popUpHauteur);
         setLocation(popUpLargeur/4, popUpHauteur/2);
+
         // On definie les elements qui seront presents dans la popup
         JLabel partieTitre = new JLabel("" + titre);
+        JPanel panelTitre = new JPanel();
+        panelTitre.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelTitre.add(partieTitre);
+        //panelTitre.setBackground(Color.BLUE); // A commenter, sert a modif du GridBagLayout
 
         JLabel partieDescription = new JLabel("" + description);
+        JPanel panelDescription = new JPanel();
+        panelDescription.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelDescription.add(partieDescription);
+        //panelDescription.setBackground(Color.RED);// A commenter, sert a modif du GridBagLayout
 
         JPanel zone_Impacts = new JPanel();
         zone_Impacts.setLayout(new GridLayout(1, 3));
@@ -60,39 +76,43 @@ public class EvenementGUI extends JFrame {
         JLabel impactArgentText = new JLabel("Impact Argent : " + impactArgent);
         impactArgentText.setForeground(new Color(141, 111, 0));
         JLabel impactPedagogieText = new JLabel("Impact Pedagogie : " + impactPedagogie);
-        impactPedagogieText.setForeground(Color.BLUE);
+        //impactPedagogieText.setForeground(Color.BLUE);// A commenter, sert a modif du GridBagLayout
 
         zone_Impacts.add(impactBonheurText);
         zone_Impacts.add(impactArgentText);
         zone_Impacts.add(impactPedagogieText);
+        zone_Impacts.setBackground(Color.GREEN);
 
-
-
-        JPanel panelVide = new JPanel();
-
+        // On met en place le layer de la popup, en y ajoutant les differents elements
         JPanel popupPanel = new JPanel();
         GridBagLayout minigridBag = new GridBagLayout();
         GridBagConstraints mini_c = new GridBagConstraints();
+        //popupPanel.setBackground(Color.YELLOW);
         popupPanel.setLayout(minigridBag);
-
         mini_c.fill = GridBagConstraints.BOTH;
 
-        //mini_c.gridwidth = 1;
         mini_c.gridy = 0;
-        mini_c.weighty=0.25;
-        minigridBag.setConstraints(partieTitre, mini_c);
-        popupPanel.add(partieTitre);
+        mini_c.weighty=0.1;
+        mini_c.weightx=1;
+        minigridBag.setConstraints(panelTitre, mini_c);
+        popupPanel.add(panelTitre);
 
         mini_c.gridy = 1;
-        mini_c.weighty=0.50;
-        minigridBag.setConstraints(partieDescription, mini_c);
-        popupPanel.add(partieDescription);
+        mini_c.weighty=0.35;
+        mini_c.weightx=1;
+        minigridBag.setConstraints(panelDescription, mini_c);
+        popupPanel.add(panelDescription);
 
         mini_c.gridy = 2;
         mini_c.weighty=0.3;
+        mini_c.weightx=1;
         minigridBag.setConstraints(zone_Impacts, mini_c);
         popupPanel.add(zone_Impacts);
 
+        mini_c.gridy = 3;
+        mini_c.weighty=0.3;
+        minigridBag.setConstraints(panelChoix, mini_c);
+        popupPanel.add(panelChoix);
         add(popupPanel);
 
         addWindowListener(new WindowAdapter() {
