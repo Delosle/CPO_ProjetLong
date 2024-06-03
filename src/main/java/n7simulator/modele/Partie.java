@@ -3,6 +3,7 @@ package n7simulator.modele;
 import java.util.Observable;
 
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 
@@ -12,11 +13,10 @@ import n7simulator.modele.jauges.JaugeBornee;
  */
 public final class Partie extends Observable {
 	
-	private static Partie instance;
 	/**
-	 * Le nombre d'élèves inscrits à l'N7.
+	 * L'instance unique de la partie.
 	 */
-	private static int nombreEleves;
+	private static Partie instance;
 
 	/**
 	 * La jauge d'argent
@@ -24,7 +24,7 @@ public final class Partie extends Observable {
 	private static Jauge jaugeArgent;
 	
 	/**
-	 * La jauge de Bonheur;
+	 * La jauge de Bonheur
 	 */
 	private static Jauge jaugeBonheur;
 
@@ -32,6 +32,11 @@ public final class Partie extends Observable {
 	 * La jauge de Pédagigie
 	 */
 	private static Jauge jaugePedagogie;
+	
+	/**
+	 * Les élèves
+	 */
+	private static GestionEleves gestionEleves;
 	
 	private Partie() {}
 	
@@ -45,36 +50,12 @@ public final class Partie extends Observable {
 			jaugeArgent = new Jauge("Argent");
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
+			gestionEleves = new GestionEleves();
+			
+			// Ajout dans JourSuivant
+			JourSuivant.getInstance().addImpactCourtTerme(gestionEleves);
 		}
 		return instance;
-	}
-	
-	/**
-	 * Obtenir le nombre d'élèves inscrits à l'N7.
-	 * @return le nombre d'élèves inscrits.
-	 */
-	public int getNombreEleves() {
-		return nombreEleves;
-	}
-	
-	/**
-	 * Permet d'inscrire de nouveaux élèves.
-	 * @param nbEleves les nouveaux élèves
-	 */
-	public void inscrireEleves(int nbEleves) {
-		nombreEleves += nbEleves;
-		this.setChanged();
-		this.notifyObservers(this);
-	}
-	
-	/**
-	 * Permet de désinscrire des élèves.
-	 * @param nbEleves 
-	 */
-	public void desinscrireEleves(int nbEleves) {
-		nombreEleves = nombreEleves - nbEleves < 0 ? 0 : nombreEleves - nbEleves;
-		this.setChanged();
-		this.notifyObservers(this);
 	}
 
 	/**
@@ -101,18 +82,11 @@ public final class Partie extends Observable {
 		return jaugePedagogie;
 	}
 	
-	private void inscriptionsElevesJourSuivant() {
-		// TODO set limite nombre élèves ?
-		int gainMax = nombreEleves / (nombreEleves < 200 ? 5 : 50);		
-		int totalJauges = (jaugeBonheur.getValue() + jaugePedagogie.getValue()) / 2;
-		int gain = totalJauges * gainMax / 100;
-		
-		if (totalJauges >= 25) {
-			inscrireEleves(gain);
-		} else {
-			gain = gain - gainMax;
-			gain = gain > 0 ? gain : ( -gain);
-			desinscrireEleves(gain);
-		}		
-	}	
+	/**
+	 * Permet de récupérer la gestion des élèves.
+	 * @return la gestion des élèves.
+	 */
+	public GestionEleves getGestionEleves() {
+		return gestionEleves;
+	}
 }

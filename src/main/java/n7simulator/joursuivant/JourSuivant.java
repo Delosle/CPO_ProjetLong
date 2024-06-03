@@ -1,4 +1,4 @@
-package joursuivant;
+package n7simulator.joursuivant;
 
 import java.util.ArrayList;
 import java.util.List;
