@@ -1,23 +1,18 @@
-CREATE TABLE SauvegardePartie (
-    idPartieNom INTEGER PRIMARY KEY,
-    nomPartie TEXT UNIQUE NOT NULL
-);
-
 CREATE TABLE ProfEmbauches (
     idprof INTEGER PRIMARY KEY,
     salaire INTEGER NOT NULL,
     nbheure INTEGER NOT NULL,
-    idPartieNom INTEGER NOT NULL  REFERENCES SauvegardePartie(idPartieNom)
+    idPartie INTEGER NOT NULL  REFERENCES Partie(idPartie)
 );
 
 CREATE TABLE EvenementEnCours (
     idEvenement INTEGER PRIMARY KEY,
     jourDebut DATE NOT NULL,
-    idPartieNom INTEGER NOT NULL REFERENCES SauvegardePartie(idPartieNom)
+    idPartie INTEGER NOT NULL REFERENCES Partie(idPartie)
 );
 
 CREATE TABLE Partie (
-    id INTEGER PRIMARY KEY,
+    idPartie INTEGER PRIMARY KEY,
     nomPartie TEXT NOT NULL,
     estPerdue BOOLEAN NOT NULL,
     nbJours INT NOT NULL,
@@ -26,7 +21,5 @@ CREATE TABLE Partie (
     bonheur INT NOT NULL,
     pedagogie INT NOT NULL,
     idQualiteRepasCrous INT NOT NULL,
-    prixVenteRepascrous FLOAT NOT NULL,
-    idPartieNom INTEGER NOT NULL REFERENCES SauvegardePartie(idPartieNom)
+    prixVenteRepascrous FLOAT NOT NULL
 );
-
