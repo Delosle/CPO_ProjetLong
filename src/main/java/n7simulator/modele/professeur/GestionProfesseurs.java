@@ -3,7 +3,7 @@ package n7simulator.modele.professeur;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.ImpactJourSuivantCourtTerme;
+import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
 import n7simulator.modele.Partie;
 import n7simulator.modele.jauges.Jauge;
 
