@@ -1,4 +1,4 @@
-package n7simulator.vue;
+package n7simulator.vue.Evenement;
 
 import n7simulator.modele.Evenements.Evenement;
 
@@ -30,15 +30,5 @@ public class EventHistoryGUI extends JPanel{
 
     }
 
-    /*
-    public void adjustSizeToParent() {
-        Container parent = this.getParent();
-        if (parent != null) {
-            Dimension parentSize = parent.getSize();
-            this.setPreferredSize(parentSize);
-            this.revalidate();
-        }
-    }
-    */
 
 }

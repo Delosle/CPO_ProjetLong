@@ -1,6 +1,7 @@
-package n7simulator.vue;
+package n7simulator.vue.Evenement;
 
 import n7simulator.modele.Evenements.Evenement;
+import n7simulator.vue.PilotageGUI;
 
 import javax.swing.*;
 import java.awt.*;

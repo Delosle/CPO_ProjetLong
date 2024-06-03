@@ -1,15 +1,13 @@
 package n7simulator.modele;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.Evenements.Evenement_Irregu;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
-import n7simulator.vue.EvenementGUI;
+import n7simulator.vue.Evenement.EvenementGUI;
 import n7simulator.vue.PilotageGUI;
 
 /**
