@@ -66,12 +66,6 @@ public final class Partie extends Observable {
 		nombreEleves += nouveauxEleves;
 		this.setChanged();
 		this.notifyObservers(this);
-		
-		// TODO calcul lendemain :
-		// gainMax = nombreEleves / 5 --ex : 100 / 5 = 20
-		// totalJauges = (jaugeBohneur + jaugePegagogie) / 2
-		// si totalJauges >=25 : gain = totalJauges * gainMax / 100
-		// sinon : gain = (totalJauges * gainMax / 100) - gainMax
 	}
 	
 	/**
