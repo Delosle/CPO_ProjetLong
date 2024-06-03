@@ -4,6 +4,7 @@ import n7simulator.modele.Evenements.Evenement;
 import n7simulator.vue.PilotageGUI;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,7 @@ public class EvenementGUI extends JFrame {
     /**
      * Constructeur
      * @param evenement l'evenement a afficher
-     * @param pilotageGUI la fenetre de pilotage
+     * @param pilotageGUI la partie à droite dans l'interface principale
      */
     public EvenementGUI(Evenement evenement, PilotageGUI pilotageGUI) {
 
@@ -40,7 +41,6 @@ public class EvenementGUI extends JFrame {
         this.impactBonheur = evenement.getImpactBonheur();
         this.impactArgent = evenement.getImpactArgent();
         this.impactPedagogie = evenement.getImpactPedagogie();
-
 
         this.pilotageGUI = pilotageGUI;
 
@@ -55,17 +55,29 @@ public class EvenementGUI extends JFrame {
         setSize(popUpLargeur, popUpHauteur);
         setLocation(popUpLargeur/4, popUpHauteur/2);
 
+
         // On definie les elements qui seront presents dans la popup
         JLabel partieTitre = new JLabel("" + titre);
         JPanel panelTitre = new JPanel();
         panelTitre.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelTitre.add(partieTitre);
+        panelTitre.setBorder(new EmptyBorder( 0, 10, 0, 0));
         //panelTitre.setBackground(Color.BLUE); // A commenter, sert a modif du GridBagLayout
 
-        JLabel partieDescription = new JLabel("" + description);
+        JTextArea partieDescription = new JTextArea("" + description);
+        partieDescription.setLineWrap(true);
+        partieDescription.setWrapStyleWord(true);
+        partieDescription.setEditable(false);
+        partieDescription.setOpaque(false);
+        partieDescription.getCaret().setVisible(false);
+        partieDescription.setFocusable(false);
+        partieDescription.setFont(javax.swing.UIManager.getDefaults().getFont("Label.font"));
+        partieDescription.setBorder(new EmptyBorder( 0, 15, 0, 15));
+
         JPanel panelDescription = new JPanel();
-        panelDescription.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelDescription.add(partieDescription);
+        panelDescription.setLayout(new BorderLayout());
+
+        panelDescription.add(partieDescription, BorderLayout.CENTER);
         //panelDescription.setBackground(Color.RED);// A commenter, sert a modif du GridBagLayout
 
         JPanel zone_Impacts = new JPanel();
@@ -73,15 +85,28 @@ public class EvenementGUI extends JFrame {
 
         JLabel impactBonheurText = new JLabel("Impact Bonheur : " + impactBonheur);
         impactBonheurText.setForeground(new Color(212, 0, 253));
+        JPanel panelBonheur = new JPanel();
+        panelBonheur.setLayout(new BorderLayout());
+        panelBonheur.add(impactBonheurText, BorderLayout.CENTER);
+
         JLabel impactArgentText = new JLabel("Impact Argent : " + impactArgent);
         impactArgentText.setForeground(new Color(141, 111, 0));
-        JLabel impactPedagogieText = new JLabel("Impact Pedagogie : " + impactPedagogie);
-        //impactPedagogieText.setForeground(Color.BLUE);// A commenter, sert a modif du GridBagLayout
+        JPanel panelArgent = new JPanel();
+        panelArgent.setLayout(new BorderLayout());
+        panelArgent.add(impactArgentText, BorderLayout.CENTER);
 
-        zone_Impacts.add(impactBonheurText);
-        zone_Impacts.add(impactArgentText);
-        zone_Impacts.add(impactPedagogieText);
-        zone_Impacts.setBackground(Color.GREEN);
+        JLabel impactPedagogieText = new JLabel("Impact Pedagogie : " + impactPedagogie);
+        impactPedagogieText.setForeground(Color.BLUE);
+        JPanel panelPedagogie = new JPanel();
+        panelPedagogie.setLayout(new BorderLayout());
+        panelPedagogie.add(impactPedagogieText, BorderLayout.CENTER);
+
+
+        zone_Impacts.add(panelBonheur);
+        zone_Impacts.add(panelArgent);
+        zone_Impacts.add(panelPedagogie);
+        zone_Impacts.setBorder(new EmptyBorder( 0, 60, 0, 0));
+        //zone_Impacts.setBackground(Color.GREEN); // A commenter, sert a modif du GridBagLayout
 
         // On met en place le layer de la popup, en y ajoutant les differents elements
         JPanel popupPanel = new JPanel();
@@ -115,6 +140,7 @@ public class EvenementGUI extends JFrame {
         popupPanel.add(panelChoix);
         add(popupPanel);
 
+        // Quand la fenetre se ferme, on ajoute l'evenement en question à la liste des evenements passés
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -124,6 +150,10 @@ public class EvenementGUI extends JFrame {
         });
     }
 
+    /**
+     * Crée un Panel contenant les informations de l'événement,
+     * pour l'ajouter à l'historique des événements
+     */
     public JPanel getPermanent(){
         JPanel miniPanel = new JPanel();
         GridLayout gridLayout = new GridLayout(1, 2);
