@@ -46,7 +46,7 @@ public class GestionEleves extends Observable implements ImpactJourSuivantCourtT
 	public void effectuerImpactJourSuivantCourtTerme() {
 		Partie partie = Partie.getInstance();
 		int gainMax = nombreEleves / (nombreEleves < 200 ? 5 : 50);		
-		int totalJauges = (partie.getJaugeBonheur().getValue() + partie.getJaugePedagogie().getValue()) / 2;
+		int totalJauges = (int)(partie.getJaugeBonheur().getValue() + partie.getJaugePedagogie().getValue()) / 2;
 		int gain = totalJauges * gainMax / 100;
 		
 		if (totalJauges >= 25) {

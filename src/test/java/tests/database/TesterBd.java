@@ -1,4 +1,4 @@
-package n7simulator.database;
+package tests.database;
 import java.util.*;
 import java.sql.*;
 
@@ -22,8 +22,8 @@ public class TesterBd {
     }**/
     public static void main(String[] args) {
         //test création bdd admin
-        System.out.println(CreerBddSauvegarde.initialiserBddSauvegarde());
-        CreationBddAdmin.initialiserBddAdmin();
+//        System.out.println(CreerBddSauvegarde.initialiserBddSauvegarde());
+//        CreationBddAdmin.initialiserBddAdmin();
         //System.out.println(CreerBddSauvegarde.verifierCreationTables());
         Map<String, Map<String, Object>> testSauvegarde = new HashMap<>();
         testSauvegarde = peuplerDico();

@@ -89,25 +89,25 @@ public class ApparitionEvenementIrregulier {
             //malus val de jauges *  frequence
             boolean pasEncoreTire = true;
             if ((int) eventDetails.get("impactBonheur") == 1) {
-                frequence *= ((100.0 - (int) valeurJauges.get("bonheur")) / 100.0);
+                frequence *= ((100.0 - (double) valeurJauges.get("bonheur")) / 100.0);
                 pasEncoreTire = false;
                 if (Math.random() < frequence) {
                     listeEvenement.add(entry.getKey());
                 }
             } else if ((int)eventDetails.get("impactBonheur") == -1) {
-                frequence *= ((int) valeurJauges.get("bonheur") /100.0);
+                frequence *= ((double) valeurJauges.get("bonheur") /100.0);
                 pasEncoreTire = false;
                 if (Math.random() < frequence) {
                     listeEvenement.add((int)entry.getKey());
                 }
                 // ajout du boolean pasEncoreTire car si impact 2 jauges ne doit pas être tiré 2 fois
             } else if ((int) eventDetails.get("impactPedagogie") == 1 && pasEncoreTire) {
-                frequence *= ((100.0 - (int) valeurJauges.get("pedagogie")) / 100.0);;
+                frequence *= ((100.0 - (double) valeurJauges.get("pedagogie")) / 100.0);;
                 if (Math.random() < frequence) {
                     listeEvenement.add((int)entry.getKey());
                 }
             } else if ((int) eventDetails.get("impactPedagogie") == -1 && pasEncoreTire) {
-                frequence *= ((int) valeurJauges.get("pedagogie") /100.0);
+                frequence *= ((double) valeurJauges.get("pedagogie") /100.0);
                 if (Math.random() < frequence) {
                     listeEvenement.add((int)entry.getKey());
                 }

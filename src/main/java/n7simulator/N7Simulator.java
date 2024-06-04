@@ -12,14 +12,17 @@ import n7simulator.database.CreationBddAdmin;
 import n7simulator.database.CreerBddSauvegarde;
 import n7simulator.database.GestionBddSauvegarde;
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.Crous;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 import n7simulator.vue.CarteGUI;
 import n7simulator.vue.N7Frame;
 import n7simulator.vue.PilotageGUI;
+import n7simulator.vue.Evenement.EventHistoryGUI;
 import n7simulator.vue.jauges.JaugesPannel;
 import n7simulator.vue.startmenu.StartMenuGUI;
 import n7simulator.vue.temps.TempsGUI;
@@ -93,7 +96,7 @@ public class N7Simulator {
 		pedagogie.addObserver(jaugesPannel.getVuePedagogie());
 
 		//Creation des interfaces
-		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel);
+		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel, new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
 		N7Frame fenetre = N7Frame.getInstance(interfaceCarte, interfacePilotage);
 		
@@ -108,7 +111,7 @@ public class N7Simulator {
 		Map<String, Object> donneesPartie = donneesChargees.get("Partie").get(0); //il n'y a qu'une ligne
 		Partie partie = Partie.getInstance();
 		partie.initNomPartie((String)donneesPartie.get("nomPartie"));
-		partie.inscrireEleves((int)donneesPartie.get("nbEleves"));
+		partie.getGestionEleves().inscrireEleves((int)donneesPartie.get("nbEleves"));
 		partie.getJaugeArgent().ajouter((double)donneesPartie.get("argent"));
 		partie.getJaugeBonheur().ajouter((double)donneesPartie.get("bonheur"));
 		partie.getJaugePedagogie().ajouter((double)donneesPartie.get("pedagogie"));
@@ -173,7 +176,7 @@ public class N7Simulator {
 	    String dateEnCours = (partieEnCours.getTemps().getJourneeEnCours()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		sauvegardePartie.put("nomPartie", partieEnCours.getNomPartie());
 		sauvegardePartie.put("dateEnCours", dateEnCours);
-		sauvegardePartie.put("nbEleves", partieEnCours.getNombreEleves());
+		sauvegardePartie.put("nbEleves", partieEnCours.getGestionEleves().getNombreEleves());
 		sauvegardePartie.put("argent", partieEnCours.getJaugeArgent().getValue());
 		sauvegardePartie.put("bonheur", partieEnCours.getJaugeBonheur().getValue());
 		sauvegardePartie.put("pedagogie", partieEnCours.getJaugePedagogie().getValue());

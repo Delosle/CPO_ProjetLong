@@ -62,25 +62,12 @@ public final class Partie extends Observable {
 	 * Gestionnaire des événements irréguliers
 	 */
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
-
-	
-	/**
-	 * Le nom de la partie (nom de la sauvegarde)
-	 */
-	private static String nomPartie;
-	
-	/**
-	 * La gestion des professeurs de la partie
-	 */
-	private static GestionProfesseurs gestionProfesseurs;
 	
 	/**
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
 
-	
-	private static Temps temps;
 	
 	private Partie() {}
 	
@@ -118,6 +105,7 @@ public final class Partie extends Observable {
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
 			evenementGUI.setVisible(true);
 		}
+	}
 
 	
 	/**
