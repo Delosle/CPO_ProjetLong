@@ -67,11 +67,7 @@ public final class Partie extends Observable {
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
-	
-	/**
-	 * Le temps
-	 */
-	private static Temps temps;
+
 	
 	private Partie() {}
 	
