@@ -11,6 +11,10 @@ import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.evenements.Evenement_Irregu;
+import n7simulator.vue.Evenement.EvenementGUI;
+import n7simulator.vue.PilotageGUI;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -37,6 +41,17 @@ public final class Partie extends Observable {
 	 * La jauge de Pédagigie
 	 */
 	private static Jauge jaugePedagogie;
+
+	/**
+	 * Le temps de la partie
+	 */
+	private static Temps temps;
+
+	/**
+	 * Gestionnaire des événements irréguliers
+	 */
+	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
+
 	
 	/**
 	 * Le nom de la partie (nom de la sauvegarde)
@@ -70,8 +85,9 @@ public final class Partie extends Observable {
 			jaugeArgent = new Jauge("Argent");
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
-			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
+			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
 			temps = new Temps();
+			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			// to delete
 			temps.setJourneeEnCours(LocalDate.now());
 			gestionEleves = new GestionEleves();
@@ -83,6 +99,18 @@ public final class Partie extends Observable {
 			jourSuivant.addImpactCourtTerme(gestionEleves);
 		}
 		return instance;
+	}
+
+
+	public void genererEvenementIrregulier(PilotageGUI pilote) {
+		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
+		System.out.println("Evenements Irreguliers : " + listeEvenement);
+		for (int idEvenement : listeEvenement) {
+			System.out.println("Evenement Irregulier : " + idEvenement);
+			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
+			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
+			evenementGUI.setVisible(true);
+		}
 	}
 
 	/**

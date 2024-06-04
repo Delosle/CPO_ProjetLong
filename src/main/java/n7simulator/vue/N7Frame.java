@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import n7simulator.modele.evenements.Evenement;
 import n7simulator.modele.Partie;
 
 /**
@@ -92,5 +93,7 @@ public class N7Frame extends JFrame {
 		layeredPanel.revalidate();
 		layeredPanel.repaint();
 	}
+
+
 
 }

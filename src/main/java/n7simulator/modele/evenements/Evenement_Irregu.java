@@ -1,4 +1,4 @@
-package n7simulator.modele.Evenements;
+package n7simulator.modele.evenements;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,6 @@ public class Evenement_Irregu extends Evenement{
      * @param id l'identifiant de l'événement
      * @param dateApparition la date d'apparition de l'événement
      */
-
     public Evenement_Irregu(int id, LocalDate dateApparition){
         super(id);
 
@@ -28,19 +27,20 @@ public class Evenement_Irregu extends Evenement{
             connexion = DatabaseConnection.getDBConnexion();
 
             /*récupération des informations de l'événement*/
-            String query = "SELECT Titre, description, impactBonheurPos, impactArgentPos, " +
-                    "impactPedagogiePos, bonus " +
+            String query = "SELECT Titre, description, impactBonheur, impactArgent, " +
+                    "impactPedagogie, bonus " +
                     "FROM evenement_irregulier " +
                     "WHERE id_eve_irre = " + id;
 
             ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexion);
 
+            // récupération des informations de l'événement
             while (resultDB.next()) {
                 titre = resultDB.getString("Titre");
                 description = resultDB.getString("description");
-                impactBonheur = resultDB.getInt("impactBonheurPos");
-                impactArgent = resultDB.getInt("impactArgentPos");
-                impactPedagogie = resultDB.getInt("impactPedagogiePos");
+                impactBonheur = resultDB.getInt("impactBonheur");
+                impactArgent = resultDB.getInt("impactArgent");
+                impactPedagogie = resultDB.getInt("impactPedagogie");
                 bonus = resultDB.getBoolean("bonus");
             }
 

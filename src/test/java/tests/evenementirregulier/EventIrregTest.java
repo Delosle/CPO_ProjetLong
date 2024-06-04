@@ -1,8 +1,8 @@
-package tests;
+package tests.evenementirregulier;
 
 import static org.junit.Assert.assertEquals;
 
-import n7simulator.modele.Evenements.Evenement_Irregu;
+import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.modele.Partie;
 
 import n7simulator.modele.Temps;
