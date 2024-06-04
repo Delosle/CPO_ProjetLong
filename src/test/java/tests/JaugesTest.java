@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class JaugesTest {
+	
+
+	public final static double EPSILON = 0.001;
 
     private Jauge jauge1, jauge2;
     private JaugeBornee jauge3;
@@ -34,9 +37,9 @@ public class JaugesTest {
      */
     @Test
     public void testValeuresInitiales(){
-        assertEquals(0, jauge1.getValue());
-        assertEquals(10, jauge2.getValue());
-        assertEquals(0, jauge3.getValue());
+        assertEquals(0, jauge1.getValue(), EPSILON);
+        assertEquals(10, jauge2.getValue(), EPSILON);
+        assertEquals(0, jauge3.getValue(), EPSILON);
     }
 
     /**
@@ -48,9 +51,9 @@ public class JaugesTest {
         jauge1.ajouter(15);
         jauge2.ajouter(-5);
         jauge3.ajouter(30);
-        assertEquals(15, jauge1.getValue());
-        assertEquals(5, jauge2.getValue());
-        assertEquals(30, jauge3.getValue());
+        assertEquals(15.0, jauge1.getValue(), EPSILON);
+        assertEquals(5.0, jauge2.getValue(), EPSILON);
+        assertEquals(30.0, jauge3.getValue(), EPSILON);
     }
 
     /**
@@ -62,9 +65,9 @@ public class JaugesTest {
         jauge1.ajouter(-100);
         jauge2.ajouter(-10);
         jauge3.ajouter(-60);
-        assertEquals(0, jauge1.getValue());
-        assertEquals(0, jauge2.getValue());
-        assertEquals(0, jauge3.getValue());
+        assertEquals(0, jauge1.getValue(), EPSILON);
+        assertEquals(0, jauge2.getValue(), EPSILON);
+        assertEquals(0, jauge3.getValue(), EPSILON);
     }
 
     /**
@@ -75,6 +78,6 @@ public class JaugesTest {
     @Test
     public void testValeurLimiteSuperieur(){
         jauge3.ajouter(150);
-        assertEquals(JaugeBornee.BORNE_MAX, jauge3.getValue());
+        assertEquals(JaugeBornee.BORNE_MAX, jauge3.getValue(), EPSILON);
     }
 }
