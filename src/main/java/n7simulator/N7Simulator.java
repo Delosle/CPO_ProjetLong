@@ -28,6 +28,7 @@ public class N7Simulator {
 		TempsGUI interfaceTemps = new TempsGUI(temps);
 		temps.addObserver(interfaceTemps);
 		TempsController controllerTemps = new TempsController(temps);
+		Crous leCrous = Crous.getInstance(1, 1.30);
 
 		// Les jauges
 		Jauge argent = laPartie.getJaugeArgent();
@@ -42,8 +43,8 @@ public class N7Simulator {
 
 		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel, new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
-		N7Frame fenetre = new N7Frame(interfaceCarte, interfacePilotage);
 
+		N7Frame fenetre = N7Frame.getInstance(interfaceCarte, interfacePilotage);
 	}
 
 }
