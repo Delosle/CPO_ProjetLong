@@ -53,6 +53,15 @@ CREATE TABLE RepasCrous (
     prix FLOAT
 );
 
+-- Crée un table pour les repas au Foy
+CREATE TABLE RepasFoy (
+    id_repas INTEGER PRIMARY KEY,
+    nom VARCHAR(60),
+    prix FLOAT NOT NULL,
+    prixLimite FLOAT NOT NULL,
+    image VARCHAR(60)
+);
+
 -- Crée une table pour les valeurs de début de partie
 CREATE TABLE ValDebPartie (
     prof INTEGER,
@@ -111,6 +120,16 @@ INSERT INTO RepasCrous (id_repas, qualite, prix) VALUES
 (2, 2, 1.30),
 (3, 3, 1.70),
 (4, 4, 2.00);
+
+-- Insère des données dans la table RepasFoy
+INSERT  INTO RepasFoy (id_repas, nom, prix, prixLimite, image) VALUES
+(1, 'Café', 0.95, 1.50, 'cafe.jpg'),
+(2, 'Chocolatine', 1.30, 2.00, 'chocolatine.jpg'),
+(3, 'Chocolat chaud', 0.8, 1.50, 'choco_chaud.jpeg'),
+(4, 'Kinder Bueno', 1.5, 2.00, 'kinder.jpeg'),
+(5, 'Coca', 1.20, 2.50, 'coca.jpg'),
+(6, 'Croissant', 0.70, 1.3, 'croissant.jpg'),
+(7, 'Jus de fruit', 0.5, 1, 'jus_fruits.jpeg');
 
 -- Insère des données dans la table ValDebPartie
 INSERT INTO ValDebPartie (prof, NbEleve, Argent, Bonheur, Pedagogie, dateDeb) 

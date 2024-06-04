@@ -1,12 +1,18 @@
 package n7simulator.modele;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
-import n7simulator.modele.evenements.Evenement_Irregu;
+import n7simulator.database.ProfesseurDAO;
+import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
+import n7simulator.modele.professeur.GestionProfesseurs;
+import n7simulator.modele.professeur.Professeur;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.vue.Evenement.EvenementGUI;
 import n7simulator.vue.PilotageGUI;
 
@@ -16,11 +22,10 @@ import n7simulator.vue.PilotageGUI;
  */
 public final class Partie extends Observable {
 	
-	private static Partie instance;
 	/**
-	 * Le nombre d'élèves inscrits à l'N7.
+	 * L'instance unique de la partie.
 	 */
-	private static int nombreEleves;
+	private static Partie instance;
 
 	/**
 	 * La jauge d'argent
@@ -28,7 +33,7 @@ public final class Partie extends Observable {
 	private static Jauge jaugeArgent;
 	
 	/**
-	 * La jauge de Bonheur;
+	 * La jauge de Bonheur
 	 */
 	private static Jauge jaugeBonheur;
 
@@ -48,6 +53,26 @@ public final class Partie extends Observable {
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
 
 	
+	/**
+	 * Le nom de la partie (nom de la sauvegarde)
+	 */
+	private static String nomPartie;
+	
+	/**
+	 * La gestion des professeurs de la partie
+	 */
+	private static GestionProfesseurs gestionProfesseurs;
+	
+	/**
+	 * Les élèves
+	 */
+	private static GestionEleves gestionEleves;
+	
+	/**
+	 * Le temps
+	 */
+	private static Temps temps;
+	
 	private Partie() {}
 	
 	/**
@@ -62,6 +87,16 @@ public final class Partie extends Observable {
 			jaugePedagogie = new JaugeBornee("Pedagogie");
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
 			temps = new Temps();
+			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
+			// to delete
+			temps.setJourneeEnCours(LocalDate.now());
+			gestionEleves = new GestionEleves();
+			
+			// Ajout dans JourSuivant
+			JourSuivant jourSuivant = JourSuivant.getInstance();
+			jourSuivant.addImpactCourtTerme(gestionProfesseurs);
+			jourSuivant.addImpactCourtTerme(temps);
+			jourSuivant.addImpactCourtTerme(gestionEleves);
 		}
 		return instance;
 	}
@@ -76,41 +111,6 @@ public final class Partie extends Observable {
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
 			evenementGUI.setVisible(true);
 		}
-	}
-
-
-	/**
-	 * Obtenir le nombre d'élèves inscrits à l'N7.
-	 * @return le nombre d'élèves inscrits.
-	 */
-	public int getNombreEleves() {
-		return nombreEleves;
-	}
-	
-	/**
-	 * Permet d'inscrire de nouveaux élèves.
-	 * @param nouveauxEleves le nombre d'élèves à inscrire
-	 */
-	public void inscrireEleves(int nouveauxEleves) {
-		nombreEleves += nouveauxEleves;
-		this.setChanged();
-		this.notifyObservers(this);
-		
-		// TODO calcul lendemain :
-		// gainMax = nombreEleves / 5 --ex : 100 / 5 = 20
-		// totalJauges = (jaugeBohneur + jaugePegagogie) / 2
-		// si totalJauges >=25 : gain = totalJauges * gainMax / 100
-		// sinon : gain = (totalJauges * gainMax / 100) - gainMax
-	}
-	
-	/**
-	 * Permet de désinscrire de nouveaux élèves.
-	 * @param exEleves le nombre d'élèves à désinscrire
-	 */
-	public void desinscrireEleves(int exEleves) {
-		nombreEleves -= exEleves;
-		this.setChanged();
-		this.notifyObservers(this);
 	}
 
 	/**
@@ -136,9 +136,28 @@ public final class Partie extends Observable {
 	public Jauge getJaugePedagogie(){
 		return jaugePedagogie;
 	}
-
+	
+	/**
+	 * Permet de récupérer la gestion des élèves.
+	 * @return la gestion des élèves.
+	 */
+	public GestionEleves getGestionEleves() {
+		return gestionEleves;
+	}
+	
+	/**
+	 * Obtenir la gestion des professeurs de la partie.
+	 * @return : la gestion des professeurs de la partie
+	 */
+	public GestionProfesseurs getGestionProfesseurs() {
+		return gestionProfesseurs;
+	}
+	
+	/**
+	 * Obtenir le temps de la partie.
+	 * @return le temps.
+	 */
 	public Temps getTemps() {
 		return temps;
 	}
-
 }

@@ -41,7 +41,7 @@ public class ValDebPartieDAO {
 
 			// parcours du résultat pour instancier la partie
 			while (resultDB.next()) {
-				partie.inscrireEleves(resultDB.getInt("NbEleve"));
+				partie.getGestionEleves().inscrireEleves(resultDB.getInt("NbEleve"));
 				partie.getJaugeArgent().ajouter(resultDB.getInt("Argent"));
 				partie.getJaugeBonheur().ajouter(resultDB.getInt("Bonheur"));
 				partie.getJaugePedagogie().ajouter(resultDB.getInt("Pedagogie"));
