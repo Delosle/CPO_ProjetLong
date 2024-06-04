@@ -65,7 +65,7 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 			// connexion à la base de données
 			connexionDB = DatabaseConnection.getDBConnexion();
 			// requête à la base de données
-			String query = "SELECT prix FROM RepasCrous WHERE id_repas = " + this.qualite;
+			String query = "SELECT prix FROM RepasCrous WHERE id_repas = " + (this.qualite + 1);
 			ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
 			marge = this.prixVente - resultDB.getDouble("prix");
 		} catch (SQLException e) {

@@ -101,7 +101,7 @@ public class CrousController extends JPanel {
 		// On créé le contenant de la marge
 		JPanel laMarge = new JPanel();
 		laMarge.setLayout(new BoxLayout(laMarge, BoxLayout.Y_AXIS));
-		JLabel titleMarge = new JLabel("Marge :");
+		JLabel titleMarge = new JLabel("Marge totale :");
 		titleMarge.setAlignmentX(CENTER_ALIGNMENT);
 		
 		// On créé la zone de la marge qui va se modifier régulièrement
@@ -136,7 +136,7 @@ public class CrousController extends JPanel {
 		Double prixRevente = (Double)spinnerPrixRevente.getValue();
 		Double valeur = Crous.getInstance(0, 0.0).getMarge(indexQualite, prixRevente);
 		String text = "";
-		if (valeur > 0) {
+		if (valeur >= 0) {
 			text += "+ ";
 		}
 		else {
