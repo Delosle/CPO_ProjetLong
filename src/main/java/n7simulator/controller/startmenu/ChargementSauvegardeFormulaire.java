@@ -20,62 +20,69 @@ import n7simulator.N7Simulator;
 import n7simulator.database.GestionBddSauvegarde;
 import n7simulator.vue.startmenu.StartMenuGUI;
 
+/**
+ * Classe représentant le formulaire pour le choix de la sauvegarde à charger
+ */
 public class ChargementSauvegardeFormulaire extends JPanel {
+	
+	/**
+	 * Obtenir un formulaire de chargement de sauvegarde
+	 */
+	public ChargementSauvegardeFormulaire() {
+		this.setLayout(new BorderLayout());
+		this.setPreferredSize(new Dimension(100, 150));
 
-	    public ChargementSauvegardeFormulaire() {
-	        this.setLayout(new BorderLayout());
-	        this.setPreferredSize(new Dimension(100, 150));
-	        
-	        // Panneau pour contenir les boutons
+		// Recuperation du nom des sauvegardes en BD
+		List<String> nomsSauvegardes = getNomSauvegardeBD();
+		
+		if (nomsSauvegardes.size() == 0) {
+			this.add(new JLabel("<html>Aucune partie sauvegardée ! Veuillez commencer une nouvelle partie.</html>"));
+		} else {
+			this.setBorder(new EmptyBorder(10, 10, 10, 10));
+			this.setLayout(new GridLayout(0, 1)); // Un GridLayout avec une seule colonne
 
-	        // Ajout des boutons au panneau
-	        List<String> nomsSauvegardes = getNomSauvegardeBD();
-	        if(nomsSauvegardes.size() == 0) {
-	        	this.add(new JLabel("<html>Aucune partie sauvegardée ! Veuillez commencer une nouvelle partie.</html>"));
-	        } else {
+			// Ajout des noms des parties
+			for (String sauvegarde : nomsSauvegardes) {
+				JButton button = new JButton(sauvegarde);
+				button.setBackground(new Color(0xA6DDF0));
+				button.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						chargerPartie(sauvegarde);
+					}
+				});
+				this.add(button);
+			}
 
-		    	this.setBorder(new EmptyBorder(10, 10, 10, 10));
-	        	 this.setLayout(new GridLayout(0, 1)); // Un GridLayout avec une seule colonne
-	        	 
-	        	 for (String sauvegarde : nomsSauvegardes) {
-		            JButton button = new JButton(sauvegarde);
-		            button.setBackground(new Color(0xA6DDF0));
-		            button.addActionListener(new ActionListener() {
-		                @Override
-						public void actionPerformed(ActionEvent e) {
-		                    loadBackupData(sauvegarde);
-		                }
-		            });
-		            this.add(button);
-		        }
-	        	
-	        }
+		}
 
-	        Object[] options = {"Retour"};
-	        int result = JOptionPane.showOptionDialog(
-                    null,
-                    this,
-                    "Choix de la sauvegarde",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    options,
-                    options[0]);
-	        if(result == 0) {
-	        	new StartMenuGUI();
-	        }
+		//Ajout des éléments dans une fenetre de dialogue
+		Object[] options = { "Retour" };
+		int result = JOptionPane.showOptionDialog(null, this, "Choix de la sauvegarde", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		
+		//si bouton retour
+		if (result == 0) {
+			new StartMenuGUI();
+		}
+	}
 
-	    }
+	/**
+	 * Obtenir le nom des sauvegardes en base de données
+	 * @return : la liste des noms de sauvegarde
+	 */
+	private List<String> getNomSauvegardeBD() {
+		return GestionBddSauvegarde.recupererNomPartie();
+	}
 
-	    private List<String> getNomSauvegardeBD() {
-	        return GestionBddSauvegarde.recupererNomPartie();
-	    }
-
-	    private void loadBackupData(String nomPartie) {
-	    	Window win = SwingUtilities.getWindowAncestor(this.getParent());
-			win.dispose();
-	    	N7Simulator.initPartieChargee(nomPartie);
-	    }
-
+	/**
+	 * Charge la partie une fois le bouton cliqué
+	 * @param nomPartie : le nom de la partie à charger
+	 */
+	private void chargerPartie(String nomPartie) {
+		Window win = SwingUtilities.getWindowAncestor(this.getParent());
+		win.dispose();
+		N7Simulator.initPartieChargee(nomPartie);
+	}
 
 }

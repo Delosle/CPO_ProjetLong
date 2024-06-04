@@ -33,24 +33,46 @@ public class N7Simulator {
 		affichageMenu();
 	}
 
+	/**
+	 * Permet d'afficher le menu de démarrage du jeu
+	 * (nouvelle partie - charger une partie)
+	 */
 	private static void affichageMenu() {
 		new StartMenuGUI();
 	}
 
+	/**
+	 * permet de valoriser la partie avec les valeurs par défaut
+	 * de début de partie (nouvelel partie)
+	 */
 	public static void initNouvellePartie() {
 		ValDebPartieDAO.initialiserDonneesDebutPartie();
 		affichageCarte();
 	}
 	
+	/**
+	 * permet de valoriser la partie avec les valeurs récupérées
+	 * depuis une sauvegarde en base de données
+	 * @param nomPartie : le nom de la partie en bd
+	 */
 	public static void initPartieChargee(String nomPartie) {
+		//Recuperation des donnees en base de données
 		Map<String, List<Map<String, Object>>> donneesChargees = GestionBddSauvegarde.recupererInfoBddSauvegarde(nomPartie);
+		
+		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
+		
 		affichageCarte();
 	}
 
+	/**
+	 * Permet d'afficher la carte (interface principale du jeu)
+	 */
 	private static void affichageCarte() {
 		Partie laPartie = Partie.getInstance();
+		
+		//partie temps
 		Temps tempsPartie = laPartie.getTemps();
 		TempsGUI interfaceTemps = new TempsGUI(tempsPartie);
 		tempsPartie.addObserver(interfaceTemps);
@@ -67,12 +89,17 @@ public class N7Simulator {
 		bonheur.addObserver(jaugesPannel.getVueBonheur());
 		pedagogie.addObserver(jaugesPannel.getVuePedagogie());
 
+		//Creation des interfaces
 		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel);
 		CarteGUI interfaceCarte = new CarteGUI();
 		N7Frame fenetre = new N7Frame(interfaceCarte, interfacePilotage);
 		
 	}
 	
+	/**
+	 * Valorise toutes les données liées à la partie (table Partie en bd)
+	 * @param donneesChargees : les données récupérées depuis la bd
+	 */
 	private static void valoriserDonneesPartie(Map<String, List<Map<String, Object>>> donneesChargees) {
 		//table Partie
 		Map<String, Object> donneesPartie = donneesChargees.get("Partie").get(0); //il n'y a qu'une ligne
@@ -86,24 +113,28 @@ public class N7Simulator {
 		partie.getTemps().setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));		
 	}
 	
-	
-	
+	/**
+	 * Valorise toutes les données liées aux professeurs embauches (table ProfEmbauches en bd)
+	 * @param donneesChargees : les données récupérées depuis la bd
+	 */
 	private static void valoriserDonneesProfesseur(Map<String, List<Map<String, Object>>> donneesChargees) {
 		List<Map<String, Object>> donneesPartie = donneesChargees.get("ProfEmbauches");
-		System.out.println(donneesPartie);
 		Partie partie = Partie.getInstance();
 		GestionProfesseurs gestionProfesseurs = partie.getGestionProfesseurs();
 		List<Professeur> professeursNonEmbauches = gestionProfesseurs.getProfesseursNonEmbauches();
-		List<Professeur> professeursEmbauches = gestionProfesseurs.getProfesseursEmbauches();
 		
+		//Parcours des professeurs recupérés en bd
 		for(Map<String, Object> profEmbaucheBD : donneesPartie) {
 			int idProf = (int)profEmbaucheBD.get("idprof");
 			int nbProfesseursNonEmbauches = professeursNonEmbauches.size();
 			int i = 0;
 			boolean professeurTrouve = false;
+			
+			//Recherche du professeur dans la liste des professeurs non embauches
 			while(i<nbProfesseursNonEmbauches && !professeurTrouve) {
 				Professeur profIter = professeursNonEmbauches.get(i);
 				if(profIter.getId() == idProf) {
+					//valorisation des données du professeur
 					profIter.setSalaireActuel((int)profEmbaucheBD.get("salaire"));
 					profIter.setNbHeuresTravaillees((int)profEmbaucheBD.get("nbheure"));
 					gestionProfesseurs.embaucherProfesseur(profIter);
@@ -114,7 +145,11 @@ public class N7Simulator {
 		}
 	}
 	
+	/**
+	 * Permet de sauvegarder la partie en base de données
+	 */
 	public static void sauvegarderPartie() {
+		//Association entre la table de BD et les données
 		Map<String, List<Map<String, Object>>> donneesPartie = new HashMap<String, List<Map<String,Object>>>();
 		donneesPartie.put("Partie", getObjetSauvegardePartie());
 		donneesPartie.put("ProfEmbauches", getObjetSauvegardeProfs());
@@ -123,6 +158,11 @@ public class N7Simulator {
 		GestionBddSauvegarde.sauvegarderDonnee(donneesPartie, partieEnCours.getNomPartie());
 	}
 	
+	/**
+	 * Obtenir un objet contenant toutes les données liées à la partie
+	 * afin de pouvoir les écrire en bd
+	 * @return : une liste d'objets associatifs (entre le nom de la colonne et sa valeur)
+	 */
 	private static List<Map<String, Object>> getObjetSauvegardePartie() {
 		Partie partieEnCours = Partie.getInstance();
 		Map<String, Object> sauvegardePartie = new HashMap<String, Object>();
@@ -144,6 +184,11 @@ public class N7Simulator {
 		return result;
 	}
 	
+	/**
+	 * Obtenir un objet contenant toutes les données liées aux professeurs embauchés
+	 * afin de pouvoir les écrire en bd
+	 * @return : une liste d'objets associatifs (entre le nom de la colonne et sa valeur)
+	 */
 	private static List<Map<String, Object>> getObjetSauvegardeProfs() {
 		List<Map<String, Object>> listeSauvegardeProfs = new ArrayList<>();
 		
@@ -151,6 +196,7 @@ public class N7Simulator {
 		GestionProfesseurs gestionProfesseurs = partieEnCours.getGestionProfesseurs();
 		List<Professeur> professeursEmbauches = gestionProfesseurs.getProfesseursEmbauches();
 		
+		//Creation d'une ligne par prof
 		for(Professeur prof : professeursEmbauches) {
 			Map<String, Object> sauvegardeProfs = new HashMap<String, Object>();
 			sauvegardeProfs.put("idprof", prof.getId());
