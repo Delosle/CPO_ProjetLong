@@ -134,7 +134,15 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 	@Override
 	public void effectuerImpactJourSuivantCourtTerme() {
 		double marge = getMarge();
-		Partie.getInstance().getJaugeArgent().ajouter((int)marge);
+		Partie instance = Partie.getInstance();
+		instance.getJaugeArgent().ajouter((int)marge);
+		double margeIndividuelle = getMarge() / instance.getNombreEleves();
+		if (margeIndividuelle > 1) {
+			instance.getJaugeBonheur().ajouter(- 10);
+		}
+		else if(margeIndividuelle < 1) {
+			instance.getJaugeBonheur().ajouter(2 * qualite);
+		}
 	}
 	
 	/* Problème : le pointeur se ferme quand la connexion à la BD se ferme
