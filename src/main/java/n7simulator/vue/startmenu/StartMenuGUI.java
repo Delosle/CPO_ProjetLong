@@ -17,8 +17,14 @@ import javax.swing.border.EmptyBorder;
 import n7simulator.controller.startmenu.ChargerPartieBouton;
 import n7simulator.controller.startmenu.NouvellePartieBouton;
 
+/**
+ * Classe représentant la vue du menu principal (nouvelle partie - charger une partie)
+ */
 public class StartMenuGUI extends JPanel {
 
+	/**
+	 * Obtenir une vue du menu principal
+	 */
 	public StartMenuGUI() {
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -28,7 +34,6 @@ public class StartMenuGUI extends JPanel {
 		this.setTitre();
 
 		// Ajout boutons nouvelle partie et charger partie
-		//TODO : ne plus mettre en param
 		JButton nouvellePartieBouton = new NouvellePartieBouton();
 		JButton chargerPartieBouton = new ChargerPartieBouton();
 
@@ -53,6 +58,9 @@ public class StartMenuGUI extends JPanel {
 		dialog.setVisible(true);
 	}
 
+	/**
+	 * Titre de la fenetre
+	 */
 	private void setTitre() {
 		JLabel messageLabel = new JLabel("<html><h1><font color=\"#E4BA22\">N7</font> Simulator</h1></html>");
 		messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

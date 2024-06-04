@@ -10,6 +10,9 @@ import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+/**
+ * Classe de style concernant les boutons
+ */
 public class StyleBoutonUI extends BasicButtonUI {
 
     @Override

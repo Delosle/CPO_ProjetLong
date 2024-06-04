@@ -209,6 +209,7 @@ public class GestionBddSauvegarde {
 				List<Map<String, Object>> listOfRecords = entry.getValue(); // recupérer les données de la table
 				
 				if(tableName == "ProfEmbauches") {
+					//suppression des donnees sur les professeurs pour tout remettre de 0
 					profsCleanSauvegarde(conn, maxidPartie);
 				}
 				
@@ -232,8 +233,10 @@ public class GestionBddSauvegarde {
 
 					String query;
 					if(tableName == "ProfEmbauches") {
+						// ajout de l'idPartie
 						columns.append(", ").append("idPartie");
 						values.append(", ").append("'" + maxidPartie + "'");
+						//on considere que les donnees n'existent pas car on a tout supprimé au niveau des profs
 						existeDeja = false;
 					}
 					
@@ -244,7 +247,6 @@ public class GestionBddSauvegarde {
 						query = "INSERT INTO " + tableName + " (" + columns.toString() + ") VALUES ("
 								+ values.toString() + ");";
 					}
-					System.out.println(query);
 					effectuerMiseAJour(query, conn);
 				}
 			}
@@ -261,10 +263,14 @@ public class GestionBddSauvegarde {
 		}
 	}
 
+	/**
+	 * Permet de supprimer les profs sauvegarder pour la partie idPartie
+	 * @param conn : la connexion a la base de données sauvegarde
+	 * @param idPartie : l'id de la partie
+	 */
 	private static void profsCleanSauvegarde(Connection conn, int idPartie) {
 			String queryDelete = "DELETE FROM ProfEmbauches WHERE idPartie = "+idPartie+";";
             try {
-            	System.out.println("delete");
 				effectuerMiseAJour(queryDelete, conn);
 			} catch (SQLException e) {
 				e.printStackTrace();
