@@ -25,9 +25,6 @@ public class BatimentAdminGUI extends JPanel {
 		ElevesGUI elevesVue = new ElevesGUI();
 		Partie.getInstance().addObserver(elevesVue);
 		this.add(elevesVue);
-
-		// ajout des repas Foy
-		add(new ListeRepasFoy(new RepasFoyDAO().getAllRepasFoy()));
 	}
 	
 }
