@@ -1,4 +1,5 @@
-package n7simulator.modele.Evenements;
+package tests.evenementirregulier;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.database.CreerBddSauvegarde;
 import n7simulator.database.CreationBddAdmin;
