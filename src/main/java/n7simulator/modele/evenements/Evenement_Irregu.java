@@ -47,6 +47,7 @@ public class Evenement_Irregu extends Evenement{
             this.dateApparition = dateApparition;
 
 
+
         } catch (SQLException e) {
             System.err.println("Erreur lors de la récupération des données " +
                     "de l'evenement irregulier dans la base de données.");

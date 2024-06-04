@@ -3,8 +3,8 @@ package n7simulator.modele;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.modele.Evenements.ApparitionEvenementIrregulier;
-import n7simulator.modele.Evenements.Evenement_Irregu;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.vue.Evenement.EvenementGUI;
@@ -73,6 +73,7 @@ public final class Partie extends Observable {
 		for (int idEvenement : listeEvenement) {
 			System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
+			evenement.appliquerImpact(this);
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
 			evenementGUI.setVisible(true);
 		}
