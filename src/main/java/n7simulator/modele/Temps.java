@@ -19,7 +19,8 @@ public class Temps extends Observable implements ImpactJourSuivantCourtTerme {
 	 * Permet de creer un nouvel objet Temps.
 	 * @param dateDebut : la date de debut de la partie
 	 */
-	public Temps() {
+	public Temps(LocalDate dateDebut) {
+		this.journeeEnCours = dateDebut;
 	}
 	
 	/**

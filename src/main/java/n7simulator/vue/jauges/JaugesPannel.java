@@ -23,7 +23,7 @@ public class JaugesPannel extends JPanel{
      */
     private JaugeBorneeGUI vuePedagogie;
 
-    public JaugesPannel(int initBonheur, int initPedagogie, int sommeInitiale) {
+    public JaugesPannel(double initBonheur, double initPedagogie, double sommeInitiale) {
         setLayout(new GridLayout(3, 1));
         
         vueArgent = new ArgentGUI("Argent", sommeInitiale);

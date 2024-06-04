@@ -33,13 +33,13 @@ public class JaugeBorneeGUI extends JPanel implements Observer {
      * @param initValue la valeur initiale de la jauge
      * @param couleur la couleur d'affichage de la jauge
      */
-    public JaugeBorneeGUI(String nom, int initValue, Color couleur) {
+    public JaugeBorneeGUI(String nom, double initValue, Color couleur) {
         super(new BorderLayout());
         //création d'une marge
         setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
         setPreferredSize(new Dimension(LARGEUR_PANNEL, HAUTEUR_PANNEL));
 
-        largBar = LARGEUR_BARMAX * initValue / JaugeBornee.BORNE_MAX;
+        largBar = LARGEUR_BARMAX * (int)initValue / JaugeBornee.BORNE_MAX;
 
         // Créer le JLabel pour le nom
         JLabel nomLabel = new JLabel(nom);
@@ -70,7 +70,7 @@ public class JaugeBorneeGUI extends JPanel implements Observer {
         bareValue.setPreferredSize(new Dimension(LARGEUR_BARMAX+5, HAUTER_BARMAX));
         
         // Créer le JLabel pour la valeur
-        valeurLabel = new JLabel("" + initValue);
+        valeurLabel = new JLabel("" + (int)initValue);
         valeurLabel.setForeground(couleur);
         
         // Ajout de la barre de valeur

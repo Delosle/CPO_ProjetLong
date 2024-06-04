@@ -14,6 +14,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
+import n7simulator.modele.Partie;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 
@@ -33,7 +34,6 @@ public abstract class BoutonGeneriqueProfesseur extends JButton {
 	 * Obtenir un bouton de modification d'un professeur.
 	 * 
 	 * @param professeur         : le professeur étant modifié
-	 * @param gestionProfesseurs : la gestion des professeurs
 	 * @param texteSalaire       : le texte permettant la
 	 *                           modification/initialisation du salaire dans le
 	 *                           formulaire
@@ -41,10 +41,10 @@ public abstract class BoutonGeneriqueProfesseur extends JButton {
 	 *                           modification/initialisation du nombre d'heures du
 	 *                           professeur
 	 */
-	public BoutonGeneriqueProfesseur(Professeur professeur, GestionProfesseurs gestionProfesseurs, String texteSalaire,
+	public BoutonGeneriqueProfesseur(Professeur professeur, String texteSalaire,
 			String texteNbHeures) {
 		this.professeur = professeur;
-		this.gestionProfesseurs = gestionProfesseurs;
+		this.gestionProfesseurs = Partie.getInstance().getGestionProfesseurs();
 		this.addActionListener(new ActionProfesseur(texteSalaire, texteNbHeures));
 	}
 

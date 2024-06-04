@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import n7simulator.database.ProfesseurDAO;
 import n7simulator.joursuivant.JourSuivant;
+import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
@@ -21,11 +22,21 @@ import n7simulator.vue.PilotageGUI;
  * La partie peut être chargée à partir d'une sauvegarde, ou 
  */
 public final class Partie extends Observable {
-	
+
 	/**
 	 * L'instance unique de la partie.
 	 */
 	private static Partie instance;
+	
+	/**
+	 * Le nom de la partie (nom de la sauvegarde)
+	 */
+	private static String nomPartie;
+	
+	/**
+	 * La gestion des professeurs de la partie
+	 */
+	private static GestionProfesseurs gestionProfesseurs;
 
 	/**
 	 * La jauge d'argent
@@ -69,6 +80,8 @@ public final class Partie extends Observable {
 	private static GestionEleves gestionEleves;
 
 	
+	private static Temps temps;
+	
 	private Partie() {}
 	
 	/**
@@ -82,10 +95,8 @@ public final class Partie extends Observable {
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
-			temps = new Temps();
+			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
-			// to delete
-			temps.setJourneeEnCours(LocalDate.now());
 			gestionEleves = new GestionEleves();
 			
 			// Ajout dans JourSuivant
@@ -107,8 +118,24 @@ public final class Partie extends Observable {
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
 			evenementGUI.setVisible(true);
 		}
-	}
 
+	
+	/**
+	 * Renseigner le nom de la partie (sauvegarde)
+	 * @param nomPartie : le nom de la partie
+	 */
+	public void initNomPartie(String initNomPartie) {
+		nomPartie = initNomPartie;
+	}
+	
+	/**
+	 * Obtenir le nom de la partie (sauvegarde)
+	 * @return : le nom de la partie
+	 */
+	public String getNomPartie() {
+		return nomPartie;
+	}
+	
 	/**
 	 * Obtenir la jauge Argent
 	 * @return la jauge d'argent
@@ -142,13 +169,14 @@ public final class Partie extends Observable {
 	}
 	
 	/**
-	 * Obtenir la gestion des professeurs de la partie.
+	 * Obtenir la gestion des professeurs de la partie
 	 * @return : la gestion des professeurs de la partie
 	 */
 	public GestionProfesseurs getGestionProfesseurs() {
 		return gestionProfesseurs;
 	}
 	
+
 	/**
 	 * Obtenir le temps de la partie.
 	 * @return le temps.

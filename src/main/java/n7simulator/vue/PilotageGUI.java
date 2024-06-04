@@ -4,11 +4,13 @@ import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.controller.TempsController;
 import n7simulator.vue.Evenement.EventHistoryGUI;
+import n7simulator.controller.sauvegarde.SauvegardeController;
 import n7simulator.vue.jauges.JaugesPannel;
 import n7simulator.vue.temps.TempsGUI;
 
@@ -28,7 +30,7 @@ public class PilotageGUI extends JPanel {
 		
 		GridBagConstraints contraintes = new GridBagConstraints();
 		contraintes.fill = GridBagConstraints.BOTH;
-		contraintes.weightx = 1.0;
+		contraintes.weightx = 1.0; 
 		contraintes.gridx = 0;
 		
 		// On ajoute les jauges
@@ -68,8 +70,12 @@ public class PilotageGUI extends JPanel {
 		zoneTemps.setLayout(new BoxLayout(zoneTemps, BoxLayout.Y_AXIS));
 		zoneTemps.setBorder(BorderFactory.createLineBorder(Color.black));
 		zoneTemps.add(interfaceTemps);
-		zoneTemps.add(controllerTemps);
+		zoneTemps.add(controllerTemps); 
+		//TODO : test
+		SauvegardeController test = new SauvegardeController(); 
+		zoneTemps.add(test);
 		this.add(zoneTemps, contraintes);
+		
 		
 	}
 

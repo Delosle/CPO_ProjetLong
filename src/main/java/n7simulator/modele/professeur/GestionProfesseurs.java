@@ -15,7 +15,7 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 	// liste des professeurs embauchés
 	private List<Professeur> professeursEmbauches;
 
-	// liste des professeurs non embauchés
+	// liste des professeurs non embauchés 
 	private List<Professeur> professeursNonEmbauches;
 
 	/**

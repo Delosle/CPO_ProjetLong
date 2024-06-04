@@ -16,10 +16,9 @@ public class BoutonModifierContratProfesseur extends BoutonGeneriqueProfesseur {
 	 * Obtenir un bouton de modification/gestion d'un professeur à embaucher.
 	 * 
 	 * @param professeur         : le professeur choisi
-	 * @param gestionProfesseurs : la gestion des professeurs
 	 */
 	public BoutonModifierContratProfesseur(Professeur professeur, GestionProfesseurs gestionProfesseurs) {
-		super(professeur, gestionProfesseurs, "Veuillez entrer le nouveau salaire : ",
+		super(professeur, "Veuillez entrer le nouveau salaire : ",
 				"Nombre d'heures travaillées par jour :");
 		this.setText("Modifier");
 	}

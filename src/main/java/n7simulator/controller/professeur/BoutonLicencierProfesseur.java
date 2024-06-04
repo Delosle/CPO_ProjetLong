@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import n7simulator.modele.Partie;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 
@@ -27,11 +28,10 @@ public class BoutonLicencierProfesseur extends JButton {
 	 * liste des professeurs embauchés)
 	 * 
 	 * @param professeur         : le professeur concerné
-	 * @param gestionProfesseurs : la gestion des professeurs
 	 */
-	public BoutonLicencierProfesseur(Professeur professeur, GestionProfesseurs gestionProfesseurs) {
+	public BoutonLicencierProfesseur(Professeur professeur) {
 		this.professeur = professeur;
-		this.gestionProfesseurs = gestionProfesseurs;
+		this.gestionProfesseurs = Partie.getInstance().getGestionProfesseurs();
 		this.setText("Licencier");
 		this.addActionListener(new ActionLicencier());
 	}
