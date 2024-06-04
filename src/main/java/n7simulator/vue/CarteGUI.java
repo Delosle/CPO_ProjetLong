@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.controller.*;
-import n7simulator.modele.professeur.Professeur;
 import n7simulator.vue.professeur.GestionProfesseursGUI;
 
 import n7simulator.modele.Partie;

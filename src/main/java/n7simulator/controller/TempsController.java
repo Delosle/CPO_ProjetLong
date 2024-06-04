@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
+import n7simulator.vue.PilotageGUI;
 
 /**
  * Controller permettant de modifier la date de la journée en cours.
@@ -27,8 +29,8 @@ public class TempsController extends JPanel {
 	private class ActionJourSuivant implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			temps.incrementJournee();
-			Partie.getInstance().inscrireEleves(10);
+			Partie.getInstance().genererEvenementIrregulier((PilotageGUI) getParent().getParent());
+			JourSuivant.getInstance().effectuerImpactsJourSuivant();
 		}
 	}
 }

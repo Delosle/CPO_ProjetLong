@@ -17,7 +17,7 @@ public class TempsTest {
 	
 	@Before public void setUp() {
 		//Creer un nouveau temps
-		nouveauTemps = new Temps();
+		nouveauTemps = new Temps(LocalDate.now());
 	}
 	
 	/*

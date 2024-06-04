@@ -26,6 +26,7 @@ public class TempsGUI extends JPanel implements Observer {
 		String dateAffichage = formatJourneeEnCours(temps.getJourneeEnCours());
 		this.afficheurJourEnCours = new JLabel(dateAffichage);
 		this.add(afficheurJourEnCours);
+		Partie.getInstance().getTemps().addObserver(this);
 	}
 	
 	

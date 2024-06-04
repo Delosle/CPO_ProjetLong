@@ -3,10 +3,12 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
+import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
+
 /**
  * Classe modélisant le temps.
  */
-public class Temps extends Observable {
+public class Temps extends Observable implements ImpactJourSuivantCourtTerme {
 	
 	/**
 	 * La date de la journée en cours pour la partie.
@@ -17,7 +19,8 @@ public class Temps extends Observable {
 	 * Permet de creer un nouvel objet Temps.
 	 * @param dateDebut : la date de debut de la partie
 	 */
-	public Temps() {
+	public Temps(LocalDate dateDebut) {
+		this.journeeEnCours = dateDebut;
 	}
 	
 	/**
@@ -27,8 +30,7 @@ public class Temps extends Observable {
 		this.journeeEnCours = this.journeeEnCours.plusDays(1);
 		this.setChanged();
 		this.notifyObservers(this);
-	}
-	
+	}	
 	
 	/**
 	 * Obtenir la date de la journee en cours pour la partie.
@@ -40,5 +42,10 @@ public class Temps extends Observable {
 	
 	public void setJourneeEnCours(LocalDate dateEnCours) {
 		this.journeeEnCours = dateEnCours;
+	}
+
+	@Override
+	public void effectuerImpactJourSuivantCourtTerme() {
+		incrementJournee();
 	}
 }

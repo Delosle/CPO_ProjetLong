@@ -7,12 +7,15 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-
+import n7simulator.modele.evenements.Evenement;
+import n7simulator.N7Simulator;
 import n7simulator.modele.Partie;
 
 /**
@@ -26,13 +29,24 @@ public class N7Frame extends JFrame {
 	
 	private JLayeredPane layeredPanel;
 	
+	private static N7Frame instance;
+	
 	/**
 	 * 
 	 */
-	public N7Frame(CarteGUI interfaceCarte, PilotageGUI interfacePilotage){
+	private N7Frame(CarteGUI interfaceCarte, PilotageGUI interfacePilotage){
 		// On créé la fenêtre globale
 		super("N7Simulator");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);	
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                N7Simulator.sauvegarderPartie();
+                dispose();  
+            }
+        });
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
 		double height = screenSize.getHeight();
@@ -76,6 +90,13 @@ public class N7Frame extends JFrame {
 		this.setVisible(true);
 	}
 
+	public static N7Frame getInstance(CarteGUI interfaceCarte, PilotageGUI interfacePilotage) {
+		if (instance == null) {
+			instance = new N7Frame(interfaceCarte, interfacePilotage);
+		}
+		return instance;
+	}
+	
 	/** Ajouter un élément au JLayeredPane
 	 * @param element L'élément à placer dans un layer
 	 * @param numLayer Le numéro du layer
@@ -92,5 +113,7 @@ public class N7Frame extends JFrame {
 		layeredPanel.revalidate();
 		layeredPanel.repaint();
 	}
+
+
 
 }

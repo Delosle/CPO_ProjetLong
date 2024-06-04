@@ -24,9 +24,7 @@ public class BatimentAdmin extends AbstractBatiment {
 
 	@Override
 	public void afficherSurCarte(CarteGUI laCarte) {
-		
 		this.afficherRectangle(laCarte, 8, 1, 21, 5);
-		
 	}
 
 }
