@@ -7,16 +7,13 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -24,21 +21,20 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import n7simulator.modele.Partie;
 import n7simulator.modele.Crous;
-import n7simulator.vue.N7Frame;
 
 /**
- * 
+ * Classe représentant un crontrolleur du Crous
  */
 public class CrousController extends JPanel {
 	
 	private JComboBox selecteur;
-	
 	private JSpinner spinnerPrixRevente;
-	
 	private JLabel marge;
-	
+
+	/**
+	 * Permet de représenter les boutons du Crous
+	 */
 	public CrousController() {
 		
 		Crous instanceCrous = Crous.getInstance(0, 0.00);
@@ -130,7 +126,10 @@ public class CrousController extends JPanel {
 		}
 		
 	}
-	
+
+	/**
+	 * controlleur permettant d'updater la marge
+	 */
 	private void updateMarge() {
 		int indexQualite = selecteur.getSelectedIndex();
 		Double prixRevente = (Double)spinnerPrixRevente.getValue();
@@ -147,7 +146,12 @@ public class CrousController extends JPanel {
 		text += " €";
 		marge.setText(text);
 	}
-	
+
+	/**
+	 * permet de récupérer le bouton pour faire les affichages
+	 * du crous afin de pouvoir faire des modifications
+	 * @return bouton
+	 */
 	public static JButton getBoutonOuverture() {
 		JButton leBouton = new JButton("Modifier");
 		ActionListener ouvrirModification = new ActionListener() {

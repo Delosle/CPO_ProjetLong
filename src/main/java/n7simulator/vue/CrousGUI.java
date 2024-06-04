@@ -23,7 +23,7 @@ import n7simulator.controller.CrousController;
 import n7simulator.modele.Crous;
 
 /**
- * 
+ * Classe représentant l'affichage du Crous
  */
 public class CrousGUI extends JPanel implements Observer {
 	
@@ -36,7 +36,7 @@ public class CrousGUI extends JPanel implements Observer {
 	private JLabel labelRevente;
 
 	/**
-	 * 
+	 * Création de la vue du Crous
 	 */
 	public CrousGUI() {
 		Crous instanceCrous = Crous.getInstance(0, 0.0);
