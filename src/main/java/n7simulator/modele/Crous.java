@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.ImpactJourSuivantCourtTerme;
 import n7simulator.database.DatabaseConnection;
+import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
 
 /**
  * Classe permettant la simulation du Crous
@@ -88,7 +88,7 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 		Connection connexionDB = null;
 		double marge = 0;
 		//Afin de multiplier la marge d'un repas par le nombre d'élève
-		int nbEleves = Partie.getInstance().getNombreEleves();
+		int nbEleves = Partie.getInstance().getGestionEleves().getNombreEleves();
 		try {
 			// connexion à la base de données
 			connexionDB = DatabaseConnection.getDBConnexion();
@@ -178,7 +178,7 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 		double marge = getMarge();
 		Partie instance = Partie.getInstance();
 		instance.getJaugeArgent().ajouter((int)marge);
-		double margeIndividuelle = getMarge() / instance.getNombreEleves();
+		double margeIndividuelle = getMarge() / instance.getGestionEleves().getNombreEleves();
 		if (margeIndividuelle > 1) {
 			instance.getJaugeBonheur().ajouter(- 10);
 		}
