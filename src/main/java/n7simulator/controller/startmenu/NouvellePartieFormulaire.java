@@ -37,7 +37,7 @@ public class NouvellePartieFormulaire extends JPanel {
 		boolean isValidInput = false;
 		while (!isValidInput) {
 			//creation de la fenetre de dialogue
-			int result = JOptionPane.showConfirmDialog(null, this, "Gestion du contrat", JOptionPane.OK_CANCEL_OPTION,
+			int result = JOptionPane.showConfirmDialog(null, this, "Nouvelle Partie", JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE);
 
 			if (result == JOptionPane.OK_OPTION) {
