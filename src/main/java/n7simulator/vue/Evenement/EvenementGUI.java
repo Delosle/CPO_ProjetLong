@@ -13,16 +13,16 @@ import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 
 public class EvenementGUI extends JFrame {
-    private String titre;
-    private String description;
-    private int impactBonheur;
-    private int impactArgent;
-    private int impactPedagogie;
+    protected String titre;
+    protected String description;
+    protected int impactBonheur;
+    protected int impactArgent;
+    protected int impactPedagogie;
 
-    private PilotageGUI pilotageGUI;
+    protected PilotageGUI pilotageGUI;
 
-    private Panel panelChoix = new Panel();
-    private JPanel popupPanel = new JPanel();
+    protected JPanel panelChoix = new JPanel();
+    protected JPanel popupPanel = new JPanel();
     public JPanel getpopupPanel() {
         return popupPanel;
     }
@@ -156,11 +156,14 @@ public class EvenementGUI extends JFrame {
      */
     public JPanel getPermanent(){
         JPanel miniPanel = new JPanel();
+        JPanel panelTitre = new JPanel();
         GridLayout gridLayout = new GridLayout(1, 2);
         gridLayout.setHgap(20);
         miniPanel.setLayout(gridLayout);
 
         JLabel titre = new JLabel(this.titre);
+        panelTitre.add(titre);
+
         JPanel zone_Impacts = new JPanel();
         zone_Impacts.setLayout(new GridLayout(1, 3));
 
@@ -174,7 +177,7 @@ public class EvenementGUI extends JFrame {
         zone_Impacts.add(impactPedagogieText);
         zone_Impacts.add(new JLabel("" + this.impactArgent));
 
-        miniPanel.add(titre);
+        miniPanel.add(panelTitre);
         miniPanel.add(zone_Impacts);
 
         return miniPanel;
