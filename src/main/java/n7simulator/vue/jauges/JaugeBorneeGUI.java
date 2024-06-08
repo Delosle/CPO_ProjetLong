@@ -85,7 +85,9 @@ public class JaugeBorneeGUI extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Integer val = (Integer) arg;
+        Double doubleVal = (Double) arg;
+        Integer val = doubleVal.intValue();
+        //Integer val = (Integer) arg;
         valeurLabel.setText(""+val);
         largBar = LARGEUR_BARMAX * val / JaugeBornee.BORNE_MAX;
         bareValue.repaint(); // Redessine la barre de valeur lorsque la valeur est mise à jour
