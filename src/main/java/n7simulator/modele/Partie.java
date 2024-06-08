@@ -105,9 +105,9 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements Irreguliers : " + listeEvenement);
+		//System.out.println("Evenements Irreguliers : " + listeEvenement);
 		for (int idEvenement : listeEvenement) {
-			System.out.println("Evenement Irregulier : " + idEvenement);
+			//System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
 			evenement.appliquerImpact(this);
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
@@ -119,6 +119,7 @@ public final class Partie extends Observable {
 	public void genererEvenementRegulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
 		System.out.println("Evenements Reguliers : " + listeEvenement + "****************");
+		System.out.println(gestionnaireEvenementRegulier.getDonneeEvenement());
 	}
 
 	
@@ -185,5 +186,13 @@ public final class Partie extends Observable {
 	 */
 	public Temps getTemps() {
 		return temps;
+	}
+
+	/**
+	 * Obtenir le gestionnaire des événements réguliers
+	 * @return : le gestionnaire des événements réguliers
+	 */
+	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
+		return gestionnaireEvenementRegulier;
 	}
 }
