@@ -14,21 +14,19 @@ public class DisplayFoy extends JPanel {
         super(new GridLayout(1, 2));
         setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 
-        JPanel description = new JPanel(new GridLayout(2, 1));
+        JPanel description = new JPanel(new GridLayout());
         description.add(new JLabel("<html>Consommables foy <br>" +
                 "Cliquer pour modifier les prix le prix de chaque" +
-                "consommable <br> 40% du prix de vente est utilisé pour l'approvisionnement</html>"));
+                "consommable <br> 40% du prix de vente est utilisé" +
+                "pour l'approvisionnement <br>" +
+                "Nombre de consommables : "+ reaps.size()+"</html>"));
 
-        description.add(new JLabel("Nombre de consommables : "+reaps.size()));
         add(description);
         JButton modifier = ConsommableFoyController.getBoutonOuverture(reaps);
         JPanel modifierPannel = new JPanel(new GridLayout(3, 1));
         modifierPannel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-
-        //code très salle pour adapter la vue.
+        //Adaptation de la vue
         modifierPannel.add(new JPanel());
-        modifierPannel.add(new JPanel());
-
         modifierPannel.add(modifier);
         add(modifierPannel);
     }
