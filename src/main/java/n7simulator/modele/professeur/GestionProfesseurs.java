@@ -75,10 +75,50 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 
 	@Override
 	public void effectuerImpactJourSuivantCourtTerme() {
-		// Paiement salaire profs
-		Jauge jaugeArgent =	Partie.getInstance().getJaugeArgent();
+		Partie partie = Partie.getInstance();
+		Jauge jaugeArgent =	partie.getJaugeArgent();
+		Jauge jaugePedagogie = partie.getJaugePedagogie();
+		Jauge jaugeBohneur = partie.getJaugeBonheur();
+		int totalPeda = 0;
+		int totalSalaireSupMin = 0;
+		
 		for (Professeur prof : professeursEmbauches) {
+			// Paiement salaire prof
 			jaugeArgent.ajouter(-(prof.getNbHeuresTravaillees()*prof.getSalaireActuel()));
+			
+			totalPeda += prof.getNiveau();
+			totalSalaireSupMin += prof.getSalaireActuel() - prof.getSalaireMin();
+		}
+		
+		int nbProfsEmbauches = professeursEmbauches.size();
+		
+		if (nbProfsEmbauches > 0) {
+			// Update niveau pedagogie
+			double moyennePeda = totalPeda / nbProfsEmbauches;
+			if (moyennePeda >= 40) {
+				jaugePedagogie.ajouter((int)(moyennePeda / 10));
+			} else {
+				jaugePedagogie.ajouter((int)((moyennePeda - 50) / 3));
+			}
+
+			double moyenneSalaireSupMin = totalSalaireSupMin / nbProfsEmbauches;
+			
+			// Si moins d'un professeur pour 50 élèves, malus
+			if (partie.getNombreEleves() / nbProfsEmbauches > 50) {
+				jaugePedagogie.ajouter(-5);
+				
+				if (moyenneSalaireSupMin < 100) {
+					jaugeBohneur.ajouter(10);
+				}
+			}
+			
+			// Update niveau bonheur profs
+			if (moyenneSalaireSupMin >= 100) {
+				jaugeBohneur.ajouter(10);
+			}
+			
+		} else {
+			jaugePedagogie.ajouter(-20);
 		}
 	}
 
