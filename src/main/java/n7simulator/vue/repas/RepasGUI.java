@@ -5,13 +5,13 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class RepasFoyGUI extends JPanel implements Observer {
+public class RepasGUI extends JPanel implements Observer {
 
     private double prixActuel;
 
     private JLabel prixLabel;
 
-    public RepasFoyGUI(String nom, double prixActuel, String image){
+    public RepasGUI(String nom, double prixActuel, String image){
         super(new GridLayout(1,2));
 
         //Affichage de l'image

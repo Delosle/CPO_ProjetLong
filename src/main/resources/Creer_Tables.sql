@@ -54,7 +54,7 @@ CREATE TABLE RepasCrous (
 );
 
 -- Crée un table pour les repas au Foy
-CREATE TABLE RepasFoy (
+CREATE TABLE ConsommableFoy (
     id_repas INTEGER PRIMARY KEY,
     nom VARCHAR(60),
     prix FLOAT NOT NULL,
@@ -121,7 +121,7 @@ INSERT INTO RepasCrous (id_repas, qualite, prix) VALUES
 (4, 4, 2.00);
 
 -- Insère des données dans la table RepasFoy
-INSERT  INTO RepasFoy (id_repas, nom, prix, prixLimite, image) VALUES
+INSERT  INTO ConsommableFoy (id_repas, nom, prix, prixLimite, image) VALUES
 (1, 'Café', 0.95, 1.50, 'cafe.jpg'),
 (2, 'Chocolatine', 1.30, 2.00, 'chocolatine.jpg'),
 (3, 'Chocolat chaud', 0.8, 1.50, 'choco_chaud.jpeg'),

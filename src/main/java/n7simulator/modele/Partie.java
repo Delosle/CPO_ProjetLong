@@ -102,8 +102,10 @@ public final class Partie extends Observable {
 		for (int idEvenement : listeEvenement) {
 			System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
+			evenement.appliquerImpact(this);
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
 			evenementGUI.setVisible(true);
+
 		}
 	}
 
