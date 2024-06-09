@@ -108,7 +108,7 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 				jaugePedagogie.ajouter(-5);
 				
 				if (moyenneSalaireSupMin < 100) {
-					jaugeBohneur.ajouter(10);
+					jaugeBohneur.ajouter(-10);
 				}
 			}
 			
