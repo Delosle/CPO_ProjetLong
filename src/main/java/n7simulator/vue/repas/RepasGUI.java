@@ -7,8 +7,6 @@ import java.util.Observer;
 
 public class RepasGUI extends JPanel implements Observer {
 
-    private double prixActuel;
-
     private JLabel prixLabel;
 
     public RepasGUI(String nom, double prixActuel, String image){
