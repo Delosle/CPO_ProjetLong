@@ -12,11 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import n7simulator.controller.BibliothequeController;
-import n7simulator.controller.CrousController;
 import n7simulator.modele.Bibliotheque;
-import n7simulator.modele.Crous;
 
-@SuppressWarnings("deprecation")
 public class BibliothequeGUI extends JPanel implements Observer {
 
 	private Integer nbLivre;
