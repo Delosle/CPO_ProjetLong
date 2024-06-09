@@ -2,6 +2,7 @@ package n7simulator.vue.repas;
 
 import n7simulator.controller.repas.ConsommableFoyController;
 import n7simulator.modele.repas.ConsommableFoy;
+import org.mockito.internal.matchers.Null;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +22,13 @@ public class DisplayFoy extends JPanel {
         description.add(new JLabel("Nombre de consommables : "+reaps.size()));
         add(description);
         JButton modifier = ConsommableFoyController.getBoutonOuverture(reaps);
-        JPanel modifierPannel = new JPanel();
+        JPanel modifierPannel = new JPanel(new GridLayout(3, 1));
         modifierPannel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-        modifier.setPreferredSize(new Dimension(645,34));
+
+        //code très salle pour adapter la vue.
+        modifierPannel.add(new JPanel());
+        modifierPannel.add(new JPanel());
+
         modifierPannel.add(modifier);
         add(modifierPannel);
     }
