@@ -16,10 +16,9 @@ public class BoutonChoixProfesseur extends BoutonGeneriqueProfesseur {
 	 * Obtenir un bouton de choix/gestion d'un professeur à embaucher.
 	 * 
 	 * @param professeur         : le professeur choisi
-	 * @param gestionProfesseurs : la gestion des professeurs
 	 */
-	public BoutonChoixProfesseur(Professeur professeur, GestionProfesseurs gestionProfesseurs) {
-		super(professeur, gestionProfesseurs, "Veuillez entrer le salaire proposé :",
+	public BoutonChoixProfesseur(Professeur professeur) {
+		super(professeur, "Veuillez entrer le salaire proposé :",
 				"Nombre d'heures travaillées par jour :");
 		this.setText("Choisir");
 	}

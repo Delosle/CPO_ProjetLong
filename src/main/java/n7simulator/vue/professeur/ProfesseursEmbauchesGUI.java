@@ -28,12 +28,12 @@ public class ProfesseursEmbauchesGUI extends ListeProfesseursGUI {
 	/**
 	 * Creation de la vue des professeurs embauches
 	 * 
-	 * @param gestionProfesseurs : l'objet permettant la gestion de tous les
-	 *                           professeurs
 	 */
-	public ProfesseursEmbauchesGUI(GestionProfesseurs gestionProfesseurs) {
-		super(gestionProfesseurs);
+	public ProfesseursEmbauchesGUI() {
+		super();
 		this.professeursEmbauches = gestionProfesseurs.getProfesseursEmbauches();
+		// Description de l'onglet
+		this.setDescription();
 		this.afficherListeProfesseurs();
 
 	}
@@ -49,7 +49,7 @@ public class ProfesseursEmbauchesGUI extends ListeProfesseursGUI {
 
 			this.add(new BoutonModifierContratProfesseur(prof, gestionProfesseurs));
 			this.add(Box.createRigidArea(new Dimension(0, 10))); // espacement
-			this.add(new BoutonLicencierProfesseur(prof, gestionProfesseurs));
+			this.add(new BoutonLicencierProfesseur(prof));
 			this.add(Box.createRigidArea(new Dimension(0, 20))); // espacement
 			this.add(new JSeparator()); // séparateur entre les profs
 		}

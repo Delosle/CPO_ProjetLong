@@ -26,6 +26,7 @@ public class CreerBddSauvegarde {
                     CreationBddUtilitaire.creerPeuplerDatabase(conn, "Creer_Tables_Sauvegarde.sql");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return false;
                 } finally {
                     try {
                         if (conn != null) {
@@ -33,6 +34,7 @@ public class CreerBddSauvegarde {
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
+                        return false;
                     }
                 }
             }
@@ -66,9 +68,11 @@ public class CreerBddSauvegarde {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                tableCreer = false;
             }
         } catch (Exception e) {
             e.printStackTrace();
+            tableCreer = false;
         } finally { // pour être sûr de fermer les ressources
             try {
                 if (connection != null) {
@@ -76,6 +80,7 @@ public class CreerBddSauvegarde {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
+                tableCreer = false;
             }
         }
         return tableCreer;

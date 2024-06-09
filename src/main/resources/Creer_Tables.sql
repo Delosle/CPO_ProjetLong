@@ -1,4 +1,4 @@
--- Crée une table pour les professeurs
+-- Crée une table pour les professeurs 
 CREATE TABLE prof (
     id_prof INTEGER PRIMARY KEY,
     nom TEXT,
@@ -38,11 +38,11 @@ CREATE TABLE evenement_regulier (
 CREATE TABLE evenement_irregulier (
     id_eve_irre INTEGER PRIMARY KEY,
     description TEXT,
-    impactBonheurPos INTEGER,
-    impactArgentPos INTEGER,
-    impactPedagogiePos INTEGER,
+    impactBonheur INTEGER,
+    impactArgent INTEGER,
+    impactPedagogie INTEGER,
     titre TEXT,
-    frequence INTEGER,
+    frequence FLOAT,
     bonus BOOLEAN
 );
 
@@ -51,6 +51,15 @@ CREATE TABLE RepasCrous (
     id_repas INTEGER PRIMARY KEY,
     qualite INTEGER,
     prix FLOAT
+);
+
+-- Crée un table pour les repas au Foy
+CREATE TABLE ConsommableFoy (
+    id_repas INTEGER PRIMARY KEY,
+    nom VARCHAR(60),
+    prix FLOAT NOT NULL,
+    prixLimite FLOAT NOT NULL,
+    image VARCHAR(60)
 );
 
 -- Crée une table pour les valeurs de début de partie
@@ -69,31 +78,40 @@ CREATE TABLE ValDebPartie (
 -- Insère des données dans la table evenement_regulier
 INSERT INTO evenement_regulier (id_eve_reg, description, impactBonheurPos, impactArgentPos, impactPedagogiePos, Titre, periode, debut, impactBonheurNeg, impactArgentNeg, impactPedagogieNeg)
 VALUES 
-(1, 'Générer des séminaires et conférences pour augmenter le bonheur et le niveau de pédagogie des étudiants.', 10, 0, 15, 'Séminaires et Conférences', 30, '2024-06-01', 0, 0, 0),
-(2, 'Organiser le show des clubs pour augmenter le bonheur des étudiants.', 20, 0, 0, 'Show des Clubs', 60, '2024-06-01', 0, 0, 0),
+(1, 'Les étudiants ont la possibilité d assister à des séminaires et conférences pour élargir leurs connaissances, découvrir de nouveaux domaines d intérêt et interagir avec des experts. Les sujets abordés peuvent inclure des avancées technologiques, des présentations de recherche et des questions sociales. Participer à ces événements offre aux étudiants l opportunité d améliorer leurs compétences en réseautage, de développer leur compréhension des sujets présentés et de potentiellement découvrir de nouvelles passions et opportunités de carrière.', 10, 0, 15, 'Séminaires et Conférences', 30, '2024-06-01', 0, 0, -10),
+(2, 'L école organise un événement mettant en vedette les clubs et associations étudiants. Les étudiants découvrent la diversité des activités extracurriculaires sur le campus, avec chaque club présentant ses activités et ses objectifs. C est une opportunité pour les étudiants d explorer de nouvelles passions, de trouver des communautés d intérêt et de s impliquer dans la vie étudiante, renforçant ainsi leurs réseaux sociaux et leurs compétences en leadership.', 20, 0, 0, 'Show des Clubs', 60, '2024-06-01', -15, 0, 0),
 (3, 'Inscrire de nouveaux élèves pour augmenter la jauge d’argent.', 0, 50, 0, 'Inscription Nouveaux Élèves', 90, '2024-06-01', 0, 0, 0),
-(4, 'Organiser des rencontres avec des entreprises pour augmenter le bonheur des étudiants.', 15, 0, 0, 'Rencontres Entreprises', 120, '2024-06-01', 0, 0, 0),
-(5, 'Organiser des compétitions sportives pour augmenter le bonheur des étudiants.', 25, 0, 0, 'Compétitions Sportives', 180, '2024-06-01', 0, 0, 0),
-(6, 'Nettoyer les locaux pour rendre les locaux plus propres et augmenter le bonheur général.', 10, 0, 0, 'Nettoyage des Locaux', 30, '2024-06-01', 0, 0, 0),
-(7, 'Choisir si je participe aux campagnes des listes pour modifier le bonheur de mes élèves.', 5, 0, 0, 'Campagnes des Listes', 365, '2024-06-01', -5, 0, 0),
-(8, 'Choisir si je fais un repas de Noël pour modifier le bonheur des élèves et du personnel.', 15, 0, 0, 'Repas de Noël', 365, '2024-12-01', 0, 0, 0),
-(9, 'Mettre à disposition des après-midi sport pour les élèves pour augmenter leur bien-être (bonheur).', 20, 0, 0, 'Après-midi Sportifs', 30, '2024-06-01', 0, 0, 0),
-(10, 'Imposer au joueur de payer un repas pour le personnel pour le challenger et le mettre en difficulté.', 0, -20, 0, 'Repas pour le Personnel', 90, '2024-06-01', 0, 0, 0);
+(4, 'L université organise une rencontre avec des représentants d entreprises locales et nationales. Les étudiants auront l opportunité de rencontrer des professionnels de différents secteurs, d en apprendre davantage sur les opportunités de stages, d emplois à temps partiel et de carrière. Cet événement offre aux étudiants la possibilité de développer leurs réseaux professionnels, de découvrir les exigences du marché du travail et d explorer des chemins de carrière potentiels. Participer à cette rencontre peut aider les étudiants à établir des contacts précieux et à prendre des décisions éclairées concernant leur avenir professionnel.', 15, -10, 0, 'Rencontres Entreprises', 120, '2024-06-01', -5, 0, -5),
+(5, 'Organiser des compétitions sportives pour promouvoir le bien-être et le bonheur des étudiants. Ces événements incluent divers sports tels que le football, le basket-ball, le volley-ball, et bien d autres, permettant aux étudiants de participer et de s amuser tout en restant actifs. En plus de favoriser une vie saine, ces compétitions renforcent l esprit de camaraderie et de communauté sur le campus. Les étudiants peuvent ainsi se détendre, se divertir et créer des souvenirs inoubliables avec leurs camarades.', 25, -10, 0, 'Compétitions Sportives', 180, '2024-06-01', -15, 0, 10),
+(6, 'Organisee une journée de nettoyage des locaux pour rendre le campus plus propre et agréable. Les étudiants, le personnel et les enseignants sont invités à participer ensemble à cette initiative. En plus d améliorer l environnement de vie et d étude, cet événement renforce la communauté et la fierté collective. Un campus propre contribue au bien-être général et au bonheur de tous.', 10, -10, 10, 'Nettoyage des Locaux', 30, '2024-06-01', -10, 5, -5),
+(7, 'Les étudiants doivent décider s ils veulent participer aux campagnes des listes, tradition importante des écoles d ingénieurs. Ces campagnes incluent des activités et des événements visant à promouvoir les listes candidates pour les bureaux des étudiants. Participer à ces campagnes peut renforcer la cohésion de groupe, améliorer le bonheur des élèves et dynamiser la vie étudiante sur le campus. C est une occasion de s engager, de s amuser et de contribuer à l animation de la communauté universitaire.', 5, 0, 0, 'Campagnes des Listes', 365, '2024-06-01', -5, 0, 0),
+(8, 'Choisir si je fais un repas de Noël pour modifier le bonheur des élèves et du personnel.', 20, -5, -10, 'Repas de Noël', 365, '2024-12-01', -15, 0, 10),
+(9, 'L université propose des après-midi sportifs pour améliorer le bien-être des étudiants. En acceptant, les étudiants peuvent participer à divers sports comme le football, le basketball, le yoga et le jogging. Ces activités aident à rester actifs, à réduire le stress et à socialiser dans un cadre détendu..', 20, 0, 0, 'Après-midi Sportifs', 30, '2024-06-01', -10, 0, 5),
+(10, 'L université propose aux étudiants de payer un repas pour le personnel. En acceptant, l étudiant montre sa reconnaissance envers le personnel, ce qui peut améliorer le moral et renforcer les relations sur le campus. Cependant, cette décision impactera leur budget personnel, les mettant ainsi en difficulté financière. Refuser signifie conserver ses ressources financières, mais ne pas profiter de cette opportunité pour montrer sa gratitude.', 0, -20, 0, 'Repas pour le Personnel', 90, '2024-06-01', -10, 5, 0);
 
 -- Insère des données dans la table evenement_irregulier
-INSERT INTO evenement_irregulier (id_eve_irre, description, impactBonheurPos, impactArgentPos, impactPedagogiePos, Titre, frequence, bonus)
+INSERT INTO evenement_irregulier (id_eve_irre, description, impactBonheur, impactArgent, impactPedagogie, Titre, frequence, bonus)
 VALUES 
-(1, 'Imposer des grèves des enseignants pour challenger l’utilisateur et ajouter des difficultés dans le jeu.', -15, 0, 0, 'Grèves des Enseignants', 1, FALSE),
-(2, 'Des événements aléatoires arrivent pour rendre plus intéressant le jeu.', 0, 0, 0, 'Événements Aléatoires', 1, FALSE),
-(3, 'Annuler la livraison de chocolatine pour faire baisser la jauge de bonheur.', -10, 0, 0, 'Annulation Livraison Chocolatine', 1, FALSE),
-(4, 'Créer une livraison gratuite de chocolatine pour faire augmenter le bonheur des élèves.', 10, 0, 0, 'Livraison Gratuite Chocolatine', 1, TRUE),
-(5, 'Créer une invasion de canard pour faire augmenter la jauge de bonheur.', 15, 0, 0, 'Invasion de Canard', 1, TRUE),
-(6, 'Faire intervenir des mauvais professeurs pour faire baisser la jauge de pédagogie.', 0, 0, -10, 'Mauvais Professeurs', 1, FALSE),
-(7, 'Faire intervenir des bons professeurs pour faire augmenter la jauge de pédagogie.', 0, 0, 10, 'Bons Professeurs', 1, TRUE),
-(8, 'Créer une invasion de punaise pour challenger le joueur.', 0, 0, 0, 'Invasion de Punaise', 1, FALSE),
-(9, 'Créer des soirées pour faire augmenter le bonheur des élèves.', 20, 0, 0, 'Soirées Étudiantes', 1, TRUE),
-(10, 'Créer des dysfonctions (équipement qui cassent) pour challenger le joueur.', -10, 0, 0, 'Dysfonctions Équipements', 1, FALSE);
+(1, 'Les enseignants sont en grève pour protester contre l absentéisme rampant et la pénurie chronique de tampons pour effacer les tableaux à craie. Fatigués de jongler entre classes désertes et tableaux illisibles, ils réclament des soutions pour redonner vie à leurs salles de classe!.', -10, 0, -10, 'Grèves des Enseignants', 0.2, FALSE),
+(2, 'Nous regrettons de vous informer que notre livraison de chocolatines est retardée pour une raison aussi insolite qu inattendue : notre camion a été attaqué par une bande de singes farceurs en chemin vers Chocolatville !
 
+L annulation de la livraison des chocolatines au foyer de l école a plongé les étudiants dans une tristesse collective. Privés de leur douce pause gourmande, l humeur générale a chuté, transformant les sourires en soupirs. Les chocolatines étant la clé du bonheur matinal, l impact se fait ressentir dans tout l établissement.', -10, -50, 0, 'Annulation Livraison Chocolatine', 0.2, FALSE),
+(3, 'En cette période où le stress des études peut parfois sembler pesant, nous avons une délicieuse surprise pour vous ! Pour vous remercier de votre engagement et de votre fidélité, nous avons le plaisir d annoncer une journée spéciale de livraison gratuite de chocolatines, rien que pour vous !', 10, 50, 0, 'Livraison Gratuite Chocolatine', 0.25, TRUE),
+(4, 'Chers membres de la communauté,
+
+Nous vous informons avec une pointe d humour mais aussi de sérieux qu une invasion de canards a été repérée à la Rivière des MFEE ! Ces adorables mais envahissants palmipèdes semblent être à la recherche d un point d eau paisible où se rafraîchir, et notre rivière semble être leur nouvelle destination favorite.', 15, 0, 0, 'ALERTE : Invasion de Canards à la Rivière des MFEE !d', 0.15, TRUE),
+(5, 'Manque de chance : vous avez engagé un professeur incompétent. 
+
+Il arrive 30 minutes après le début du cours et ne donne qu un seul exercice à faire pendant toute l heure. Une fois que les étudiants l ont terminé, il se cache derrière son ordinateur.', 0, 0, -10, 'Mauvais Professeurs', 0.2, FALSE),
+(6, 'Chanceux d avoir engagé un excellent professeur ! Il arrive à l heure, donne des explications claires et variées, et engage les étudiants dans des activités enrichissantes tout au long du cours. Il est attentif aux besoins individuels des élèves et reste disponible pour les aider après la classe. En résumé, il incarne l excellence pédagogique', 0, 0, 10, 'Bons Professeurs', 0.3, TRUE),
+(7, 'Une invasion de punaises a plongé l école dans le chaos et l inconfort. Les salles de classe et les couloirs sont infestés, perturbant les activités quotidiennes. Les élèves et le personnel sont constamment sur leurs gardes, craignant les piqûres et l agitation causée par ces insectes indésirables. Cette situation désagréable nécessite une intervention immédiate pour rétablir un environnement d apprentissage sain et sûr.', -10,0,-10, 'Invasion de punaises', 0.1, FALSE),
+(8, 'Venez célébrer avec nous lors d une soirée étudiante sensationnelle avec des invités spéciaux de renom : Patrick Sébastien et Sébastien Patoche ! Préparez-vous à être émerveillés par des performances incroyables, des chansons entraînantes et des sketchs hilarants qui vous feront rire aux éclats toute la nuit.
+
+Mais ce n est pas tout ! Nous réservons également une surprise spéciale qui ajoutera une touche magique à cette soirée déjà inoubliable. Attendez-vous à des moments de pur plaisir et d excitation alors que nous vous offrons une expérience unique que vous n êtes pas prêts d oublier.', 20, 0, 0, 'Soirées Étudiantes', 0.3, TRUE),
+(9, 'Lors du lancement d une simulation par l un de nos étudiants, un ordinateur a malheureusement pris feu. Nous sommes reconnaissants que l incident ait été rapidement maîtrisé et que seul l ordinateur ait été endommagé.', -10, 0, 0, 'Dysfonctions Équipements', 0.15, FALSE),
+(10, 'Nous vous informons qu un incident malheureux s est produit récemment impliquant une chaise défectueuse, ayant entraîné une légère blessure pour l un de nos élèves. Nous tenons à présenter nos excuses les plus sincères pour cet incident et à assurer à tous notre engagement envers la sécurité et le bien-être de nos étudiants.
+
+En signe de notre regret pour cet incident et pour compenser l inconfort causé, nous nous engageons à remplacer la chaise défectueuse par une nouvelle et sûre. De plus, nous offrirons à l élève concerné un Mars en guise de geste d excuse pour cet incident regrettable. ', -10, 0, 0, 'Dysfonctions Équipements', 0.15, FALSE);
 
 -- Insère des données dans la table RepasCrous
 INSERT INTO RepasCrous (id_repas, qualite, prix) VALUES
@@ -102,6 +120,16 @@ INSERT INTO RepasCrous (id_repas, qualite, prix) VALUES
 (3, 3, 1.70),
 (4, 4, 2.00);
 
+-- Insère des données dans la table RepasFoy
+INSERT  INTO ConsommableFoy (id_repas, nom, prix, prixLimite, image) VALUES
+(1, 'Café', 0.95, 1.50, 'cafe.jpg'),
+(2, 'Chocolatine', 1.30, 2.00, 'chocolatine.jpg'),
+(3, 'Chocolat chaud', 0.8, 1.50, 'choco_chaud.jpeg'),
+(4, 'Kinder Bueno', 1.5, 2.00, 'kinder.jpeg'),
+(5, 'Coca', 1.20, 2.50, 'coca.jpg'),
+(6, 'Croissant', 0.70, 1.3, 'croissant.jpg'),
+(7, 'Jus de fruit', 0.5, 1, 'jus_fruits.jpeg');
+
 -- Insère des données dans la table ValDebPartie
 INSERT INTO ValDebPartie (prof, NbEleve, Argent, Bonheur, Pedagogie, dateDeb) 
 VALUES (0, 10, 1500, 50, 50, '2024-09-01');
@@ -109,8 +137,8 @@ VALUES (0, 10, 1500, 50, 50, '2024-09-01');
 
 -- Insérer des données dans la table matiere
 INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (1, 'Informatique', 8, 9);
-INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (2, 'Physique', 7, 8);
-INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (3, 'Mathématiques', 9, 7);
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (2, 'Anglais', 7, 6);
+INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (3, 'Réseau', 9, 7);
 INSERT INTO matiere (id_matiere, nom, bonheur, pedagogie) VALUES (4, 'Communication', 5, 5);
 
 -- Insérer des données dans la table prof

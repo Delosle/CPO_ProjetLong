@@ -16,7 +16,7 @@ public class Jauge extends Observable{
 	/**
      * la valeur entière de la jauge.
      */
-    public int valeur;
+    public double valeur;
 
     /**
      * Initialiser une jauge avec une valeur initialie.
@@ -40,7 +40,7 @@ public class Jauge extends Observable{
      * Obtenir la valeur de la jauge.
      * @return la valeur de la jauge
      */
-    public int getValue(){
+    public double getValue(){
         return valeur;
     }
     /**
@@ -56,7 +56,7 @@ public class Jauge extends Observable{
      * elle est inférieure à zéro.
      * @param valeur la valeur a ajouter à la jauge
      */
-    public void ajouter(int valeur){
+    public void ajouter(double valeur){
         this.valeur += this.valeur + valeur > 0 ? valeur : -this.valeur;
         setChanged();
         notifyObservers(this.valeur);

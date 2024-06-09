@@ -20,33 +20,47 @@ public class CreationBddUtilitaire {
         return conn;
     }
 
-    public static String readSqlFile(String fileName) {
+    /**
+     * Lire le fichier SQL depuis /main/ressources et le renvoyer sous forme de String
+     * @param fileName
+     * @return contenu du .sql sous forme d'une grande chaine de caractère
+     */
+    public static String readSqlFile(String fileName) throws Exception {
         StringBuilder sqlString = new StringBuilder();
-        try (InputStream inputStream = CreationBddUtilitaire.class.getClassLoader().getResourceAsStream(fileName);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sqlString.append(line).append("\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        // try avec ressources : permet de savoir que ces ressources seront fermées à la fin du try
+        // InputStream : obtient le flux d'entrée
+        // BufferedReader : permet de lire des caractères
+        InputStream inputStream = CreationBddUtilitaire.class.getClassLoader().getResourceAsStream(fileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        // Lit chaque ligne du fichier sql jusqu'à ce qu'il n'y en ait plus
+        while ((line = reader.readLine()) != null) {
+            sqlString.append(line).append("\n");
         }
         return sqlString.toString();
     }
 
-    public static void creerPeuplerDatabase(Connection connection, String sqlFileName) {
-        try {
-            String sql = readSqlFile(sqlFileName);
-            Statement statement = connection.createStatement();
-            String[] requetes = sql.split(";");
-            for (String requete : requetes) {
-                if (requete.trim().length() > 0) {
-                    statement.execute(requete.trim() + ";");
-                }
+    /**
+     * Permet de lire le .sql et de remplir notre bdd admin avec les requêtes
+     * @param connection
+     */
+    public static void creerPeuplerDatabase(Connection connection, String sqlFileName) throws Exception {
+        // Lire le fichier SQL
+        String sql = readSqlFile(sqlFileName);
+
+        // Exécuter les requêtes SQL
+        Statement statement = connection.createStatement();
+
+        // tableau où chaque case est une requête
+        String[] requetes = sql.split(";");
+
+        // parcours les requêtes et les exécutes
+        for (String requete : requetes) {
+            if (requete.trim().length() > 0) {
+                statement.execute(requete.trim() + ";");
             }
-            statement.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        // Ferme les ressources
+        statement.close();
     }
 }
