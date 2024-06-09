@@ -2,9 +2,8 @@ package n7simulator.controller.repas;
 
 import n7simulator.joursuivant.ImpactConsommableFoy;
 import n7simulator.joursuivant.JourSuivant;
-import n7simulator.modele.Partie;
-import n7simulator.modele.repas.ConsommableFoy;
-import n7simulator.vue.repas.RepasGUI;
+import n7simulator.modele.ConsommableFoy;
+import n7simulator.vue.consommable.ConsommableGUI;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -12,7 +11,6 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class ConsommableFoyController extends JPanel {
         for (ConsommableFoy consommableFoy : dataRepas) {
 
             this.consommableFoys.add(consommableFoy.copieFoy(consommableFoy));
-            RepasGUI vueRepas = new RepasGUI(consommableFoy.getNom(),consommableFoy.getPrix(),consommableFoy.getImage());
+            ConsommableGUI vueRepas = new ConsommableGUI(consommableFoy.getNom(),consommableFoy.getPrix(),consommableFoy.getImage());
             consommableFoy.addObserver(vueRepas);
             JPanel repasVC = new JPanel();
             repasVC.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 10));
@@ -90,7 +88,7 @@ public class ConsommableFoyController extends JPanel {
      * @param vueRepas la vue du consommable
      * @return le JPannel contenant le MVC du consommable.
      */
-    private static JPanel creeVueControlFoy(ConsommableFoy consommableFoy, RepasGUI vueRepas){
+    private static JPanel creeVueControlFoy(ConsommableFoy consommableFoy, ConsommableGUI vueRepas){
         JPanel monPanel = new JPanel(new GridLayout(2, 1));
 
         monPanel.setPreferredSize(new Dimension(500, 200));

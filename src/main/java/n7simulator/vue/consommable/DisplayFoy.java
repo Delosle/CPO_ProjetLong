@@ -1,8 +1,7 @@
-package n7simulator.vue.repas;
+package n7simulator.vue.consommable;
 
 import n7simulator.controller.repas.ConsommableFoyController;
-import n7simulator.modele.repas.ConsommableFoy;
-import org.mockito.internal.matchers.Null;
+import n7simulator.modele.ConsommableFoy;
 
 import javax.swing.*;
 import java.awt.*;
