@@ -81,6 +81,7 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 		Jauge jaugeBohneur = partie.getJaugeBonheur();
 		int totalPeda = 0;
 		int totalSalaireSupMin = 0;
+		int totalHeureCours = 0;
 		
 		for (Professeur prof : professeursEmbauches) {
 			// Paiement salaire prof
@@ -88,11 +89,12 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 			
 			totalPeda += prof.getNiveau();
 			totalSalaireSupMin += prof.getSalaireActuel() - prof.getSalaireMin();
+			totalHeureCours += prof.getNbHeuresTravaillees();
 		}
 		
 		int nbProfsEmbauches = professeursEmbauches.size();
 		
-		if (nbProfsEmbauches > 0) {
+		if (nbProfsEmbauches > 0 && totalHeureCours > 0) {
 			// Update niveau pedagogie
 			double moyennePeda = totalPeda / nbProfsEmbauches;
 			if (moyennePeda >= 40) {
@@ -103,10 +105,9 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 
 			double moyenneSalaireSupMin = totalSalaireSupMin / nbProfsEmbauches;
 			
-			// Si moins d'un professeur pour 50 élèves, malus
-			if (partie.getNombreEleves() / nbProfsEmbauches > 50) {
-				jaugePedagogie.ajouter(-5);
-				
+			// Malus
+			if (partie.getGestionEleves().getNombreEleves() / nbProfsEmbauches > 50 || partie.getGestionEleves().getNombreEleves() / totalHeureCours > 50) {
+				jaugePedagogie.ajouter(-15);				
 				if (moyenneSalaireSupMin < 100) {
 					jaugeBohneur.ajouter(-10);
 				}
