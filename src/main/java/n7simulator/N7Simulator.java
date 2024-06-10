@@ -62,11 +62,14 @@ public class N7Simulator {
 		//Recuperation des donnees en base de données
 		Map<String, List<Map<String, Object>>> donneesChargees = GestionBddSauvegarde.recupererInfoBddSauvegarde(nomPartie);
 		
+		//affichage de l'interface du jeu
+		if(!Partie.estPerdue()) {
+			affichageCarte();
+		}
+		
 		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
-		
-		affichageCarte();
 	}
 
 	/**
@@ -117,6 +120,10 @@ public class N7Simulator {
 		partie.getJaugePedagogie().ajouter((double)donneesPartie.get("pedagogie"));
 		String dateString = (String) donneesPartie.get("dateEnCours");
 		partie.getTemps().setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));		
+		Crous crousInstance = Crous.getInstance(0, 0);
+		crousInstance.setQualite((int)donneesPartie.get("idQualiteRepasCrous"));
+		crousInstance.setPrixVente((double)donneesPartie.get("prixVenteRepascrous"));
+		
 	}
 	
 	/**
@@ -181,9 +188,10 @@ public class N7Simulator {
 		sauvegardePartie.put("bonheur", partieEnCours.getJaugeBonheur().getValue());
 		sauvegardePartie.put("pedagogie", partieEnCours.getJaugePedagogie().getValue());
 		//a changer quand implementation des fonctionnalités
-		sauvegardePartie.put("estPerdue", false);
-		sauvegardePartie.put("idQualiteRepasCrous", 0);
-		sauvegardePartie.put("prixVenteRepascrous", 0.0);
+		sauvegardePartie.put("estPerdue", Partie.estPerdue());
+		Crous crousInstance = Crous.getInstance(0, 0);
+		sauvegardePartie.put("idQualiteRepasCrous", crousInstance.getQualite());
+		sauvegardePartie.put("prixVenteRepascrous", crousInstance.getPrixVente());
 		
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		result.add(sauvegardePartie);
