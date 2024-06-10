@@ -83,6 +83,7 @@ public class GameOverFrame extends JDialog {
 	        for (Window window : windows) {
 	                window.dispose();
 	        }
+	        N7Frame.reinitialiserInstance();
 			new StartMenuGUI();
 		}
     }

@@ -59,13 +59,12 @@ public class Jauge extends Observable{
      * elle est inférieure à zéro.
      * @param valeur la valeur a ajouter à la jauge
      */
-    public void ajouter(double valeur){
+    public void ajouter(double valeur) {
         this.valeur += this.valeur + valeur > 0 ? valeur : -this.valeur;
         setChanged();
         notifyObservers(this.valeur);
         if(this.valeur == 0) {
-        	Partie.setPerdue();
-        	new GameOverFrame(this);
+        	throw new ValeurNulleException(this);
         }
     }
 

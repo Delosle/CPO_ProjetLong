@@ -17,9 +17,11 @@ import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.jauges.Jauge;
+import n7simulator.modele.jauges.ValeurNulleException;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 import n7simulator.vue.CarteGUI;
+import n7simulator.vue.GameOverFrame;
 import n7simulator.vue.N7Frame;
 import n7simulator.vue.PilotageGUI;
 import n7simulator.vue.Evenement.EventHistoryGUI;
@@ -62,14 +64,16 @@ public class N7Simulator {
 		//Recuperation des donnees en base de données
 		Map<String, List<Map<String, Object>>> donneesChargees = GestionBddSauvegarde.recupererInfoBddSauvegarde(nomPartie);
 		
-		//affichage de l'interface du jeu
-		if(!Partie.estPerdue()) {
-			affichageCarte();
-		}
 		
 		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
+		
+		//affichage de l'interface du jeu
+		if(!Partie.estPerdue()) {
+			affichageCarte();
+		}
+				
 	}
 
 	/**
@@ -115,9 +119,14 @@ public class N7Simulator {
 		Partie partie = Partie.getInstance();
 		partie.initNomPartie((String)donneesPartie.get("nomPartie"));
 		partie.getGestionEleves().inscrireEleves((int)donneesPartie.get("nbEleves"));
-		partie.getJaugeArgent().ajouter((double)donneesPartie.get("argent"));
-		partie.getJaugeBonheur().ajouter((double)donneesPartie.get("bonheur"));
-		partie.getJaugePedagogie().ajouter((double)donneesPartie.get("pedagogie"));
+		try {
+			partie.getJaugeArgent().ajouter((double)donneesPartie.get("argent"));
+			partie.getJaugeBonheur().ajouter((double)donneesPartie.get("bonheur"));
+			partie.getJaugePedagogie().ajouter((double)donneesPartie.get("pedagogie"));
+		} catch (ValeurNulleException vne) {
+			Partie.setPerdue();
+			new GameOverFrame(vne.getJaugeDeclenchement());
+		}
 		String dateString = (String) donneesPartie.get("dateEnCours");
 		partie.getTemps().setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));		
 		Crous crousInstance = Crous.getInstance(0, 0);
