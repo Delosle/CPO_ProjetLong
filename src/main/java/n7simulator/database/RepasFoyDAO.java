@@ -1,6 +1,6 @@
 package n7simulator.database;
 
-import n7simulator.modele.ConsommableFoy;
+import n7simulator.modele.repas.RepasFoy;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,20 +8,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsommableFoyDAO {
+public class RepasFoyDAO {
 
-    public static List<ConsommableFoy> getAllConsommableFoy(){
+    public static List<RepasFoy> getAllRepasFoy(){
 
-        List<ConsommableFoy> consommableFoys = new ArrayList<>();
+        List<RepasFoy> repasFoys = new ArrayList<>();
         Connection connexionDB = null;
         try {
             // connexion à la base de données
             connexionDB = DatabaseConnection.getDBConnexion();
 
             // requête à la base de données
-            String query = "SELECT * FROM ConsommableFoy";
+            String query = "SELECT * FROM RepasFoy";
             ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
-            ConsommableFoy consommableFoy;
+            RepasFoy repasFoy;
 
             // parcours du résultat pour instancier les objets profs
             while (resultDB.next()) {
@@ -30,8 +30,8 @@ public class ConsommableFoyDAO {
                 Double prixLimite = resultDB.getDouble("prixLimite");
                 String image = resultDB.getString("image");
 
-                consommableFoy = new ConsommableFoy(nom, prix, prixLimite, image);
-                consommableFoys.add(consommableFoy);
+                repasFoy = new RepasFoy(nom, prix, prixLimite, image);
+                repasFoys.add(repasFoy);
             }
 
         } catch (SQLException e) {
@@ -45,6 +45,6 @@ public class ConsommableFoyDAO {
                 e.printStackTrace();
             }
         }
-        return consommableFoys;
+        return repasFoys;
     }
 }

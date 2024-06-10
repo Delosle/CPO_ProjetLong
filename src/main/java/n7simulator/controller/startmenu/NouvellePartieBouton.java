@@ -18,7 +18,9 @@ public class NouvellePartieBouton extends StartMenuBouton {
 
 	@Override
 	protected void creationFormulairePartie() {
-		new NouvellePartieFormulaire(this);
+		new NouvellePartieFormulaire();
+		Window win = SwingUtilities.getWindowAncestor(this.getParent());
+		win.dispose();
 	}
 
 }

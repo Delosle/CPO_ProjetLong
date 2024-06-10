@@ -3,7 +3,7 @@ package n7simulator.modele.professeur;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.joursuivant.ImpactJourSuivant;
+import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
 import n7simulator.modele.Partie;
 import n7simulator.modele.jauges.Jauge;
 
@@ -11,7 +11,7 @@ import n7simulator.modele.jauges.Jauge;
  * Classe permettant la gestion des professeurs avec la distinction entre ceux
  * qui sont embauchés et ceux qui ne le sont pas.
  */
-public class GestionProfesseurs extends Observable implements ImpactJourSuivant {
+public class GestionProfesseurs extends Observable implements ImpactJourSuivantCourtTerme {
 	// liste des professeurs embauchés
 	private List<Professeur> professeursEmbauches;
 
@@ -74,59 +74,11 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivant 
 	}
 
 	@Override
-	public void effectuerImpactJourSuivant() {
-		Partie partie = Partie.getInstance();
-		Jauge jaugeArgent =	partie.getJaugeArgent();
-		Jauge jaugePedagogie = partie.getJaugePedagogie();
-		Jauge jaugeBohneur = partie.getJaugeBonheur();
-		int totalPeda = 0;
-		int totalSalaireSupMin = 0;
-		int totalHeureCours = 0;
-		
+	public void effectuerImpactJourSuivantCourtTerme() {
+		// Paiement salaire profs
+		Jauge jaugeArgent =	Partie.getInstance().getJaugeArgent();
 		for (Professeur prof : professeursEmbauches) {
-			// Paiement salaire prof
 			jaugeArgent.ajouter(-(prof.getNbHeuresTravaillees()*prof.getSalaireActuel()));
-			
-			totalPeda += prof.getNiveau();
-			totalSalaireSupMin += prof.getSalaireActuel() - prof.getSalaireMin();
-			totalHeureCours += prof.getNbHeuresTravaillees();
-		}
-		
-		int nbProfsEmbauches = professeursEmbauches.size();
-		
-		if (nbProfsEmbauches > 0 && totalHeureCours > 0) {
-			// Update niveau pedagogie en fonction niveau moyen profs
-			double moyennePeda = totalPeda / nbProfsEmbauches;
-			if (moyennePeda >= 40) {
-				jaugePedagogie.ajouter((int)(moyennePeda / 10));
-			} else {
-				jaugePedagogie.ajouter((int)((moyennePeda - 50) / 3));
-			}
-
-			double moyenneSalaireSupMin = totalSalaireSupMin / nbProfsEmbauches;
-			
-			// Si trop d'élèves par profs et trop peu d'heures de cours pour les élèves, malus pédagogie
-			if (partie.getGestionEleves().getNombreEleves() / nbProfsEmbauches > 50 || partie.getGestionEleves().getNombreEleves() / totalHeureCours > 50) {
-				jaugePedagogie.ajouter(-15);
-				// Si prof pas assez payé, malus bohneur
-				if (moyenneSalaireSupMin < 100) {
-					jaugeBohneur.ajouter(-10);
-				}
-			}
-			
-			// Si en moyenne plus de 6h de cours quotidiennes/prof, malus bonheur
-			if (totalHeureCours / nbProfsEmbauches > 6) {
-				jaugeBohneur.ajouter(-10);
-			}
-			
-			// Bonus niveau bonheur profs si bon salaire
-			if (moyenneSalaireSupMin >= 100) {
-				jaugeBohneur.ajouter(10);
-			}
-			
-		} else {
-			// Si pas de profs embauchés, malus pédagogie
-			jaugePedagogie.ajouter(-20);
 		}
 	}
 

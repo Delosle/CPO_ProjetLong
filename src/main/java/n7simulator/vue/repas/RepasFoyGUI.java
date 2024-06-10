@@ -1,15 +1,17 @@
-package n7simulator.vue.consommable;
+package n7simulator.vue.repas;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ConsommableGUI extends JPanel implements Observer {
+public class RepasFoyGUI extends JPanel implements Observer {
+
+    private double prixActuel;
 
     private JLabel prixLabel;
 
-    public ConsommableGUI(String nom, double prixActuel, String image){
+    public RepasFoyGUI(String nom, double prixActuel, String image){
         super(new GridLayout(1,2));
 
         //Affichage de l'image

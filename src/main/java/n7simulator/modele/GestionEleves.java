@@ -2,12 +2,12 @@ package n7simulator.modele;
 
 import java.util.Observable;
 
-import n7simulator.joursuivant.ImpactJourSuivant;
+import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;;
 
 /**
  * Classe permettant de gérer le nombre d'élèves inscrits à l'N7.
  */
-public class GestionEleves extends Observable implements ImpactJourSuivant {
+public class GestionEleves extends Observable implements ImpactJourSuivantCourtTerme {
 
 	/**
 	 * Le nombre d'élèves inscrits à l'N7.
@@ -43,9 +43,9 @@ public class GestionEleves extends Observable implements ImpactJourSuivant {
 	}	
 
 	@Override
-	public void effectuerImpactJourSuivant() {
+	public void effectuerImpactJourSuivantCourtTerme() {
 		Partie partie = Partie.getInstance();
-		int gainMax = (nombreEleves / (nombreEleves < 200 ? 5 : 50)) + 10;		
+		int gainMax = nombreEleves / (nombreEleves < 200 ? 5 : 50);		
 		int totalJauges = (int)(partie.getJaugeBonheur().getValue() + partie.getJaugePedagogie().getValue()) / 2;
 		int gain = totalJauges * gainMax / 100;
 		

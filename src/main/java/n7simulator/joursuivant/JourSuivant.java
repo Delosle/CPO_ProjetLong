@@ -10,7 +10,8 @@ public final class JourSuivant {
 
 	private static JourSuivant instance;
 	
-	private static List<ImpactJourSuivant> impacts;
+	private static List<ImpactJourSuivantCourtTerme> impactsCourtTerme;
+	private static List<ImpactJourSuivantLongTerme> impactsLongTerme; 
 
 	/**
 	 * Contient l'instance de la classe.
@@ -24,23 +25,36 @@ public final class JourSuivant {
 	}
 	
 	private JourSuivant() {
-		impacts = new ArrayList<ImpactJourSuivant>();
+		impactsCourtTerme = new ArrayList<ImpactJourSuivantCourtTerme>();
+		impactsLongTerme = new ArrayList<ImpactJourSuivantLongTerme>();
 	}
 	
 	/**
 	 * Ajoute un impact dans la liste des impacts.
 	 * @param impact
 	 */
-	public void addImpact(ImpactJourSuivant impact) {
-		impacts.add(impact);
+	public void addImpactLongTerme(ImpactJourSuivantLongTerme impact) {
+		impactsLongTerme.add(impact);
+	}
+	
+	/**
+	 * Ajoute un impact dans la liste des impacts.
+	 * @param impact
+	 */
+	public void addImpactCourtTerme(ImpactJourSuivantCourtTerme impact) {
+		impactsCourtTerme.add(impact);
 	}
 	
 	/**
 	 * Effectue tous les impacts.
 	 */
 	public void effectuerImpactsJourSuivant() {
-		for (ImpactJourSuivant impact : impacts) {
-			impact.effectuerImpactJourSuivant();
+		for (ImpactJourSuivantCourtTerme impact : impactsCourtTerme) {
+			impact.effectuerImpactJourSuivantCourtTerme();
+		}
+		
+		for (ImpactJourSuivantLongTerme impact : impactsLongTerme) {
+			impact.effectuerImpactJourSuivantLongTerme();
 		}
 	}
 	
@@ -48,6 +62,7 @@ public final class JourSuivant {
 	 * Permet de clearer le contenu des listes.
 	 */
 	public void reinitialiser() {
-		impacts.clear();
+		impactsCourtTerme.clear();
+		impactsLongTerme.clear();
 	}
 }

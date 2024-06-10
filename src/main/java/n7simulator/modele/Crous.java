@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Observable;
 
 import n7simulator.database.DatabaseConnection;
-import n7simulator.joursuivant.ImpactJourSuivant;
-import n7simulator.joursuivant.JourSuivant;
+import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
 
 /**
  * Classe permettant la simulation du Crous
  */
-public class Crous extends Observable implements ImpactJourSuivant {
+public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 	public static final String[] QUALITE_STR = {"Mauvaise", "Acceptable", "Bonne", "Très bonne", "Excellente"};
 	private static Crous instance;
 	private int qualite;
@@ -29,7 +28,7 @@ public class Crous extends Observable implements ImpactJourSuivant {
 		this.qualite = qualite;
 		this.prixVente = prixVente;
 		// TODO : décommenter la ligne suivante pour ajouter l'impact quand on merge avec develop
-		JourSuivant.getInstance().addImpact(this);
+		//JourSuivant.getInstance().addImpactCourtTerme(this);
 	}
 	
 	/**
@@ -175,7 +174,7 @@ public class Crous extends Observable implements ImpactJourSuivant {
 	}
 
 	@Override
-	public void effectuerImpactJourSuivant() {
+	public void effectuerImpactJourSuivantCourtTerme() {
 		double marge = getMarge();
 		Partie instance = Partie.getInstance();
 		instance.getJaugeArgent().ajouter((int)marge);

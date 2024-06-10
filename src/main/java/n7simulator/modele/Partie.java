@@ -67,11 +67,6 @@ public final class Partie extends Observable {
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
-	
-	/**
-	 * Indique si la partie est perdue ou non
-	 */
-	private static boolean estPerdue;
 
 	
 	private Partie() {}
@@ -90,13 +85,12 @@ public final class Partie extends Observable {
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
-			estPerdue = false;
 			
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
-			jourSuivant.addImpact(gestionProfesseurs);
-			jourSuivant.addImpact(temps);
-			jourSuivant.addImpact(gestionEleves);
+			jourSuivant.addImpactCourtTerme(gestionProfesseurs);
+			jourSuivant.addImpactCourtTerme(temps);
+			jourSuivant.addImpactCourtTerme(gestionEleves);
 		}
 		return instance;
 	}
@@ -104,8 +98,9 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements : " + listeEvenement);
+		System.out.println("Evenements Irreguliers : " + listeEvenement);
 		for (int idEvenement : listeEvenement) {
+			System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
 			evenement.appliquerImpact(this);
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
@@ -178,20 +173,5 @@ public final class Partie extends Observable {
 	 */
 	public Temps getTemps() {
 		return temps;
-	}
-	
-	/**
-	 * Modifie la partie qui devient "perdue"
-	 */
-	public static void setPerdue() {
-		estPerdue = true;
-	}
-	
-	/**
-	 * Est ce que la partie est perdue ?
-	 * @return : si la partie est perdue
-	 */
-	public static boolean estPerdue() {
-		return estPerdue;
 	}
 }
