@@ -67,6 +67,11 @@ public final class Partie extends Observable {
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
+	
+	/**
+	 * Indique si la partie est perdue ou non
+	 */
+	private static boolean estPerdue;
 
 	
 	private Partie() {}
@@ -85,6 +90,7 @@ public final class Partie extends Observable {
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
+			estPerdue = false;
 			
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
@@ -173,5 +179,20 @@ public final class Partie extends Observable {
 	 */
 	public Temps getTemps() {
 		return temps;
+	}
+	
+	/**
+	 * Modifie la partie qui devient "perdue"
+	 */
+	public static void setPerdue() {
+		estPerdue = true;
+	}
+	
+	/**
+	 * Est ce que la partie est perdue ?
+	 * @return : si la partie est perdue
+	 */
+	public static boolean estPerdue() {
+		return estPerdue;
 	}
 }
