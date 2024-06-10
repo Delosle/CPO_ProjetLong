@@ -189,7 +189,7 @@ public class N7Simulator {
 		sauvegardePartie.put("pedagogie", partieEnCours.getJaugePedagogie().getValue());
 		//a changer quand implementation des fonctionnalités
 		sauvegardePartie.put("estPerdue", Partie.estPerdue());
-		Crous crousInstance = Crous.getInstance(0, 0);
+		Crous crousInstance = Crous.getInstance(1, 1.30);
 		sauvegardePartie.put("idQualiteRepasCrous", crousInstance.getQualite());
 		sauvegardePartie.put("prixVenteRepascrous", crousInstance.getPrixVente());
 		
