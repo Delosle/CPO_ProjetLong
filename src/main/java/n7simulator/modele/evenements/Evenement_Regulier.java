@@ -9,39 +9,41 @@ import n7simulator.modele.Partie;
 import java.sql.Connection;
 import n7simulator.database.DatabaseConnection;
 
-public class Evenement_Irregu extends Evenement{
+
+public class Evenement_Regulier extends Evenement{
+    private String impactBonheurNeg, impactArgentNeg, impactPedagogieNeg;
     private LocalDate dateApparition;
-    private boolean bonus;
 
     /**
      * Constructeur
      * @param id l'identifiant de l'événement
      * @param dateApparition la date d'apparition de l'événement
      */
-    public Evenement_Irregu(int id, LocalDate dateApparition){
+    public Evenement_Regulier(int id, LocalDate dateApparition){
         super(id);
-
         Connection connexion = null;
         try {
             /*ouverture de connexion à la base de données*/
             connexion = DatabaseConnection.getDBConnexion();
 
             /*récupération des informations de l'événement*/
-            String query = "SELECT titre, description, impactBonheur, impactArgent, " +
-                    "impactPedagogie, bonus " +
-                    "FROM evenement_irregulier " +
-                    "WHERE id_eve_irre = " + id;
+            String query = "SELECT titre, description, impactBonheurPos, impactArgentPos, " +
+                    "impactPedagogiePos, impactBonheurNeg, impactArgentNeg, impactPedagogieNeg " +
+                    "FROM evenement_regulier " +
+                    "WHERE id_eve_reg = " + id;
 
             ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexion);
 
             // récupération des informations de l'événement
             while (resultDB.next()) {
-                titre = resultDB.getString("Titre");
+                titre = resultDB.getString("titre");
                 description = resultDB.getString("description");
-                impactBonheur = resultDB.getInt("impactBonheur");
-                impactArgent = resultDB.getInt("impactArgent");
-                impactPedagogie = resultDB.getInt("impactPedagogie");
-                bonus = resultDB.getBoolean("bonus");
+                impactBonheur = resultDB.getInt("impactBonheurPos");
+                impactArgent = resultDB.getInt("impactArgentPos");
+                impactPedagogie = resultDB.getInt("impactPedagogiePos");
+                impactBonheurNeg = resultDB.getInt("impactBonheurNeg");
+                impactArgentNeg = resultDB.getInt("impactArgentNeg");
+                impactPedagogieNeg = resultDB.getInt("impactPedagogieNeg");
             }
 
             this.dateApparition = dateApparition;
@@ -59,8 +61,8 @@ public class Evenement_Irregu extends Evenement{
             } catch (Exception e) {
                 System.err.println("Erreur lors de la fermeture de la connexion");
                 e.printStackTrace();
+            }
         }
-    }
 
     }
     /** @return la date d'apparition de l'événement
@@ -70,12 +72,17 @@ public class Evenement_Irregu extends Evenement{
     }
 
     /*
-        * @return si l'événement est un bonus
+     * @return si l'événement est un bonus
      */
     public boolean isBonus() {
         return bonus;
     }
 
+    public void choixNegatif (){
+        impactArgent = impactArgentNeg;
+        impactBonheur = impactBonheurNeg;
+        impactPedagogie = impactPedagogieNeg;
+    }
 
     /**
      * Appliquer l'impact de l'événement sur la partie
