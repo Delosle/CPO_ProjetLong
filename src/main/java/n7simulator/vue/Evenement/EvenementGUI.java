@@ -139,22 +139,9 @@ public class EvenementGUI extends JFrame {
         minigridBag.setConstraints(panelChoix, mini_c);
         popupPanel.add(panelChoix);
         add(popupPanel);
-
-        // Quand la fenetre se ferme, on ajoute l'evenement en question à la liste des evenements passés
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                pilotageGUI.enregistrerEvent(getPermanent());
-            };
-
-        });
     }
 
-    /**
-     * Crée un Panel contenant les informations de l'événement,
-     * pour l'ajouter à l'historique des événements
-     */
-    public JPanel getPermanent(){
+    public JPanel getPermanent() {
         JPanel miniPanel = new JPanel();
         JPanel panelTitre = new JPanel();
         GridLayout gridLayout = new GridLayout(1, 2);

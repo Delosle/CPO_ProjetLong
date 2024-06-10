@@ -16,6 +16,7 @@ public class EventHistoryGUI extends JPanel{
      */
     public EventHistoryGUI() {
         setBorder(BorderFactory.createTitledBorder("Historique des événements"));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         eventIrreguHistory.setLayout(new BoxLayout(eventIrreguHistory, BoxLayout.Y_AXIS));
         eventIrreguHistory.setBorder(BorderFactory.createTitledBorder("Evénements irréguliers"));
         eventIrreguHistory.add(Box.createVerticalGlue());
@@ -27,7 +28,6 @@ public class EventHistoryGUI extends JPanel{
         add(eventReguHistory);
 
         setPreferredSize(new Dimension(LARGEUR_PANNEL, this.getPreferredSize().height));
-
 
     }
 
