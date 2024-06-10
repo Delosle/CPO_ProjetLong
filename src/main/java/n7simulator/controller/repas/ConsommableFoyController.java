@@ -26,7 +26,7 @@ public class ConsommableFoyController extends JPanel {
         super(new GridLayout(dataRepas.size(), 1));
 
         impact = ImpactConsommableFoy.getInstance();
-        JourSuivant.getInstance().addImpactLongTerme(impact);
+        JourSuivant.getInstance().addImpact(impact);
 
         this.consommableFoys = new ArrayList<ConsommableFoy>();
 

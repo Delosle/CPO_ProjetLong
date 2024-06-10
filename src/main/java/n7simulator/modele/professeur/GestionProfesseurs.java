@@ -3,7 +3,7 @@ package n7simulator.modele.professeur;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
+import n7simulator.joursuivant.ImpactJourSuivant;
 import n7simulator.modele.Partie;
 import n7simulator.modele.jauges.Jauge;
 
@@ -11,7 +11,7 @@ import n7simulator.modele.jauges.Jauge;
  * Classe permettant la gestion des professeurs avec la distinction entre ceux
  * qui sont embauchés et ceux qui ne le sont pas.
  */
-public class GestionProfesseurs extends Observable implements ImpactJourSuivantCourtTerme {
+public class GestionProfesseurs extends Observable implements ImpactJourSuivant {
 	// liste des professeurs embauchés
 	private List<Professeur> professeursEmbauches;
 
@@ -74,7 +74,7 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 	}
 
 	@Override
-	public void effectuerImpactJourSuivantCourtTerme() {
+	public void effectuerImpactJourSuivant() {
 		Partie partie = Partie.getInstance();
 		Jauge jaugeArgent =	partie.getJaugeArgent();
 		Jauge jaugePedagogie = partie.getJaugePedagogie();

@@ -3,12 +3,12 @@ package n7simulator.modele;
 import java.time.LocalDate;
 import java.util.Observable;
 
-import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
+import n7simulator.joursuivant.ImpactJourSuivant;
 
 /**
  * Classe modélisant le temps.
  */
-public class Temps extends Observable implements ImpactJourSuivantCourtTerme {
+public class Temps extends Observable implements ImpactJourSuivant {
 	
 	/**
 	 * La date de la journée en cours pour la partie.
@@ -45,7 +45,7 @@ public class Temps extends Observable implements ImpactJourSuivantCourtTerme {
 	}
 
 	@Override
-	public void effectuerImpactJourSuivantCourtTerme() {
+	public void effectuerImpactJourSuivant() {
 		incrementJournee();
 	}
 }

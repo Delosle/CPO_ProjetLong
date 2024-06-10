@@ -88,9 +88,9 @@ public final class Partie extends Observable {
 			
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
-			jourSuivant.addImpactCourtTerme(gestionProfesseurs);
-			jourSuivant.addImpactCourtTerme(temps);
-			jourSuivant.addImpactCourtTerme(gestionEleves);
+			jourSuivant.addImpact(gestionProfesseurs);
+			jourSuivant.addImpact(temps);
+			jourSuivant.addImpact(gestionEleves);
 		}
 		return instance;
 	}
