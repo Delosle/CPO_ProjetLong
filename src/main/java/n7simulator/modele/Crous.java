@@ -9,6 +9,7 @@ import java.util.Observable;
 
 import n7simulator.database.DatabaseConnection;
 import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
+import n7simulator.joursuivant.JourSuivant;
 
 /**
  * Classe permettant la simulation du Crous
@@ -28,7 +29,7 @@ public class Crous extends Observable implements ImpactJourSuivantCourtTerme {
 		this.qualite = qualite;
 		this.prixVente = prixVente;
 		// TODO : décommenter la ligne suivante pour ajouter l'impact quand on merge avec develop
-		//JourSuivant.getInstance().addImpactCourtTerme(this);
+		JourSuivant.getInstance().addImpactCourtTerme(this);
 	}
 	
 	/**
