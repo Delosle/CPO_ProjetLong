@@ -1,6 +1,5 @@
-package n7simulator.modele.repas;
+package n7simulator.modele;
 
-import java.security.PublicKey;
 import java.util.Observable;
 
 public class ConsommableFoy extends Observable {

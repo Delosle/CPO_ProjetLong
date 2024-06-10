@@ -1,6 +1,6 @@
 package n7simulator.controller.repas;
 
-import n7simulator.modele.repas.ConsommableFoy;
+import n7simulator.modele.ConsommableFoy;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

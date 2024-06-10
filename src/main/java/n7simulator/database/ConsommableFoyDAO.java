@@ -1,6 +1,6 @@
 package n7simulator.database;
 
-import n7simulator.modele.repas.ConsommableFoy;
+import n7simulator.modele.ConsommableFoy;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
