@@ -95,7 +95,7 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 		int nbProfsEmbauches = professeursEmbauches.size();
 		
 		if (nbProfsEmbauches > 0 && totalHeureCours > 0) {
-			// Update niveau pedagogie
+			// Update niveau pedagogie en fonction niveau moyen profs
 			double moyennePeda = totalPeda / nbProfsEmbauches;
 			if (moyennePeda >= 40) {
 				jaugePedagogie.ajouter((int)(moyennePeda / 10));
@@ -105,20 +105,27 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivantC
 
 			double moyenneSalaireSupMin = totalSalaireSupMin / nbProfsEmbauches;
 			
-			// Malus
+			// Si trop d'élèves par profs et trop peu d'heures de cours pour les élèves, malus pédagogie
 			if (partie.getGestionEleves().getNombreEleves() / nbProfsEmbauches > 50 || partie.getGestionEleves().getNombreEleves() / totalHeureCours > 50) {
-				jaugePedagogie.ajouter(-15);				
+				jaugePedagogie.ajouter(-15);
+				// Si prof pas assez payé, malus bohneur
 				if (moyenneSalaireSupMin < 100) {
 					jaugeBohneur.ajouter(-10);
 				}
 			}
 			
-			// Update niveau bonheur profs
+			// Si en moyenne plus de 6h de cours quotidiennes/prof, malus bonheur
+			if (totalHeureCours / nbProfsEmbauches > 6) {
+				jaugeBohneur.ajouter(-10);
+			}
+			
+			// Bonus niveau bonheur profs si bon salaire
 			if (moyenneSalaireSupMin >= 100) {
 				jaugeBohneur.ajouter(10);
 			}
 			
 		} else {
+			// Si pas de profs embauchés, malus pédagogie
 			jaugePedagogie.ajouter(-20);
 		}
 	}
