@@ -13,9 +13,10 @@ public class EvenementReguGUI extends EvenementGUI{
 
     public EvenementReguGUI(Evenement evenement, PilotageGUI pilotageGUI) {
         super(evenement, pilotageGUI);
-        Partie laPartie = Partie.getInstance();
-        ChoixEventRegu panelChoix = new ChoixEventRegu(evenement, laPartie);
-        popupPanel.add(panelChoix);
+        panelChoix.add(new ChoixEventRegu(evenement,  Partie.getInstance(), this));
+        //panelChoix.add(panelBoutonsChoix);
+        revalidate();
+        repaint();
     }
 
     public void changeInpactEnNega(int bonheur, int pedagogie, int argent){
