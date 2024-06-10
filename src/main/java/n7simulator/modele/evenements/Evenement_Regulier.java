@@ -71,13 +71,6 @@ public class Evenement_Regulier extends Evenement{
         return dateApparition;
     }
 
-    /*
-     * @return si l'événement est un bonus
-     */
-    public boolean isBonus() {
-        return bonus;
-    }
-
     public void choixNegatif (){
         impactArgent = impactArgentNeg;
         impactBonheur = impactBonheurNeg;
