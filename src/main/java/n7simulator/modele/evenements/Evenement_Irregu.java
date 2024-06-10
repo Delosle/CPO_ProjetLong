@@ -81,7 +81,7 @@ public class Evenement_Irregu extends Evenement{
      * Appliquer l'impact de l'événement sur la partie
      * @param p la partie sur laquelle appliquer l'impact
      */
-    public void appliquerImpact(Partie p){
+    public void appliquerImpact(Partie p, boolean choix){
         p.getJaugeArgent().ajouter(impactArgent);
         p.getJaugeBonheur().ajouter(impactBonheur);
         p.getJaugePedagogie().ajouter(impactPedagogie);

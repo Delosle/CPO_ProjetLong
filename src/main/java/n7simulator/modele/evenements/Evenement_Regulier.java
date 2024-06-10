@@ -11,7 +11,7 @@ import n7simulator.database.DatabaseConnection;
 
 
 public class Evenement_Regulier extends Evenement{
-    private String impactBonheurNeg, impactArgentNeg, impactPedagogieNeg;
+    private int impactBonheurNeg, impactArgentNeg, impactPedagogieNeg;
     private LocalDate dateApparition;
 
     /**
@@ -71,19 +71,19 @@ public class Evenement_Regulier extends Evenement{
         return dateApparition;
     }
 
-    public void choixNegatif (){
-        impactArgent = impactArgentNeg;
-        impactBonheur = impactBonheurNeg;
-        impactPedagogie = impactPedagogieNeg;
-    }
-
     /**
      * Appliquer l'impact de l'événement sur la partie
      * @param p la partie sur laquelle appliquer l'impact
      */
-    public void appliquerImpact(Partie p){
-        p.getJaugeArgent().ajouter(impactArgent);
-        p.getJaugeBonheur().ajouter(impactBonheur);
-        p.getJaugePedagogie().ajouter(impactPedagogie);
+    public void appliquerImpact(Partie p, boolean choix) {
+        if (choix) {
+            p.getJaugeArgent().ajouter(impactArgent);
+            p.getJaugeBonheur().ajouter(impactBonheur);
+            p.getJaugePedagogie().ajouter(impactPedagogie);
+        } else {
+            p.getJaugeArgent().ajouter(impactArgentNeg);
+            p.getJaugeBonheur().ajouter(impactBonheurNeg);
+            p.getJaugePedagogie().ajouter(impactPedagogieNeg);
+        }
     }
 }
