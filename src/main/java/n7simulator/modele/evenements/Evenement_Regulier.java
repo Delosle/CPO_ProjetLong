@@ -73,6 +73,7 @@ public class Evenement_Regulier extends Evenement{
 
     /**
      * Appliquer l'impact de l'événement sur la partie
+     * Si choix est vrai, l'impact correspond au choix Oui, sinon il correspond au choix Non
      * @param p la partie sur laquelle appliquer l'impact
      */
     public void appliquerImpact(Partie p, boolean choix) {

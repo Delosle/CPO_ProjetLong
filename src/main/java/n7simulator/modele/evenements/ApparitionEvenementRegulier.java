@@ -8,13 +8,22 @@ import n7simulator.database.DatabaseConnection;
 
 public class ApparitionEvenementRegulier {
 
+    /**
+     * Contient les données de l'événement
+     */
     private Map<Integer, Map<String, Object>> donneeEvenement; // contient les données de l'événement
 
+    /**
+     * Constructeur de la classe ApparitionEvenementRegulier
+     */
     public ApparitionEvenementRegulier() {
         donneeEvenement = new LinkedHashMap<>();
         recupDonneeEvenement();
     }
 
+    /**
+     * Vérifie si un événement régulier doit se produire
+     */
     public List <Integer> verifEvenementRegulier (LocalDate dateActuelle) {
         //System.out.println("Date actuelle : " + dateActuelle);
         List <Integer> listeEvenement = new ArrayList<>();
@@ -44,6 +53,10 @@ public class ApparitionEvenementRegulier {
         return donneeEvenement;
     }
 
+    /**
+     * Met à jour les données de l'événement
+     * @param donneeSauvegarde
+     */
     public void setDonneeEvenement(List<Map<String, Object>> donneeSauvegarde) {
         for (Map<String, Object> eventDetails : donneeSauvegarde) {
             //recup id de l'événement
@@ -55,6 +68,9 @@ public class ApparitionEvenementRegulier {
         }
     }
 
+    /**
+     * Récupère les données de l'événement dans la base de données
+     */
     private void recupDonneeEvenement() {
         try {
             Connection conn = DatabaseConnection.getDBConnexion();
