@@ -42,7 +42,7 @@ public class EventIrregTest {
         //(Verifier si les valeurs de jauge ont bien ete modifiees)
         LocalDate dateapparition = new Temps(LocalDate.now()).getJourneeEnCours();
         Evenement_Irregu event2 = new Evenement_Irregu(4, dateapparition);
-        event2.appliquerImpact(nouvellePartie);
+        event2.appliquerImpact(nouvellePartie, true);
         nouvellePartie.getJaugeArgent().ajouter(500);
         nouvellePartie.getJaugePedagogie().ajouter(15);
         nouvellePartie.getJaugeBonheur().ajouter(10);
