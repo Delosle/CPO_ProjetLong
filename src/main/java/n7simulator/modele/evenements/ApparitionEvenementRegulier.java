@@ -48,12 +48,9 @@ public class ApparitionEvenementRegulier {
         for (Map<String, Object> eventDetails : donneeSauvegarde) {
             //recup id de l'événement
             int idEveReg = (int) eventDetails.get("idEvenementRegulier");
-            System.out.println("idEveReg : " + idEveReg);
             //recup dico avec les données de l'événement
             Map<String, Object> event = donneeEvenement.get(idEveReg);
-            System.out.println("event : " + event);
             event.put("debut", eventDetails.get("dateEvenement"));
-            System.out.println("event : " + event);
             donneeEvenement.put(idEveReg, event);
         }
     }

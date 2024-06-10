@@ -118,8 +118,6 @@ public final class Partie extends Observable {
 
 	public void genererEvenementRegulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
-		System.out.println("Evenements Reguliers : " + listeEvenement + "****************");
-		System.out.println(gestionnaireEvenementRegulier.getDonneeEvenement());
 	}
 
 	
