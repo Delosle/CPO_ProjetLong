@@ -29,8 +29,9 @@ public class TempsController extends JPanel {
 	private class ActionJourSuivant implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Partie.getInstance().genererEvenementIrregulier((PilotageGUI) getParent().getParent());
 			JourSuivant.getInstance().effectuerImpactsJourSuivant();
+			Partie.getInstance().genererEvenementIrregulier((PilotageGUI) getParent().getParent());
+			Partie.getInstance().genererEvenementRegulier((PilotageGUI) getParent().getParent());
 		}
 	}
 }

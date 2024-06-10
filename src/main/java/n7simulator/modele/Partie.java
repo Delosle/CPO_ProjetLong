@@ -16,6 +16,7 @@ import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.vue.Evenement.EvenementGUI;
 import n7simulator.vue.PilotageGUI;
+import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -62,6 +63,11 @@ public final class Partie extends Observable {
 	 * Gestionnaire des événements irréguliers
 	 */
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
+
+	/**
+	 * Gestionnaire des événements réguliers
+	 */
+	private static ApparitionEvenementRegulier gestionnaireEvenementRegulier;
 	
 	/**
 	 * Les élèves
@@ -82,6 +88,7 @@ public final class Partie extends Observable {
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
+			gestionnaireEvenementRegulier = new ApparitionEvenementRegulier();
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
@@ -98,15 +105,19 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements Irreguliers : " + listeEvenement);
+		//System.out.println("Evenements Irreguliers : " + listeEvenement);
 		for (int idEvenement : listeEvenement) {
-			System.out.println("Evenement Irregulier : " + idEvenement);
+			//System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
 			evenement.appliquerImpact(this, true);
 			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
 			evenementGUI.setVisible(true);
 
 		}
+	}
+
+	public void genererEvenementRegulier(PilotageGUI pilote) {
+		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
 	}
 
 	
@@ -173,5 +184,13 @@ public final class Partie extends Observable {
 	 */
 	public Temps getTemps() {
 		return temps;
+	}
+
+	/**
+	 * Obtenir le gestionnaire des événements réguliers
+	 * @return : le gestionnaire des événements réguliers
+	 */
+	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
+		return gestionnaireEvenementRegulier;
 	}
 }
