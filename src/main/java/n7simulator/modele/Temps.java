@@ -42,6 +42,8 @@ public class Temps extends Observable implements ImpactJourSuivant {
 	
 	public void setJourneeEnCours(LocalDate dateEnCours) {
 		this.journeeEnCours = dateEnCours;
+		this.setChanged();
+		this.notifyObservers(this);
 	}
 
 	@Override
