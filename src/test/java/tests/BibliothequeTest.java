@@ -27,10 +27,8 @@ public class BibliothequeTest {
 			biblio.setAccessible(true);
 			biblio.set(null, null);
 		} catch (NoSuchFieldException | SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -41,7 +39,6 @@ public class BibliothequeTest {
 	@Test
 	public void testInitialisationBiblio() {
 		biblio = Bibliotheque.getInstance(10);
-		System.out.println(biblio.getNbLivre());
 		assertEquals(10, biblio.getNbLivre());
 		assertEquals(15, biblio.getPrixLivre());
 	}
@@ -69,21 +66,57 @@ public class BibliothequeTest {
 	}
 
 	/*
-	 * Test vérifiant que le nombre de livre peut être modifié
+	 * Test vérifiant que le nombre de livre a un impact positif
 	 */	
 	@Test
 	public void testImpactPos() {
 		biblio = Bibliotheque.getInstance(10);
 		Partie instancePartie = Partie.getInstance();
+		instancePartie.getJaugeArgent().ajouter(50);
+		instancePartie.getJaugeBonheur().ajouter(50);
+		instancePartie.getJaugePedagogie().ajouter(50);
 		Double valeurAvantPeda = instancePartie.getJaugePedagogie().getValue();
 		Double valeurAvantBonheur = instancePartie.getJaugeBonheur().getValue();
-		//On check que valeur bien là
-		assertEquals(valeurAvantPeda, instancePartie.getJaugePedagogie().getValue(), EPSILON);
-		assertEquals(valeurAvantBonheur, instancePartie.getJaugeBonheur().getValue(), EPSILON);
+		
 		//On fait modifier les jauges
-		biblio.effectuerImpactJourSuivantCourtTerme();
+		biblio.effectuerImpactJourSuivant();
 		assertEquals(valeurAvantPeda + 0.5 * biblio.getNbLivre() + 5, instancePartie.getJaugePedagogie().getValue(), EPSILON);
 		assertEquals(valeurAvantBonheur + 5, instancePartie.getJaugeBonheur().getValue(), EPSILON);
+	}
+	
+	/*
+	 * Test vérifiant que le nombre de livre à un impact négatif
+	 */	
+	@Test
+	public void testImpactNeg() {
+		biblio = Bibliotheque.getInstance(5);
+		Partie instancePartie = Partie.getInstance();
+		instancePartie.getJaugeArgent().ajouter(50);
+		instancePartie.getJaugeBonheur().ajouter(20);
+		instancePartie.getJaugePedagogie().ajouter(20);
+		Double valeurAvantPeda = instancePartie.getJaugePedagogie().getValue();
+		
+		//On fait modifier les jauges
+		biblio.effectuerImpactJourSuivant();
+		assertEquals(valeurAvantPeda - 5, instancePartie.getJaugePedagogie().getValue(), EPSILON);
+	}
+	
+	/*
+	 * Test vérifiant que le nombre de livre à un impact sur l'argent
+	 */	
+	@Test
+	public void testImpactArgent() {
+		biblio = Bibliotheque.getInstance(5);
+		Partie instancePartie = Partie.getInstance();
+		instancePartie.getJaugeArgent().ajouter(50);
+		instancePartie.getJaugeBonheur().ajouter(20);
+		instancePartie.getJaugePedagogie().ajouter(20);
+		Double valeurAvantArgent = instancePartie.getJaugeArgent().getValue();
+		int ancienNbLivre = biblio.getNbLivre();
+		//On fait modifier les jauges
+		biblio.setNbLivre(5);
+		biblio.effectuerImpactJourSuivant();
+		assertEquals(valeurAvantArgent + (ancienNbLivre - biblio.getNbLivre()) * biblio.getPrixLivre(), instancePartie.getJaugeArgent().getValue(), EPSILON);
 	}
 
 }
