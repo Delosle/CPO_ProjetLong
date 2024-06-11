@@ -2,11 +2,11 @@ package n7simulator.modele;
 
 import java.util.Observable;
 
-import n7simulator.joursuivant.ImpactJourSuivantCourtTerme;
+import n7simulator.joursuivant.ImpactJourSuivant;
 import n7simulator.joursuivant.JourSuivant;
 
 @SuppressWarnings("deprecation")
-public class Bibliotheque extends Observable implements ImpactJourSuivantCourtTerme{
+public class Bibliotheque extends Observable implements ImpactJourSuivant {
 	private static Bibliotheque instance;
 	private final int prixLivre = 15;
 	private int nbLivre;
@@ -20,7 +20,7 @@ public class Bibliotheque extends Observable implements ImpactJourSuivantCourtTe
 	private Bibliotheque (int nbLivre) {
 		this.nbLivre = nbLivre;
 		this.ancienNbLivre = nbLivre;
-		JourSuivant.getInstance().addImpactCourtTerme(this);
+		JourSuivant.getInstance().addImpact(this);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class Bibliotheque extends Observable implements ImpactJourSuivantCourtTe
 	}
 
 	@Override
-	public void effectuerImpactJourSuivantCourtTerme() {
+	public void effectuerImpactJourSuivant() {
 		Partie instancePartie = Partie.getInstance();
 		instancePartie.getJaugeArgent().ajouter((this.ancienNbLivre - this.nbLivre) * this.prixLivre);
 		if (nbLivre > 5) {
@@ -71,8 +71,7 @@ public class Bibliotheque extends Observable implements ImpactJourSuivantCourtTe
 		}
 		else {
 			instancePartie.getJaugePedagogie().ajouter(-5);
-		}
-		
+		}		
 	}
 	
 	

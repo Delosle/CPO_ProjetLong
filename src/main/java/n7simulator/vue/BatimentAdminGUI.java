@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import n7simulator.database.ConsommableFoyDAO;
 import n7simulator.modele.Partie;
-import n7simulator.vue.repas.DisplayFoy;
+import n7simulator.vue.consommable.DisplayFoy;
 
 /**
  * Représenter la vue du bâtiment E-F.
