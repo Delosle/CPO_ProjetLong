@@ -62,7 +62,7 @@ public abstract class Evenement{
     * La méthode d'application de l'impact change selon la nature de l'evenement
     * @param p la partie sur laquelle appliquer l'impact
      */
-    abstract void appliquerImpact(Partie p, boolean choix);
+    abstract public void appliquerImpact(Partie p, boolean choix);
 
 }
 

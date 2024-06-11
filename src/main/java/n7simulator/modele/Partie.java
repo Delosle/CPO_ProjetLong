@@ -16,6 +16,8 @@ import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.vue.Evenement.EvenementGUI;
 import n7simulator.modele.evenements.Evenement_Regulier;
+import n7simulator.vue.Evenement.EvenementIrreguGUI;
+import n7simulator.vue.Evenement.EvenementReguGUI;
 import n7simulator.vue.PilotageGUI;
 import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 
@@ -106,24 +108,26 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements Irreguliers : " + listeEvenement);
+
 		for (int idEvenement : listeEvenement) {
 			//System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
 			evenement.appliquerImpact(this, true);
-			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
-			evenementGUI.setVisible(true);
+			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
+			evenementIrreguGUI.setVisible(true);
 
 		}
 	}
 
 	public void genererEvenementRegulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
-		System.out.println("Evenements Reguliers : " + listeEvenement);
+
 		for (int idEvenement : listeEvenement) {
 			Evenement_Regulier evenement = new Evenement_Regulier(idEvenement, temps.getJourneeEnCours());
 			System.out.println("Evenement Regulier : " + evenement.getTitre());
-			evenement.appliquerImpact(this, true);
+			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
+			System.out.println("Evenement Regulier : vue");
+			evenementReguGUI.setVisible(true);
 		}
 	}
 

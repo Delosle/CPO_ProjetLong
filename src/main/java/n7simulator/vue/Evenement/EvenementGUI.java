@@ -1,5 +1,7 @@
 package n7simulator.vue.Evenement;
 
+import n7simulator.controller.ChoixEventRegu;
+import n7simulator.modele.Partie;
 import n7simulator.modele.evenements.Evenement;
 import n7simulator.vue.PilotageGUI;
 
@@ -133,12 +135,16 @@ public class EvenementGUI extends JFrame {
         mini_c.weightx=1;
         minigridBag.setConstraints(zone_Impacts, mini_c);
         popupPanel.add(zone_Impacts);
+        //zone_Impacts.setBackground(Color.RED);
 
         mini_c.gridy = 3;
         mini_c.weighty=0.3;
+
         minigridBag.setConstraints(panelChoix, mini_c);
         popupPanel.add(panelChoix);
+
         add(popupPanel);
+
     }
 
     public JPanel getPermanent() {
@@ -167,6 +173,13 @@ public class EvenementGUI extends JFrame {
         miniPanel.add(panelTitre);
         miniPanel.add(zone_Impacts);
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        Dimension dimensionEvent = new Dimension((int) (width * 0.3), (int)(height * 0.05));
+        miniPanel.setSize(dimensionEvent);
+        miniPanel.setMaximumSize(dimensionEvent);
+        miniPanel.setMinimumSize(dimensionEvent);
         return miniPanel;
     }
 }

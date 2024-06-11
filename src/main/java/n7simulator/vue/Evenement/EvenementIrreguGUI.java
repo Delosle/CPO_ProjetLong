@@ -17,6 +17,7 @@ public class EvenementIrreguGUI extends EvenementGUI{
             @Override
             public void windowClosing(WindowEvent e) {
                 pilotageGUI.enregistrerEvent(getPermanent(), false);
+
             };
 
         });
