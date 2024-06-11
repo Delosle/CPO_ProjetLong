@@ -25,6 +25,7 @@ public class ChoixEventRegu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 evenement.appliquerImpact(p, true);
+                evenementReguGUI.afficher();
                 evenementReguGUI.dispose();
             }
         });
@@ -35,6 +36,7 @@ public class ChoixEventRegu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 evenement.appliquerImpact(p, false);
+                evenementReguGUI.afficher();
                 evenementReguGUI.dispose();
             }
         });

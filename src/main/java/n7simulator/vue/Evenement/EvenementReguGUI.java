@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class EvenementReguGUI extends EvenementGUI{
 
-
     public EvenementReguGUI(Evenement evenement, PilotageGUI pilotageGUI) {
         super(evenement, pilotageGUI);
         panelChoix.add(new ChoixEventRegu(evenement,  Partie.getInstance(), this));
@@ -23,6 +22,10 @@ public class EvenementReguGUI extends EvenementGUI{
         impactBonheur = bonheur;
         impactPedagogie = pedagogie;
         impactArgent = argent;
+    }
+
+    public void afficher(){
+        pilotageGUI.enregistrerEvent(getPermanent(), true);
     }
 
 

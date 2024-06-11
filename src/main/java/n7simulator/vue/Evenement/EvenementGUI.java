@@ -173,6 +173,13 @@ public class EvenementGUI extends JFrame {
         miniPanel.add(panelTitre);
         miniPanel.add(zone_Impacts);
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        Dimension dimensionEvent = new Dimension((int) (width * 0.3), (int)(height * 0.05));
+        miniPanel.setSize(dimensionEvent);
+        miniPanel.setMaximumSize(dimensionEvent);
+        miniPanel.setMinimumSize(dimensionEvent);
         return miniPanel;
     }
 }
