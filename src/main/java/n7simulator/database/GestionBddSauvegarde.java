@@ -69,13 +69,12 @@ public class GestionBddSauvegarde {
 		try (Connection conn = getDBConnexion()) {
 			// Recuperation de l'id de la partie
 			int idPartie = (int) recupererIdPartie(nomPartie, conn)[0];
-			List<String> tables = Arrays.asList("ProfEmbauches", "EvenementEnCours", "Partie", "ConsommableEnCours");
+			List<String> tables = Arrays.asList("ProfEmbauches", "EvenementEnCours", "Partie", "DateEvenementRegulier", "ConsommableEnCours");
 			for (String table : tables) {
 				String query = "SELECT * FROM " + table + " WHERE idPartie = " + idPartie;
 				infoBdd.put(table, peuplerDico(conn, query));
 			}
 			closeDBConnexion(conn);
-			System.out.println(infoBdd);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -214,9 +213,14 @@ public class GestionBddSauvegarde {
 					profsCleanSauvegarde(conn, maxidPartie);
 				}
 
-				if(tableName == "ConsommableEnCours"){
-					foyCleanSauvegarde(conn, maxidPartie);
-				}
+                if(tableName == "DateEvenementRegulier") {
+                    //suppression des donnees sur les dates des evenements reguliers pour tout remettre de 0
+                    evenementRegulierCleanSauvegarde(conn, maxidPartie);
+                }
+
+                if(tableName == "ConsommableEnCours"){
+                    foyCleanSauvegarde(conn, maxidPartie);
+                }
 				
 				for (Map<String, Object> record : listOfRecords) {
 					StringBuilder columns = new StringBuilder();
@@ -237,7 +241,7 @@ public class GestionBddSauvegarde {
 					updateValues.delete(updateValues.length() - 2, updateValues.length());
 
 					String query;
-					if(tableName == "ProfEmbauches" || tableName == "ConsommableEnCours") {
+					if(tableName == "ProfEmbauches" || tableName == "ConsommableEnCours" || tableName == "DateEvenementRegulier") {
 						// ajout de l'idPartie
 						columns.append(", ").append("idPartie");
 						values.append(", ").append("'" + maxidPartie + "'");
@@ -282,13 +286,22 @@ public class GestionBddSauvegarde {
 			}
 	}
 
-	private static void foyCleanSauvegarde(Connection conn, int idPartie){
-		String queryDelete = "DELETE FROM ConsommableEnCours WHERE idPartie = "+idPartie+";";
-		try {
-			effectuerMiseAJour(queryDelete, conn);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    private static void foyCleanSauvegarde(Connection conn, int idPartie){
+        String queryDelete = "DELETE FROM ConsommableEnCours WHERE idPartie = "+idPartie+";";
+        try {
+            effectuerMiseAJour(queryDelete, conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private static void evenementRegulierCleanSauvegarde(Connection conn, int idPartie) {
+        String queryDelete = "DELETE FROM DateEvenementRegulier WHERE idPartie = "+idPartie+";";
+        try {
+            effectuerMiseAJour(queryDelete, conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+               
 }

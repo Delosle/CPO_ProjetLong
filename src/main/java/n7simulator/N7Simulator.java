@@ -17,6 +17,9 @@ import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
 import n7simulator.modele.consommableFoy.ConsommableFoy;
 import n7simulator.modele.consommableFoy.ConsommablesFoy;
+import n7simulator.modele.evenements.ApparitionEvenementRegulier;
+import n7simulator.vue.GameOverFrame;
+import n7simulator.modele.jauges.ValeurNulleException;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.professeur.GestionProfesseurs;
@@ -67,9 +70,13 @@ public class N7Simulator {
 		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
-		valoriserDonnesFoy(donneesChargees);
-		
-		affichageCarte();
+        valoriserDonnesFoy(donneesChargees);
+        valoriserDonneesDateEvenementRegulier(donneesChargees);
+		//affichage de l'interface du jeu
+		if(!Partie.estPerdue()) {
+			affichageCarte();
+		}
+
 	}
 
 	/**
@@ -115,11 +122,20 @@ public class N7Simulator {
 		Partie partie = Partie.getInstance();
 		partie.initNomPartie((String)donneesPartie.get("nomPartie"));
 		partie.getGestionEleves().inscrireEleves((int)donneesPartie.get("nbEleves"));
-		partie.getJaugeArgent().ajouter((double)donneesPartie.get("argent"));
-		partie.getJaugeBonheur().ajouter((double)donneesPartie.get("bonheur"));
-		partie.getJaugePedagogie().ajouter((double)donneesPartie.get("pedagogie"));
+		try {
+			partie.getJaugeArgent().ajouter((double)donneesPartie.get("argent"));
+			partie.getJaugeBonheur().ajouter((double)donneesPartie.get("bonheur"));
+			partie.getJaugePedagogie().ajouter((double)donneesPartie.get("pedagogie"));
+		} catch (ValeurNulleException vne) {
+			Partie.setPerdue();
+			new GameOverFrame(vne.getJaugeDeclenchement());
+		}
 		String dateString = (String) donneesPartie.get("dateEnCours");
 		partie.getTemps().setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));		
+		Crous crousInstance = Crous.getInstance(0, 0);
+		crousInstance.setQualite((int)donneesPartie.get("idQualiteRepasCrous"));
+		crousInstance.setPrixVente((double)donneesPartie.get("prixVenteRepascrous"));
+
 	}
 	
 	/**
@@ -162,7 +178,19 @@ public class N7Simulator {
 			consommables.get(i).setPrix((double)donneesPartie.get(i).get("prix"));
 		}
 	}
-	
+
+
+	/**
+	 * Valorise toutes les données liées aux professeurs embauches (table ProfEmbauches en bd)
+	 * @param donneesChargees : les données récupérées depuis la bd
+	 */
+	private static void valoriserDonneesDateEvenementRegulier(Map<String, List<Map<String, Object>>> donneesChargees) {
+		List<Map<String, Object>> donneesPartie = donneesChargees.get("DateEvenementRegulier");
+		Partie partie = Partie.getInstance();
+		ApparitionEvenementRegulier gestionnaireEvenementRegulier = partie.getGestionnaireEvenementRegulier();
+		gestionnaireEvenementRegulier.setDonneeEvenement(donneesPartie);
+	}
+
 	/**
 	 * Permet de sauvegarder la partie en base de données
 	 */
@@ -172,7 +200,8 @@ public class N7Simulator {
 		donneesPartie.put("Partie", getObjetSauvegardePartie());
 		donneesPartie.put("ProfEmbauches", getObjetSauvegardeProfs());
 		donneesPartie.put("ConsommableEnCours", getObjetSauvegardeFoy());
-		
+		donneesPartie.put("DateEvenementRegulier", getObjetEvenementRegulierDate());
+
 		Partie partieEnCours = Partie.getInstance();
 		GestionBddSauvegarde.sauvegarderDonnee(donneesPartie, partieEnCours.getNomPartie());
 	}
@@ -194,9 +223,10 @@ public class N7Simulator {
 		sauvegardePartie.put("bonheur", partieEnCours.getJaugeBonheur().getValue());
 		sauvegardePartie.put("pedagogie", partieEnCours.getJaugePedagogie().getValue());
 		//a changer quand implementation des fonctionnalités
-		sauvegardePartie.put("estPerdue", false);
-		sauvegardePartie.put("idQualiteRepasCrous", 0);
-		sauvegardePartie.put("prixVenteRepascrous", 0.0);
+		sauvegardePartie.put("estPerdue", Partie.estPerdue());
+		Crous crousInstance = Crous.getInstance(1, 1.30);
+		sauvegardePartie.put("idQualiteRepasCrous", crousInstance.getQualite());
+		sauvegardePartie.put("prixVenteRepascrous", crousInstance.getPrixVente());
 		
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		result.add(sauvegardePartie);
@@ -242,6 +272,31 @@ public class N7Simulator {
 		}
 
 		return listeSauvegardeFoy;
+	}
+
+	/**
+	 * Obtenir un objet contenant toutes les dates des evenements réguliers  à
+	 * @return : une liste d'objets associatifs (entre le nom de la colonne et sa valeur)
+	 */
+	private static List<Map<String, Object>> getObjetEvenementRegulierDate() {
+		List<Map<String, Object>> listeSauvegardeEvenementRegulier = new ArrayList<>();
+
+		Partie partieEnCours = Partie.getInstance();
+		ApparitionEvenementRegulier gestionnaireEvenementRegulier = partieEnCours.getGestionnaireEvenementRegulier();
+		Map<Integer, Map<String, Object>> donneeEvenement = gestionnaireEvenementRegulier.getDonneeEvenement();
+
+
+		for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
+			Map<String, Object> sauvegardeEvenement = new HashMap<String, Object>();
+			Integer idEveReg = entry.getKey();
+			sauvegardeEvenement.put("idEvenementRegulier", idEveReg);
+			Map<String, Object> eventDetails = entry.getValue();
+			String dateString = eventDetails.get("debut").toString();
+			LocalDate dateDebut = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			sauvegardeEvenement.put("dateEvenement", dateDebut);
+			listeSauvegardeEvenementRegulier.add(sauvegardeEvenement);
+		}
+		return listeSauvegardeEvenementRegulier;
 	}
 
 }

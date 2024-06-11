@@ -1,9 +1,12 @@
 package n7simulator.controller.startmenu;
 
+import java.awt.Window;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import n7simulator.N7Simulator;
 import n7simulator.database.GestionBddSauvegarde;
@@ -21,7 +24,7 @@ public class NouvellePartieFormulaire extends JPanel {
 	/**
 	 * Obtenir le formulaire de nouvelle partie
 	 */
-	public NouvellePartieFormulaire() {
+	public NouvellePartieFormulaire(NouvellePartieBouton ancetre) {
 		this.setLayout(new java.awt.GridLayout(2, 1, 5, 5));
 
 		JLabel messageLabel = new JLabel("Nom de la partie");
@@ -40,19 +43,19 @@ public class NouvellePartieFormulaire extends JPanel {
 			int result = JOptionPane.showConfirmDialog(null, this, "Nouvelle Partie", JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE);
 
-			if (result == JOptionPane.OK_OPTION) {
+			if (result == JOptionPane.OK_OPTION) { 
 				if (testerNomValide()) {
 					//initialisation de la partie
 					isValidInput = true;
+					Window win = SwingUtilities.getWindowAncestor(ancetre.getParent());
+					win.dispose();
 					Partie partie = Partie.getInstance();
 					partie.initNomPartie(this.fieldNomPartie.getText().trim());
 					N7Simulator.sauvegarderPartie();
 					N7Simulator.initNouvellePartie();
 				}
 			} else {
-				//retour au menu principal
-				new StartMenuGUI();
-				break;
+				isValidInput = true;
 			}
 		}
 	}

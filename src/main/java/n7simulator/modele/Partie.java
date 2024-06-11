@@ -17,7 +17,11 @@ import n7simulator.modele.professeur.Professeur;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.vue.Evenement.EvenementGUI;
+import n7simulator.modele.evenements.Evenement_Regulier;
+import n7simulator.vue.Evenement.EvenementIrreguGUI;
+import n7simulator.vue.Evenement.EvenementReguGUI;
 import n7simulator.vue.PilotageGUI;
+import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -64,18 +68,28 @@ public final class Partie extends Observable {
 	 * Gestionnaire des événements irréguliers
 	 */
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
-	
+
+	/**
+	 * Gestionnaire des événements réguliers
+	 */
+	private static ApparitionEvenementRegulier gestionnaireEvenementRegulier;
+
 	/**
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
 
 	/**
+	 * Indique si la partie est perdue ou non
+	 */
+	private static boolean estPerdue;
+
+	/**
 	 * les consommables au Foy
 	 */
 	private static ConsommablesFoy consommablesFoy;
 
-	
+
 	private Partie() {}
 	
 	/**
@@ -96,9 +110,9 @@ public final class Partie extends Observable {
 
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
-			jourSuivant.addImpactCourtTerme(gestionProfesseurs);
-			jourSuivant.addImpactCourtTerme(temps);
-			jourSuivant.addImpactCourtTerme(gestionEleves);
+			jourSuivant.addImpact(gestionProfesseurs);
+			jourSuivant.addImpact(temps);
+			jourSuivant.addImpact(gestionEleves);
 		}
 		return instance;
 	}
@@ -106,14 +120,21 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements Irreguliers : " + listeEvenement);
 		for (int idEvenement : listeEvenement) {
-			System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
-			evenement.appliquerImpact(this);
-			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
-			evenementGUI.setVisible(true);
+			evenement.appliquerImpact(this, true);
+			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
+			evenementIrreguGUI.setVisible(true);
 
+		}
+	}
+
+	public void genererEvenementRegulier(PilotageGUI pilote) {
+		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
+		for (int idEvenement : listeEvenement) {
+			Evenement_Regulier evenement = new Evenement_Regulier(idEvenement, temps.getJourneeEnCours());
+			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
+			evenementReguGUI.setVisible(true);
 		}
 	}
 
@@ -185,5 +206,28 @@ public final class Partie extends Observable {
 
 	public ConsommablesFoy getConsommablesFoy(){
 		return consommablesFoy;
+	}
+
+	/**
+	 * Obtenir le gestionnaire des événements réguliers
+	 * @return : le gestionnaire des événements réguliers
+	 */
+	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
+		return gestionnaireEvenementRegulier;
+  }
+
+	/**
+	 * Modifie la partie qui devient "perdue"
+	 */
+	public static void setPerdue() {
+		estPerdue = true;
+	}
+
+	/**
+	 * Est ce que la partie est perdue ?
+	 * @return : si la partie est perdue
+	 */
+	public static boolean estPerdue() {
+		return estPerdue;
 	}
 }

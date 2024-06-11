@@ -114,6 +114,9 @@ public class N7Frame extends JFrame {
 		layeredPanel.repaint();
 	}
 
+	public static void reinitialiserInstance() {
+		instance = null;
+	}
 
 
 }

@@ -2,6 +2,9 @@ package n7simulator.modele.jauges;
 
 import java.util.Observable;
 
+import n7simulator.modele.Partie;
+import n7simulator.vue.GameOverFrame;
+
 /**
  * Cette classe définit la structure générale des jauges
  * pour notre simulateur de l'N7; la valeur d'une jauge ne peut etre
@@ -56,10 +59,13 @@ public class Jauge extends Observable{
      * elle est inférieure à zéro.
      * @param valeur la valeur a ajouter à la jauge
      */
-    public void ajouter(double valeur){
+    public void ajouter(double valeur) {
         this.valeur += this.valeur + valeur > 0 ? valeur : -this.valeur;
         setChanged();
         notifyObservers(this.valeur);
+        if(this.valeur == 0) {
+        	throw new ValeurNulleException(this);
+        }
     }
 
     @Override

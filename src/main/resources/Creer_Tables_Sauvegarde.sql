@@ -25,6 +25,13 @@ CREATE TABLE Partie (
     prixVenteRepascrous FLOAT NOT NULL
 );
 
+CREATE TABLE DateEvenementRegulier (
+   idEvenementRegulier INTEGER,
+   dateEvenement DATE NOT NULL,
+   idPartie INTEGER NOT NULL REFERENCES Partie(idPartie),
+   PRIMARY KEY (idEvenementRegulier, idPartie)
+);
+
 CREATE TABLE ConsommableEnCours (
     idConsommable INTEGER,
     prix DOUBLE,

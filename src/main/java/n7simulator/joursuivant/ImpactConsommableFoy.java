@@ -2,7 +2,7 @@ package n7simulator.joursuivant;
 
 import n7simulator.modele.Partie;
 
-public class ImpactConsommableFoy implements ImpactJourSuivantLongTerme{
+public class ImpactConsommableFoy implements ImpactJourSuivant{
 
     private double impactBonheur;
 
@@ -15,7 +15,7 @@ public class ImpactConsommableFoy implements ImpactJourSuivantLongTerme{
     }
 
     @Override
-    public void effectuerImpactJourSuivantLongTerme() {
+    public void effectuerImpactJourSuivant() {
         Partie laPartie = Partie.getInstance();
         laPartie.getJaugeArgent().ajouter(impactArgent*laPartie.getGestionEleves().getNombreEleves());
         laPartie.getJaugeBonheur().ajouter(impactBonheur);

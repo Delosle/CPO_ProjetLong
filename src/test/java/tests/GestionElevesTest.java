@@ -1,10 +1,10 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import n7simulator.modele.GestionEleves;
-import n7simulator.modele.Partie;
 
 public class GestionElevesTest {
 	
@@ -13,7 +13,7 @@ public class GestionElevesTest {
 	 */
 	@Test
 	public void testInscrireEleves() {
-		GestionEleves gestElv = Partie.getInstance().getGestionEleves();
+		GestionEleves gestElv = new GestionEleves();
 		int nbNvxEleves = 39;
 		int oldNbEleves = gestElv.getNombreEleves();
 		gestElv.inscrireEleves(nbNvxEleves);
@@ -25,7 +25,7 @@ public class GestionElevesTest {
 	 */
 	@Test
 	public void testDesinscrireEleves() {
-		GestionEleves gestElv = Partie.getInstance().getGestionEleves();
+		GestionEleves gestElv = new GestionEleves();
 		gestElv.inscrireEleves(20);
 		int oldNbEleves = gestElv.getNombreEleves();
 		int nbExEleves = 5;
@@ -38,7 +38,7 @@ public class GestionElevesTest {
 	 */
 	@Test
 	public void testDesinscrireElevesInferieur0() {
-		GestionEleves gestElv = Partie.getInstance().getGestionEleves();
+		GestionEleves gestElv = new GestionEleves();
 		int oldNbEleves = gestElv.getNombreEleves();
 		int nbExEleves = 13;
 		gestElv.desinscrireEleves(oldNbEleves);
