@@ -76,6 +76,11 @@ public final class Partie extends Observable {
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
+	
+	/**
+	 * Indique si la partie est perdue ou non
+	 */
+	private static boolean estPerdue;
 
 	
 	private Partie() {}
@@ -95,12 +100,13 @@ public final class Partie extends Observable {
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
+			estPerdue = false;
 			
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
-			jourSuivant.addImpactCourtTerme(gestionProfesseurs);
-			jourSuivant.addImpactCourtTerme(temps);
-			jourSuivant.addImpactCourtTerme(gestionEleves);
+			jourSuivant.addImpact(gestionProfesseurs);
+			jourSuivant.addImpact(temps);
+			jourSuivant.addImpact(gestionEleves);
 		}
 		return instance;
 	}
@@ -108,9 +114,7 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-
 		for (int idEvenement : listeEvenement) {
-			//System.out.println("Evenement Irregulier : " + idEvenement);
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
 			evenement.appliquerImpact(this, true);
 			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
@@ -121,12 +125,9 @@ public final class Partie extends Observable {
 
 	public void genererEvenementRegulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
-
 		for (int idEvenement : listeEvenement) {
 			Evenement_Regulier evenement = new Evenement_Regulier(idEvenement, temps.getJourneeEnCours());
-			System.out.println("Evenement Regulier : " + evenement.getTitre());
 			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
-			System.out.println("Evenement Regulier : vue");
 			evenementReguGUI.setVisible(true);
 		}
 	}
@@ -203,5 +204,20 @@ public final class Partie extends Observable {
 	 */
 	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
 		return gestionnaireEvenementRegulier;
+  }
+	
+	/**
+	 * Modifie la partie qui devient "perdue"
+	 */
+	public static void setPerdue() {
+		estPerdue = true;
+	}
+	
+	/**
+	 * Est ce que la partie est perdue ?
+	 * @return : si la partie est perdue
+	 */
+	public static boolean estPerdue() {
+		return estPerdue;
 	}
 }
