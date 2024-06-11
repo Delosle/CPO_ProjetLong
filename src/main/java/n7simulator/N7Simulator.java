@@ -16,6 +16,7 @@ import n7simulator.modele.Crous;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.ValeurNulleException;
 import n7simulator.modele.professeur.GestionProfesseurs;
@@ -63,11 +64,14 @@ public class N7Simulator {
 	public static void initPartieChargee(String nomPartie) {
 		//Recuperation des donnees en base de données
 		Map<String, List<Map<String, Object>>> donneesChargees = GestionBddSauvegarde.recupererInfoBddSauvegarde(nomPartie);
+
 		
 		
 		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
+		valoriserDonneesDateEvenementRegulier(donneesChargees);
+
 		
 		//affichage de l'interface du jeu
 		if(!Partie.estPerdue()) {
@@ -166,7 +170,18 @@ public class N7Simulator {
 			}
 		}
 	}
-	
+
+	/**
+	 * Valorise toutes les données liées aux professeurs embauches (table ProfEmbauches en bd)
+	 * @param donneesChargees : les données récupérées depuis la bd
+	 */
+	private static void valoriserDonneesDateEvenementRegulier(Map<String, List<Map<String, Object>>> donneesChargees) {
+		List<Map<String, Object>> donneesPartie = donneesChargees.get("DateEvenementRegulier");
+		Partie partie = Partie.getInstance();
+		ApparitionEvenementRegulier gestionnaireEvenementRegulier = partie.getGestionnaireEvenementRegulier();
+		gestionnaireEvenementRegulier.setDonneeEvenement(donneesPartie);
+	}
+
 	/**
 	 * Permet de sauvegarder la partie en base de données
 	 */
@@ -175,6 +190,7 @@ public class N7Simulator {
 		Map<String, List<Map<String, Object>>> donneesPartie = new HashMap<String, List<Map<String,Object>>>();
 		donneesPartie.put("Partie", getObjetSauvegardePartie());
 		donneesPartie.put("ProfEmbauches", getObjetSauvegardeProfs());
+		donneesPartie.put("DateEvenementRegulier", getObjetEvenementRegulierDate());
 		
 		Partie partieEnCours = Partie.getInstance();
 		GestionBddSauvegarde.sauvegarderDonnee(donneesPartie, partieEnCours.getNomPartie());
@@ -229,6 +245,31 @@ public class N7Simulator {
 		}
 		
 		return listeSauvegardeProfs;
+	}
+
+	/**
+	 * Obtenir un objet contenant toutes les dates des evenements réguliers  à
+	 * @return : une liste d'objets associatifs (entre le nom de la colonne et sa valeur)
+	 */
+	private static List<Map<String, Object>> getObjetEvenementRegulierDate() {
+		List<Map<String, Object>> listeSauvegardeEvenementRegulier = new ArrayList<>();
+
+		Partie partieEnCours = Partie.getInstance();
+		ApparitionEvenementRegulier gestionnaireEvenementRegulier = partieEnCours.getGestionnaireEvenementRegulier();
+		Map<Integer, Map<String, Object>> donneeEvenement = gestionnaireEvenementRegulier.getDonneeEvenement();
+
+
+		for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
+			Map<String, Object> sauvegardeEvenement = new HashMap<String, Object>();
+			Integer idEveReg = entry.getKey();
+			sauvegardeEvenement.put("idEvenementRegulier", idEveReg);
+			Map<String, Object> eventDetails = entry.getValue();
+			String dateString = eventDetails.get("debut").toString();
+			LocalDate dateDebut = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			sauvegardeEvenement.put("dateEvenement", dateDebut);
+			listeSauvegardeEvenementRegulier.add(sauvegardeEvenement);
+		}
+		return listeSauvegardeEvenementRegulier;
 	}
 
 }

@@ -1,5 +1,7 @@
 package n7simulator.vue.Evenement;
 
+import n7simulator.controller.ChoixEventRegu;
+import n7simulator.modele.Partie;
 import n7simulator.modele.evenements.Evenement;
 import n7simulator.vue.PilotageGUI;
 
@@ -13,16 +15,16 @@ import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 
 public class EvenementGUI extends JFrame {
-    private String titre;
-    private String description;
-    private int impactBonheur;
-    private int impactArgent;
-    private int impactPedagogie;
+    protected String titre;
+    protected String description;
+    protected int impactBonheur;
+    protected int impactArgent;
+    protected int impactPedagogie;
 
-    private PilotageGUI pilotageGUI;
+    protected PilotageGUI pilotageGUI;
 
-    private Panel panelChoix = new Panel();
-    private JPanel popupPanel = new JPanel();
+    protected JPanel panelChoix = new JPanel();
+    protected JPanel popupPanel = new JPanel();
     public JPanel getpopupPanel() {
         return popupPanel;
     }
@@ -133,34 +135,28 @@ public class EvenementGUI extends JFrame {
         mini_c.weightx=1;
         minigridBag.setConstraints(zone_Impacts, mini_c);
         popupPanel.add(zone_Impacts);
+        //zone_Impacts.setBackground(Color.RED);
 
         mini_c.gridy = 3;
         mini_c.weighty=0.3;
+
         minigridBag.setConstraints(panelChoix, mini_c);
         popupPanel.add(panelChoix);
+
         add(popupPanel);
 
-        // Quand la fenetre se ferme, on ajoute l'evenement en question à la liste des evenements passés
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                pilotageGUI.enregistrerEvent(getPermanent());
-            };
-
-        });
     }
 
-    /**
-     * Crée un Panel contenant les informations de l'événement,
-     * pour l'ajouter à l'historique des événements
-     */
-    public JPanel getPermanent(){
+    public JPanel getPermanent() {
         JPanel miniPanel = new JPanel();
+        JPanel panelTitre = new JPanel();
         GridLayout gridLayout = new GridLayout(1, 2);
         gridLayout.setHgap(20);
         miniPanel.setLayout(gridLayout);
 
         JLabel titre = new JLabel(this.titre);
+        panelTitre.add(titre);
+
         JPanel zone_Impacts = new JPanel();
         zone_Impacts.setLayout(new GridLayout(1, 3));
 
@@ -174,9 +170,16 @@ public class EvenementGUI extends JFrame {
         zone_Impacts.add(impactPedagogieText);
         zone_Impacts.add(new JLabel("" + this.impactArgent));
 
-        miniPanel.add(titre);
+        miniPanel.add(panelTitre);
         miniPanel.add(zone_Impacts);
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        Dimension dimensionEvent = new Dimension((int) (width * 0.3), (int)(height * 0.05));
+        miniPanel.setSize(dimensionEvent);
+        miniPanel.setMaximumSize(dimensionEvent);
+        miniPanel.setMinimumSize(dimensionEvent);
         return miniPanel;
     }
 }

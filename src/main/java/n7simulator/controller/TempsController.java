@@ -34,7 +34,7 @@ public class TempsController extends JPanel {
 			try {
 				JourSuivant.getInstance().effectuerImpactsJourSuivant();
 				Partie.getInstance().genererEvenementIrregulier((PilotageGUI) getParent().getParent());
-
+        Partie.getInstance().genererEvenementRegulier((PilotageGUI) getParent().getParent());
 			} catch (ValeurNulleException vne) {
 				Partie.setPerdue();
 				new GameOverFrame(vne.getJaugeDeclenchement());

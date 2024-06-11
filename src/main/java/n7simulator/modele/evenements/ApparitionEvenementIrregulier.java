@@ -102,7 +102,8 @@ public class ApparitionEvenementIrregulier {
                 }
                 // ajout du boolean pasEncoreTire car si impact 2 jauges ne doit pas être tiré 2 fois
             } else if ((int) eventDetails.get("impactPedagogie") == 1 && pasEncoreTire) {
-                frequence *= (((100.0 - (double) valeurJauges.get("pedagogie")) / 100.0)/2);
+                frequence *= (((100.0 - (double) valeurJauges.get("pedagogie")) / 100.0)/2);;
+
                 if (Math.random() < frequence) {
                     listeEvenement.add((int)entry.getKey());
                 }

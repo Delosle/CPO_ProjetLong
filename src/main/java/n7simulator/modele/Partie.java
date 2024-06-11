@@ -15,7 +15,11 @@ import n7simulator.modele.professeur.Professeur;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.evenements.Evenement_Irregu;
 import n7simulator.vue.Evenement.EvenementGUI;
+import n7simulator.modele.evenements.Evenement_Regulier;
+import n7simulator.vue.Evenement.EvenementIrreguGUI;
+import n7simulator.vue.Evenement.EvenementReguGUI;
 import n7simulator.vue.PilotageGUI;
+import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -62,6 +66,11 @@ public final class Partie extends Observable {
 	 * Gestionnaire des événements irréguliers
 	 */
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
+
+	/**
+	 * Gestionnaire des événements réguliers
+	 */
+	private static ApparitionEvenementRegulier gestionnaireEvenementRegulier;
 	
 	/**
 	 * Les élèves
@@ -87,6 +96,7 @@ public final class Partie extends Observable {
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
+			gestionnaireEvenementRegulier = new ApparitionEvenementRegulier();
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
@@ -104,13 +114,21 @@ public final class Partie extends Observable {
 
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements : " + listeEvenement);
 		for (int idEvenement : listeEvenement) {
 			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
-			evenement.appliquerImpact(this);
-			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
-			evenementGUI.setVisible(true);
+			evenement.appliquerImpact(this, true);
+			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
+			evenementIrreguGUI.setVisible(true);
 
+		}
+	}
+
+	public void genererEvenementRegulier(PilotageGUI pilote) {
+		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
+		for (int idEvenement : listeEvenement) {
+			Evenement_Regulier evenement = new Evenement_Regulier(idEvenement, temps.getJourneeEnCours());
+			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
+			evenementReguGUI.setVisible(true);
 		}
 	}
 
@@ -179,6 +197,14 @@ public final class Partie extends Observable {
 	public Temps getTemps() {
 		return temps;
 	}
+
+	/**
+	 * Obtenir le gestionnaire des événements réguliers
+	 * @return : le gestionnaire des événements réguliers
+	 */
+	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
+		return gestionnaireEvenementRegulier;
+  }
 	
 	/**
 	 * Modifie la partie qui devient "perdue"
