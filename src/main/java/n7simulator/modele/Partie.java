@@ -103,9 +103,11 @@ public final class Partie extends Observable {
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
+			gestionnaireEvenementRegulier = new ApparitionEvenementRegulier();
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
+			estPerdue = false;
 			consommablesFoy = new ConsommablesFoy(new ConsommableFoyDAO().getAllConsommableFoy());
 
 			// Ajout dans JourSuivant
