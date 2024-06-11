@@ -12,6 +12,7 @@ import n7simulator.database.CreationBddAdmin;
 import n7simulator.database.CreerBddSauvegarde;
 import n7simulator.database.GestionBddSauvegarde;
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.Bibliotheque;
 import n7simulator.modele.Crous;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
@@ -135,7 +136,9 @@ public class N7Simulator {
 		Crous crousInstance = Crous.getInstance(0, 0);
 		crousInstance.setQualite((int)donneesPartie.get("idQualiteRepasCrous"));
 		crousInstance.setPrixVente((double)donneesPartie.get("prixVenteRepascrous"));
-
+		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
+		biblioInstance.setNbLivre((int) donneesPartie.get("nbLivre"));
+		
 	}
 	
 	/**
@@ -227,6 +230,8 @@ public class N7Simulator {
 		Crous crousInstance = Crous.getInstance(1, 1.30);
 		sauvegardePartie.put("idQualiteRepasCrous", crousInstance.getQualite());
 		sauvegardePartie.put("prixVenteRepascrous", crousInstance.getPrixVente());
+		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
+		sauvegardePartie.put("nbLivre", biblioInstance.getNbLivre());
 		
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		result.add(sauvegardePartie);

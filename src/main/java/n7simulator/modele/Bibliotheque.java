@@ -13,9 +13,9 @@ public class Bibliotheque extends Observable implements ImpactJourSuivant {
 	private int ancienNbLivre;
 	
 	/**
-	 * Permet de Créer le crous à partir d'un qualité et d'un prix de vente
-	 * @param qualite
-	 * @param prixVente
+	 * Permet de Créer la Bibliotheque à partir d'un nombre de livre initial
+	 * ancien livre sert à caculer l'impact
+	 * @param nbLivre le nombre de livre initial
 	 */
 	private Bibliotheque (int nbLivre) {
 		this.nbLivre = nbLivre;
@@ -53,6 +53,10 @@ public class Bibliotheque extends Observable implements ImpactJourSuivant {
 		this.notifyObservers(this);
 	}
 	
+	/**
+	 * getter du prix d'un livre
+	 * @return le prix d'achat ou de revente d'un livre
+	 */
 	public int getPrixLivre() {
 		return prixLivre;
 	}

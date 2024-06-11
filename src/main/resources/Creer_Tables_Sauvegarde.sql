@@ -22,7 +22,8 @@ CREATE TABLE Partie (
     bonheur FLOAT NOT NULL,
     pedagogie FLOAT NOT NULL,
     idQualiteRepasCrous INT NOT NULL,
-    prixVenteRepascrous FLOAT NOT NULL
+    prixVenteRepascrous FLOAT NOT NULL,
+    nbLivre INT NOT NULL
 );
 
 CREATE TABLE DateEvenementRegulier (
