@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import n7simulator.database.ConsommableFoyDAO;
 import n7simulator.modele.Partie;
-import n7simulator.vue.consommable.DisplayFoy;
+import n7simulator.vue.consommable.VueConsommables;
 
 /**
  * Représenter la vue du bâtiment E-F.
@@ -47,7 +47,7 @@ public class BatimentAdminGUI extends JPanel {
 		crousVue.setMaximumSize(d);
 		this.add(crousVue);
 
-		DisplayFoy display = new DisplayFoy(new ConsommableFoyDAO().getAllConsommableFoy());
+		VueConsommables display = new VueConsommables();
 		d = display.getPreferredSize();
 		d.width = (int)width;
 		d.height = 150;

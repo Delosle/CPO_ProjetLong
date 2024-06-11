@@ -1,16 +1,18 @@
 package n7simulator.vue.consommable;
 
-import n7simulator.controller.repas.ConsommableFoyController;
-import n7simulator.modele.ConsommableFoy;
+import n7simulator.controller.consommable.ConsommableFoyController;
+import n7simulator.modele.consommableFoy.ConsommableFoy;
+import n7simulator.modele.consommableFoy.ConsommablesFoy;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DisplayFoy extends JPanel {
+public class VueConsommables extends JPanel {
 
-    public DisplayFoy(List<ConsommableFoy> reaps){
+    public VueConsommables(){
         super(new GridLayout(1, 2));
+        List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
         setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 
         JPanel description = new JPanel(new GridLayout());
@@ -18,10 +20,12 @@ public class DisplayFoy extends JPanel {
                 "Cliquer pour modifier les prix le prix de chaque" +
                 "consommable <br> 40% du prix de vente est utilisé" +
                 "pour l'approvisionnement <br>" +
-                "Nombre de consommables : "+ reaps.size()+"</html>"));
+                "Nombre de consommables : "+ consommables.size()+"</html>"));
 
         add(description);
-        JButton modifier = ConsommableFoyController.getBoutonOuverture(reaps);
+
+
+        JButton modifier = ConsommableFoyController.getBoutonOuverture(consommables);
         JPanel modifierPannel = new JPanel(new GridLayout(3, 1));
         modifierPannel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         //Adaptation de la vue

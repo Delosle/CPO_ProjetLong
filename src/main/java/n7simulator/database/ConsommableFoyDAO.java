@@ -1,6 +1,6 @@
 package n7simulator.database;
 
-import n7simulator.modele.ConsommableFoy;
+import n7simulator.modele.consommableFoy.ConsommableFoy;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,12 +25,13 @@ public class ConsommableFoyDAO {
 
             // parcours du résultat pour instancier les objets profs
             while (resultDB.next()) {
+                int id = resultDB.getInt("idConsommable");
                 String nom = resultDB.getString("nom");
                 Double prix = resultDB.getDouble("prix");
                 Double prixLimite = resultDB.getDouble("prixLimite");
                 String image = resultDB.getString("image");
 
-                consommableFoy = new ConsommableFoy(nom, prix, prixLimite, image);
+                consommableFoy = new ConsommableFoy(id ,nom, prix, prixLimite, image);
                 consommableFoys.add(consommableFoy);
             }
 

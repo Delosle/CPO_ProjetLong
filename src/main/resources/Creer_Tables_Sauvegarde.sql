@@ -24,3 +24,10 @@ CREATE TABLE Partie (
     idQualiteRepasCrous INT NOT NULL,
     prixVenteRepascrous FLOAT NOT NULL
 );
+
+CREATE TABLE ConsommableEnCours (
+    idConsommable INTEGER,
+    prix DOUBLE,
+    idPartie INTEGER NOT NULL REFERENCES Partie(idPartie),
+    PRIMARY KEY (idConsommable, idPartie)
+);

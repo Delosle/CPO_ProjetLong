@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import n7simulator.database.ConsommableFoyDAO;
 import n7simulator.database.ProfesseurDAO;
 import n7simulator.joursuivant.JourSuivant;
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
@@ -68,6 +70,11 @@ public final class Partie extends Observable {
 	 */
 	private static GestionEleves gestionEleves;
 
+	/**
+	 * les consommables au Foy
+	 */
+	private static ConsommablesFoy consommablesFoy;
+
 	
 	private Partie() {}
 	
@@ -85,7 +92,8 @@ public final class Partie extends Observable {
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
-			
+			consommablesFoy = new ConsommablesFoy(new ConsommableFoyDAO().getAllConsommableFoy());
+
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
 			jourSuivant.addImpactCourtTerme(gestionProfesseurs);
@@ -173,5 +181,9 @@ public final class Partie extends Observable {
 	 */
 	public Temps getTemps() {
 		return temps;
+	}
+
+	public ConsommablesFoy getConsommablesFoy(){
+		return consommablesFoy;
 	}
 }

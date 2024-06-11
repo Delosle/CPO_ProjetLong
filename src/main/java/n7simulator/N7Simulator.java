@@ -15,6 +15,8 @@ import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Crous;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
+import n7simulator.modele.consommableFoy.ConsommableFoy;
+import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.professeur.GestionProfesseurs;
@@ -65,6 +67,7 @@ public class N7Simulator {
 		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
+		valoriserDonnesFoy(donneesChargees);
 		
 		affichageCarte();
 	}
@@ -150,6 +153,15 @@ public class N7Simulator {
 			}
 		}
 	}
+
+	private static void valoriserDonnesFoy(Map<String, List<Map<String, Object>>> donneesChargees){
+		List<Map<String, Object>> donneesPartie = donneesChargees.get("ConsommableEnCours");
+		Partie partie = Partie.getInstance();
+		List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
+		for(int i = 0; i < consommables.size(); i++){
+			consommables.get(i).setPrix((double)donneesPartie.get(i).get("prix"));
+		}
+	}
 	
 	/**
 	 * Permet de sauvegarder la partie en base de données
@@ -159,6 +171,7 @@ public class N7Simulator {
 		Map<String, List<Map<String, Object>>> donneesPartie = new HashMap<String, List<Map<String,Object>>>();
 		donneesPartie.put("Partie", getObjetSauvegardePartie());
 		donneesPartie.put("ProfEmbauches", getObjetSauvegardeProfs());
+		donneesPartie.put("ConsommableEnCours", getObjetSauvegardeFoy());
 		
 		Partie partieEnCours = Partie.getInstance();
 		GestionBddSauvegarde.sauvegarderDonnee(donneesPartie, partieEnCours.getNomPartie());
@@ -212,6 +225,23 @@ public class N7Simulator {
 		}
 		
 		return listeSauvegardeProfs;
+	}
+
+	private static List<Map<String, Object>> getObjetSauvegardeFoy(){
+		List<Map<String, Object>> listeSauvegardeFoy = new ArrayList<>();
+
+		Partie partieEnCours = Partie.getInstance();
+		List<ConsommableFoy> consommablesFoy = ConsommablesFoy.getConsommables();
+
+		//création d'une ligne par consommables
+		for(ConsommableFoy consommable : consommablesFoy){
+			Map<String, Object> sauvegardeFoy = new HashMap<String, Object>();
+			sauvegardeFoy.put("idConsommable", consommable.getId());
+			sauvegardeFoy.put("prix", consommable.getPrix());
+			listeSauvegardeFoy.add(sauvegardeFoy);
+		}
+
+		return listeSauvegardeFoy;
 	}
 
 }
