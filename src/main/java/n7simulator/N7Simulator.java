@@ -15,14 +15,16 @@ import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Crous;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
-import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.consommableFoy.ConsommableFoy;
+import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.modele.evenements.ApparitionEvenementRegulier;
-import n7simulator.modele.jauges.Jauge;
+import n7simulator.vue.GameOverFrame;
 import n7simulator.modele.jauges.ValeurNulleException;
+import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
+import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 import n7simulator.vue.CarteGUI;
-import n7simulator.vue.GameOverFrame;
 import n7simulator.vue.N7Frame;
 import n7simulator.vue.PilotageGUI;
 import n7simulator.vue.Evenement.EventHistoryGUI;
@@ -64,20 +66,17 @@ public class N7Simulator {
 	public static void initPartieChargee(String nomPartie) {
 		//Recuperation des donnees en base de données
 		Map<String, List<Map<String, Object>>> donneesChargees = GestionBddSauvegarde.recupererInfoBddSauvegarde(nomPartie);
-
-		
 		
 		//Valorsiation des données de la partie
 		valoriserDonneesPartie(donneesChargees);
 		valoriserDonneesProfesseur(donneesChargees);
-		valoriserDonneesDateEvenementRegulier(donneesChargees);
-
-		
+        valoriserDonnesFoy(donneesChargees);
+        valoriserDonneesDateEvenementRegulier(donneesChargees);
 		//affichage de l'interface du jeu
 		if(!Partie.estPerdue()) {
 			affichageCarte();
 		}
-				
+
 	}
 
 	/**
@@ -136,7 +135,7 @@ public class N7Simulator {
 		Crous crousInstance = Crous.getInstance(0, 0);
 		crousInstance.setQualite((int)donneesPartie.get("idQualiteRepasCrous"));
 		crousInstance.setPrixVente((double)donneesPartie.get("prixVenteRepascrous"));
-		
+
 	}
 	
 	/**
@@ -171,6 +170,16 @@ public class N7Simulator {
 		}
 	}
 
+	private static void valoriserDonnesFoy(Map<String, List<Map<String, Object>>> donneesChargees){
+		List<Map<String, Object>> donneesPartie = donneesChargees.get("ConsommableEnCours");
+		Partie partie = Partie.getInstance();
+		List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
+		for(int i = 0; i < consommables.size(); i++){
+			consommables.get(i).setPrix((double)donneesPartie.get(i).get("prix"));
+		}
+	}
+
+
 	/**
 	 * Valorise toutes les données liées aux professeurs embauches (table ProfEmbauches en bd)
 	 * @param donneesChargees : les données récupérées depuis la bd
@@ -190,8 +199,9 @@ public class N7Simulator {
 		Map<String, List<Map<String, Object>>> donneesPartie = new HashMap<String, List<Map<String,Object>>>();
 		donneesPartie.put("Partie", getObjetSauvegardePartie());
 		donneesPartie.put("ProfEmbauches", getObjetSauvegardeProfs());
+		donneesPartie.put("ConsommableEnCours", getObjetSauvegardeFoy());
 		donneesPartie.put("DateEvenementRegulier", getObjetEvenementRegulierDate());
-		
+
 		Partie partieEnCours = Partie.getInstance();
 		GestionBddSauvegarde.sauvegarderDonnee(donneesPartie, partieEnCours.getNomPartie());
 	}
@@ -245,6 +255,23 @@ public class N7Simulator {
 		}
 		
 		return listeSauvegardeProfs;
+	}
+
+	private static List<Map<String, Object>> getObjetSauvegardeFoy(){
+		List<Map<String, Object>> listeSauvegardeFoy = new ArrayList<>();
+
+		Partie partieEnCours = Partie.getInstance();
+		List<ConsommableFoy> consommablesFoy = ConsommablesFoy.getConsommables();
+
+		//création d'une ligne par consommables
+		for(ConsommableFoy consommable : consommablesFoy){
+			Map<String, Object> sauvegardeFoy = new HashMap<String, Object>();
+			sauvegardeFoy.put("idConsommable", consommable.getId());
+			sauvegardeFoy.put("prix", consommable.getPrix());
+			listeSauvegardeFoy.add(sauvegardeFoy);
+		}
+
+		return listeSauvegardeFoy;
 	}
 
 	/**

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import n7simulator.database.ConsommableFoyDAO;
 import n7simulator.database.ProfesseurDAO;
 import n7simulator.joursuivant.JourSuivant;
 import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
@@ -71,18 +73,23 @@ public final class Partie extends Observable {
 	 * Gestionnaire des événements réguliers
 	 */
 	private static ApparitionEvenementRegulier gestionnaireEvenementRegulier;
-	
+
 	/**
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
-	
+
 	/**
 	 * Indique si la partie est perdue ou non
 	 */
 	private static boolean estPerdue;
 
-	
+	/**
+	 * les consommables au Foy
+	 */
+	private static ConsommablesFoy consommablesFoy;
+
+
 	private Partie() {}
 	
 	/**
@@ -101,7 +108,8 @@ public final class Partie extends Observable {
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
 			estPerdue = false;
-			
+			consommablesFoy = new ConsommablesFoy(new ConsommableFoyDAO().getAllConsommableFoy());
+
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
 			jourSuivant.addImpact(gestionProfesseurs);
@@ -198,6 +206,10 @@ public final class Partie extends Observable {
 		return temps;
 	}
 
+	public ConsommablesFoy getConsommablesFoy(){
+		return consommablesFoy;
+	}
+
 	/**
 	 * Obtenir le gestionnaire des événements réguliers
 	 * @return : le gestionnaire des événements réguliers
@@ -205,14 +217,14 @@ public final class Partie extends Observable {
 	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
 		return gestionnaireEvenementRegulier;
   }
-	
+
 	/**
 	 * Modifie la partie qui devient "perdue"
 	 */
 	public static void setPerdue() {
 		estPerdue = true;
 	}
-	
+
 	/**
 	 * Est ce que la partie est perdue ?
 	 * @return : si la partie est perdue

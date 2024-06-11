@@ -1,8 +1,14 @@
-package n7simulator.modele;
+package n7simulator.modele.consommableFoy;
 
 import java.util.Observable;
 
 public class ConsommableFoy extends Observable {
+
+    /**
+     * L'identifiant du consommable.
+     */
+    private int id;
+
     /**
      * Le nom pour la description du repas
      */
@@ -29,7 +35,8 @@ public class ConsommableFoy extends Observable {
      * @param prixLimite le prixLimite du consommable
      * @param image le nom de l'image pour le repas
      */
-    public ConsommableFoy(String nom, double prix, double prixLimite, String image){
+    public ConsommableFoy(int id, String nom, double prix, double prixLimite, String image){
+        this.id = id;
         this.nom = nom;
         this.prix = prix;
         this.prixLimite = prixLimite;
@@ -62,8 +69,12 @@ public class ConsommableFoy extends Observable {
         return nom;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public static ConsommableFoy copieFoy(ConsommableFoy foy){
-        return new ConsommableFoy(foy.getNom(), foy.getPrix(), foy.prixLimite, foy.getImage()) ;
+        return new ConsommableFoy(foy.getId(),foy.getNom(), foy.getPrix(), foy.prixLimite, foy.getImage()) ;
     }
 
     /**
