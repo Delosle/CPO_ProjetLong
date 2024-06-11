@@ -20,13 +20,13 @@ import n7simulator.modele.Partie;
 public class CarteGUI extends JPanel {
 
 	private BatimentA batimentA;
-	
+
 	private BatimentB batimentB;
-	
+
 	private BatimentC batimentC;
-	
+
 	private BatimentAdmin batimentAdmin;
-	
+
 	/**
 	 * 
 	 */
@@ -34,10 +34,10 @@ public class CarteGUI extends JPanel {
 		// On délimite précisément l'emplacement de la carte
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(Color.white);
-		
+
 		// On sépare la carte en une grille
 		this.setLayout(new GridBagLayout());
-		
+
 		// On créé les contraintes des éléments de la grille
 		GridBagConstraints contraintes = new GridBagConstraints();
 		contraintes.fill = GridBagConstraints.BOTH;
@@ -73,13 +73,13 @@ public class CarteGUI extends JPanel {
 		// Batiment A
 		batimentA = new BatimentA(laFrame, new JPanel());
 		batimentA.afficherSurCarte(this);
-		
+
 		// Batiment B
 		batimentB = new BatimentB(laFrame, new GestionProfesseursGUI());
 		batimentB.afficherSurCarte(this);
-		
+
 		// Batiment C
-		batimentC = new BatimentC(laFrame, new JPanel());
+		batimentC = new BatimentC(laFrame, new BatimentCGUI());
 		batimentC.afficherSurCarte(this);
 
 		// Batiment Admin

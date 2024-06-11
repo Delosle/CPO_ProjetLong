@@ -1,6 +1,6 @@
 package n7simulator.controller.repas;
 
-import n7simulator.modele.repas.RepasFoy;
+import n7simulator.modele.ConsommableFoy;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BoutonModifierPrix extends JButton {
+public class BoutonModifierPrixFoy extends JButton {
 
-    private RepasFoy repasFoy;
+    private ConsommableFoy consommableFoy;
 
-    public BoutonModifierPrix(RepasFoy repasFoy){
-        this.repasFoy = repasFoy;
+    public BoutonModifierPrixFoy(ConsommableFoy consommableFoy){
+        this.consommableFoy = consommableFoy;
         setText("Modifier");
         addActionListener(new ActionModifierPrix());
     }
@@ -28,10 +28,10 @@ public class BoutonModifierPrix extends JButton {
 
             // Message de confirmation
             JLabel messageLabel = new JLabel("<html>Veuillez Saisir le nouveau prix pour "
-                    +"<strong>"+ repasFoy.getNom()+ "</strong></html> ");
+                    +"<strong>"+ consommableFoy.getNom()+ "</strong></html> ");
             panel.add(messageLabel);
 
-            JTextField newPrix = new JTextField(""+repasFoy.getPrix());
+            JTextField newPrix = new JTextField(""+consommableFoy.getPrix());
             panel.add(newPrix);
             // Afficher la boite de dialogue
             int result = JOptionPane.showConfirmDialog(null, panel, "Modifier le prix",
@@ -41,17 +41,17 @@ public class BoutonModifierPrix extends JButton {
             if (result == JOptionPane.OK_OPTION) {
                 try {
                     double nouveauPrix = Double.parseDouble(newPrix.getText());
-                    repasFoy.setPrix(nouveauPrix);
+                    consommableFoy.setPrix(nouveauPrix);
 
                 } catch (NumberFormatException e1) {
                     JOptionPane.showMessageDialog(null,
                             "<html><font style='color: red;'>Veuillez saisir un montant valide pour le prix de "
-                                    + repasFoy.getNom()+ "</font></html>", "Erreur",
+                                    + consommableFoy.getNom()+ "</font></html>", "Erreur",
                             JOptionPane.INFORMATION_MESSAGE);
                 } catch (NullPointerException e1){
                     JOptionPane.showMessageDialog(null,
                             "<html><font style='color: red;'>Aucun montant saisi "
-                                    + repasFoy.getNom()+ "</font></html>", "Erreur",
+                                    + consommableFoy.getNom()+ "</font></html>", "Erreur",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }

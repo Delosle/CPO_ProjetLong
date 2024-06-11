@@ -1,9 +1,8 @@
-package n7simulator.modele.repas;
+package n7simulator.modele;
 
 import java.util.Observable;
-import java.util.Observer;
 
-public class RepasFoy extends Observable {
+public class ConsommableFoy extends Observable {
     /**
      * Le nom pour la description du repas
      */
@@ -19,7 +18,7 @@ public class RepasFoy extends Observable {
      */
     private double prixLimite;
     /**
-     * le nom de l'image à charger pour le repasFoy
+     * le nom de l'image à charger pour le consommableFoy
      */
     private String image;
 
@@ -30,7 +29,7 @@ public class RepasFoy extends Observable {
      * @param prixLimite le prixLimite du consommable
      * @param image le nom de l'image pour le repas
      */
-    public RepasFoy(String nom, double prix, double prixLimite, String image){
+    public ConsommableFoy(String nom, double prix, double prixLimite, String image){
         this.nom = nom;
         this.prix = prix;
         this.prixLimite = prixLimite;
@@ -61,5 +60,25 @@ public class RepasFoy extends Observable {
 
     public String getNom(){
         return nom;
+    }
+
+    public static ConsommableFoy copieFoy(ConsommableFoy foy){
+        return new ConsommableFoy(foy.getNom(), foy.getPrix(), foy.prixLimite, foy.getImage()) ;
+    }
+
+    /**
+     * Obteinr la différence entre le prix limite et le prix du consommable
+     * @return la différence.
+     */
+    public double getDiff(){
+        return getPrixLimite() - getPrix();
+    }
+
+    /**
+     * la marge est de 60% du prix de vente d'un consommable
+     * @return les 60% du prix de vente.
+     */
+    public double getMarge(){
+        return getPrix()*6/10;
     }
 }

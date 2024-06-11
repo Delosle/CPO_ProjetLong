@@ -54,7 +54,7 @@ CREATE TABLE RepasCrous (
 );
 
 -- Crée un table pour les repas au Foy
-CREATE TABLE RepasFoy (
+CREATE TABLE ConsommableFoy (
     id_repas INTEGER PRIMARY KEY,
     nom VARCHAR(60),
     prix FLOAT NOT NULL,
@@ -95,11 +95,11 @@ VALUES
 (1, 'Les enseignants sont en grève pour protester contre l absentéisme rampant et la pénurie chronique de tampons pour effacer les tableaux à craie. Fatigués de jongler entre classes désertes et tableaux illisibles, ils réclament des soutions pour redonner vie à leurs salles de classe!.', -10, 0, -10, 'Grèves des Enseignants', 0.2, FALSE),
 (2, 'Nous regrettons de vous informer que notre livraison de chocolatines est retardée pour une raison aussi insolite qu inattendue : notre camion a été attaqué par une bande de singes farceurs en chemin vers Chocolatville !
 
-L annulation de la livraison des chocolatines au foyer de l école a plongé les étudiants dans une tristesse collective. Privés de leur douce pause gourmande, l humeur générale a chuté, transformant les sourires en soupirs. Les chocolatines étant la clé du bonheur matinal, l impact se fait ressentir dans tout l établissement.', -10, -50, 0, 'Annulation Livraison Chocolatine', 0.2, FALSE),
-(3, 'En cette période où le stress des études peut parfois sembler pesant, nous avons une délicieuse surprise pour vous ! Pour vous remercier de votre engagement et de votre fidélité, nous avons le plaisir d annoncer une journée spéciale de livraison gratuite de chocolatines, rien que pour vous !', 10, 50, 0, 'Livraison Gratuite Chocolatine', 0.25, TRUE),
+L annulation de la livraison des chocolatines au foyer de l école a plongé les étudiants dans une tristesse collective. Privés de leur douce pause gourmande, l humeur générale a chuté, transformant les sourires en soupirs. Les chocolatines étant la clé du bonheur matinal, l impact se fait ressentir dans tout l établissement.', -10, -50, 0, 'Annulation Livraison Choco', 0.2, FALSE),
+(3, 'En cette période où le stress des études peut parfois sembler pesant, nous avons une délicieuse surprise pour vous ! Pour vous remercier de votre engagement et de votre fidélité, nous avons le plaisir d annoncer une journée spéciale de livraison gratuite de chocolatines, rien que pour vous !', 10, 50, 0, 'Livraison Gratuite Choco', 0.25, TRUE),
 (4, 'Chers membres de la communauté,
 
-Nous vous informons avec une pointe d humour mais aussi de sérieux qu une invasion de canards a été repérée à la Rivière des MFEE ! Ces adorables mais envahissants palmipèdes semblent être à la recherche d un point d eau paisible où se rafraîchir, et notre rivière semble être leur nouvelle destination favorite.', 15, 0, 0, 'ALERTE : Invasion de Canards à la Rivière des MFEE !d', 0.15, TRUE),
+Nous vous informons avec une pointe d humour mais aussi de sérieux qu une invasion de canards a été repérée à la Rivière des MFEE ! Ces adorables mais envahissants palmipèdes semblent être à la recherche d un point d eau paisible où se rafraîchir, et notre rivière semble être leur nouvelle destination favorite.', 15, 0, 0, 'Invasion de Canards !', 0.15, TRUE),
 (5, 'Manque de chance : vous avez engagé un professeur incompétent. 
 
 Il arrive 30 minutes après le début du cours et ne donne qu un seul exercice à faire pendant toute l heure. Une fois que les étudiants l ont terminé, il se cache derrière son ordinateur.', 0, 0, -10, 'Mauvais Professeurs', 0.2, FALSE),
@@ -121,7 +121,7 @@ INSERT INTO RepasCrous (id_repas, qualite, prix) VALUES
 (4, 4, 2.00);
 
 -- Insère des données dans la table RepasFoy
-INSERT  INTO RepasFoy (id_repas, nom, prix, prixLimite, image) VALUES
+INSERT  INTO ConsommableFoy (id_repas, nom, prix, prixLimite, image) VALUES
 (1, 'Café', 0.95, 1.50, 'cafe.jpg'),
 (2, 'Chocolatine', 1.30, 2.00, 'chocolatine.jpg'),
 (3, 'Chocolat chaud', 0.8, 1.50, 'choco_chaud.jpeg'),
