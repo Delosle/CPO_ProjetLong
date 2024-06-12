@@ -22,8 +22,7 @@ public class EvenementGUI extends JFrame {
     protected int impactPedagogie;
 
     protected PilotageGUI pilotageGUI;
-
-    private Panel panelChoix = new Panel();
+    protected JPanel panelChoix = new JPanel();
 
     /**
      * Constructeur
@@ -128,8 +127,8 @@ public class EvenementGUI extends JFrame {
         mini_c.gridy = 2;
         mini_c.weighty=0.3;
         mini_c.weightx=1;
-        minigridBag.setConstraints(zone_Impacts, mini_c);
-        popupPanel.add(zone_Impacts);
+        minigridBag.setConstraints(zoneImpacts, mini_c);
+        popupPanel.add(zoneImpacts);
 
         mini_c.gridy = 3;
         mini_c.weighty=0.3;
