@@ -23,12 +23,7 @@ public class EvenementGUI extends JFrame {
 
     protected PilotageGUI pilotageGUI;
 
-    protected JPanel panelChoix = new JPanel();
-    protected JPanel popupPanel = new JPanel();
-    public JPanel getpopupPanel() {
-        return popupPanel;
-    }
-
+    private Panel panelChoix = new Panel();
 
     /**
      * Constructeur
@@ -82,8 +77,8 @@ public class EvenementGUI extends JFrame {
         panelDescription.add(partieDescription, BorderLayout.CENTER);
         //panelDescription.setBackground(Color.RED);// A commenter, sert a modif du GridBagLayout
 
-        JPanel zone_Impacts = new JPanel();
-        zone_Impacts.setLayout(new GridLayout(1, 3));
+        JPanel zoneImpacts = new JPanel();
+        zoneImpacts.setLayout(new GridLayout(1, 3));
 
         JLabel impactBonheurText = new JLabel("Impact Bonheur : " + impactBonheur);
         impactBonheurText.setForeground(new Color(212, 0, 253));
@@ -104,10 +99,10 @@ public class EvenementGUI extends JFrame {
         panelPedagogie.add(impactPedagogieText, BorderLayout.CENTER);
 
 
-        zone_Impacts.add(panelBonheur);
-        zone_Impacts.add(panelArgent);
-        zone_Impacts.add(panelPedagogie);
-        zone_Impacts.setBorder(new EmptyBorder( 0, 60, 0, 0));
+        zoneImpacts.add(panelBonheur);
+        zoneImpacts.add(panelArgent);
+        zoneImpacts.add(panelPedagogie);
+        zoneImpacts.setBorder(new EmptyBorder( 0, 60, 0, 0));
         //zone_Impacts.setBackground(Color.GREEN); // A commenter, sert a modif du GridBagLayout
 
         // On met en place le layer de la popup, en y ajoutant les differents elements
@@ -135,7 +130,6 @@ public class EvenementGUI extends JFrame {
         mini_c.weightx=1;
         minigridBag.setConstraints(zone_Impacts, mini_c);
         popupPanel.add(zone_Impacts);
-        //zone_Impacts.setBackground(Color.RED);
 
         mini_c.gridy = 3;
         mini_c.weighty=0.3;
