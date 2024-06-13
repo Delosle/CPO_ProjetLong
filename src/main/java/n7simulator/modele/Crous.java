@@ -28,7 +28,6 @@ public class Crous extends Observable implements ImpactJourSuivant {
 	private Crous(int qualite, double prixVente) {
 		this.qualite = qualite;
 		this.prixVente = prixVente;
-		// TODO : décommenter la ligne suivante pour ajouter l'impact quand on merge avec develop
 		JourSuivant.getInstance().addImpact(this);
 	}
 	

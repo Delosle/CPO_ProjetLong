@@ -2,6 +2,9 @@ package n7simulator.modele.consommableFoy;
 
 import java.util.Observable;
 
+/**
+ * Classe representant un consommable du batiment foy
+ */
 public class ConsommableFoy extends Observable {
 
     /**

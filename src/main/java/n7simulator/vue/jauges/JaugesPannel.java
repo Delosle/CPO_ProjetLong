@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+import n7simulator.modele.Partie;
+import n7simulator.modele.jauges.Jauge;
+
 public class JaugesPannel extends JPanel{
     static final int LARGEUR_PANNEL = 500;
     static final int HAUTEUR_PANNEL = 240;
@@ -23,13 +26,20 @@ public class JaugesPannel extends JPanel{
      */
     private JaugeBorneeGUI vuePedagogie;
 
-    public JaugesPannel(double initBonheur, double initPedagogie, double sommeInitiale) {
+    public JaugesPannel() {
         setLayout(new GridLayout(3, 1));
         
-        vueArgent = new ArgentGUI("Argent", sommeInitiale);
-        vueBonheur = new JaugeBorneeGUI("Bonheur", initBonheur, new Color(212, 0, 253));
-        vuePedagogie = new JaugeBorneeGUI("Pedagogie", initPedagogie, Color.BLUE);
-
+        Partie partie = Partie.getInstance();
+        Jauge argent = partie.getJaugeArgent();
+		Jauge bonheur = partie.getJaugeBonheur();
+		Jauge pedagogie = partie.getJaugePedagogie();
+        
+        vueArgent = new ArgentGUI("Argent", argent.getValue());
+        vueBonheur = new JaugeBorneeGUI("Bonheur", bonheur.getValue(), new Color(212, 0, 253));
+        vuePedagogie = new JaugeBorneeGUI("Pedagogie", pedagogie.getValue(), Color.BLUE);
+        argent.addObserver(vueArgent);
+		bonheur.addObserver(vueBonheur);
+		pedagogie.addObserver(vuePedagogie);
         // .......... TO-DO............
         // Ajouter les controllers des jauges
 

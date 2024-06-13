@@ -5,8 +5,12 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Classe de l'affichage d'un consommable au détail
+ */
 public class ConsommableGUI extends JPanel implements Observer {
 
+	//Prix du consommable à afficher
     private JLabel prixLabel;
 
     public ConsommableGUI(String nom, double prixActuel, String image){

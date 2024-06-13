@@ -3,6 +3,7 @@ package n7simulator.controller.consommable;
 import n7simulator.joursuivant.ImpactConsommableFoy;
 import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.consommableFoy.ConsommableFoy;
+import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.vue.consommable.ConsommableGUI;
 
 import javax.swing.*;
@@ -15,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller des consommables du foy
+ */
 public class ConsommableFoyController extends JPanel {
 
     /**
@@ -23,20 +27,20 @@ public class ConsommableFoyController extends JPanel {
     List<ConsommableFoy> consommableFoys;
 
 
-
-    public ConsommableFoyController(List<ConsommableFoy> dataRepas){
-        super(new GridLayout(dataRepas.size(), 1));
+    public ConsommableFoyController(){
+        List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
+        this.setLayout(new GridLayout(consommables.size(), 1));
 
         ImpactConsommableFoy impact = ImpactConsommableFoy.getInstance();
         JourSuivant.getInstance().addImpact(impact);
 
-        this.consommableFoys = new ArrayList<ConsommableFoy>();
+        this.consommableFoys = new ArrayList<>();
 
         // on recupère les consommables en modèle; initialise les vues ainsi que
         // les controleurs pour chaque consommable.
-        for (ConsommableFoy consommableFoy : dataRepas) {
+        for (ConsommableFoy consommableFoy : consommables) {
 
-            this.consommableFoys.add(consommableFoy.copieFoy(consommableFoy));
+            this.consommableFoys.add(ConsommableFoy.copieFoy(consommableFoy));
             ConsommableGUI vueRepas = new ConsommableGUI(consommableFoy.getNom(),consommableFoy.getPrix(),consommableFoy.getImage());
             consommableFoy.addObserver(vueRepas);
             JPanel repasVC = new JPanel();
@@ -48,8 +52,8 @@ public class ConsommableFoyController extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(this);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         // On récupère les dimensions de l'écran
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -65,17 +69,15 @@ public class ConsommableFoyController extends JPanel {
 
         // Implémentation des modifications si non validation
         if (result == JOptionPane.CANCEL_OPTION) {
-            for (int i= 0; i < dataRepas.size(); i++){
-                dataRepas.get(i).setPrix(consommableFoys.get(i).getPrix());
+            for (int i= 0; i < consommables.size(); i++){
+            	consommables.get(i).setPrix(consommableFoys.get(i).getPrix());
             }
         }
 
         //calcul des impacts ( Bonheur et Argent)
-        JourSuivant jourSuivant = JourSuivant.getInstance();
-
         double impactBonheur = 0;
         double impactArgent = 0;
-        for(ConsommableFoy consommableFoy: dataRepas){
+        for(ConsommableFoy consommableFoy: consommables){
             impactArgent += consommableFoy.getMarge();
             impactBonheur += consommableFoy.getDiff();
         }
@@ -161,24 +163,5 @@ public class ConsommableFoyController extends JPanel {
         leButton.addActionListener(new ActionModifierPrix());
         return  leButton;
     }
-
-    /**
-     * Cette fonction permet de créer le Bouton qui ouvrira le controleur pour l'ensemble
-     * des consommables.
-     * @param consommableFoys les consommables;
-     * @return Le bouton qui ouvre le controler sur les consommables.
-     */
-    public static JButton getBoutonOuverture(List<ConsommableFoy> consommableFoys){
-        JButton modifier = new JButton("Modifier");
-        ActionListener ouvrirModification = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ConsommableFoyController fenetre = new ConsommableFoyController(consommableFoys);
-            }
-        };
-        modifier.addActionListener(ouvrirModification);
-        return modifier;
-    }
-
-
 
 }

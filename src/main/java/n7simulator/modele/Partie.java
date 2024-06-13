@@ -108,8 +108,8 @@ public final class Partie extends Observable {
 			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 			gestionEleves = new GestionEleves();
 			estPerdue = false;
-			consommablesFoy = new ConsommablesFoy(new ConsommableFoyDAO().getAllConsommableFoy());
-
+			ConsommablesFoy.setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
+			
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
 			jourSuivant.addImpact(gestionProfesseurs);

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsommableFoyDAO {
+	
+	private ConsommableFoyDAO() {}
 
     public static List<ConsommableFoy> getAllConsommableFoy(){
 

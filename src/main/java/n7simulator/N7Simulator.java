@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import n7simulator.controller.TempsController;
+import n7simulator.database.ConsommableFoyDAO;
 import n7simulator.database.CreationBddAdmin;
 import n7simulator.database.CreerBddSauvegarde;
 import n7simulator.database.GestionBddSauvegarde;
@@ -15,7 +15,6 @@ import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Bibliotheque;
 import n7simulator.modele.Crous;
 import n7simulator.modele.Partie;
-import n7simulator.modele.Temps;
 import n7simulator.modele.consommableFoy.ConsommableFoy;
 import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.modele.evenements.ApparitionEvenementRegulier;
@@ -87,29 +86,14 @@ public class N7Simulator {
 		Partie laPartie = Partie.getInstance();
 
 		//crous
-		Crous leCrous = Crous.getInstance(1, 1.30);
+		Crous.getInstance(1, 1.30);
 		
-		//partie temps
-		Temps tempsPartie = laPartie.getTemps();
-		TempsGUI interfaceTemps = new TempsGUI(tempsPartie);
-		tempsPartie.addObserver(interfaceTemps);
-		TempsController controllerTemps = new TempsController(tempsPartie);
-
-		// Les jauges
-		Jauge argent = laPartie.getJaugeArgent();
-		Jauge bonheur = laPartie.getJaugeBonheur();
-		Jauge pedagogie = laPartie.getJaugePedagogie();
-
-		JaugesPannel jaugesPannel = new JaugesPannel(bonheur.getValue(), pedagogie.getValue(), argent.getValue());
-		ApparitionEvenementIrregulier gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
-		argent.addObserver(jaugesPannel.getVueArgent());
-		bonheur.addObserver(jaugesPannel.getVueBonheur());
-		pedagogie.addObserver(jaugesPannel.getVuePedagogie());
+		new ApparitionEvenementIrregulier();
 
 		//Creation des interfaces
-		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel, new EventHistoryGUI());
+		PilotageGUI interfacePilotage = new PilotageGUI(new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
-		N7Frame fenetre = N7Frame.getInstance(interfaceCarte, interfacePilotage);
+		N7Frame.getInstance(interfaceCarte, interfacePilotage);
 		
 	}
 	
@@ -175,7 +159,8 @@ public class N7Simulator {
 
 	private static void valoriserDonnesFoy(Map<String, List<Map<String, Object>>> donneesChargees){
 		List<Map<String, Object>> donneesPartie = donneesChargees.get("ConsommableEnCours");
-		Partie partie = Partie.getInstance();
+		ConsommablesFoy.setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
+		
 		List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
 		for(int i = 0; i < consommables.size(); i++){
 			consommables.get(i).setPrix((double)donneesPartie.get(i).get("prix"));
@@ -199,7 +184,7 @@ public class N7Simulator {
 	 */
 	public static void sauvegarderPartie() {
 		//Association entre la table de BD et les données
-		Map<String, List<Map<String, Object>>> donneesPartie = new HashMap<String, List<Map<String,Object>>>();
+		Map<String, List<Map<String, Object>>> donneesPartie = new HashMap<>();
 		donneesPartie.put("Partie", getObjetSauvegardePartie());
 		donneesPartie.put("ProfEmbauches", getObjetSauvegardeProfs());
 		donneesPartie.put("ConsommableEnCours", getObjetSauvegardeFoy());
@@ -216,7 +201,7 @@ public class N7Simulator {
 	 */
 	private static List<Map<String, Object>> getObjetSauvegardePartie() {
 		Partie partieEnCours = Partie.getInstance();
-		Map<String, Object> sauvegardePartie = new HashMap<String, Object>();
+		Map<String, Object> sauvegardePartie = new HashMap<>();
 
 	    String dateEnCours = (partieEnCours.getTemps().getJourneeEnCours()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		sauvegardePartie.put("nomPartie", partieEnCours.getNomPartie());
@@ -233,7 +218,7 @@ public class N7Simulator {
 		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
 		sauvegardePartie.put("nbLivre", biblioInstance.getNbLivre());
 		
-		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> result = new ArrayList<>();
 		result.add(sauvegardePartie);
 		return result;
 	}
@@ -252,7 +237,7 @@ public class N7Simulator {
 		
 		//Creation d'une ligne par prof
 		for(Professeur prof : professeursEmbauches) {
-			Map<String, Object> sauvegardeProfs = new HashMap<String, Object>();
+			Map<String, Object> sauvegardeProfs = new HashMap<>();
 			sauvegardeProfs.put("idprof", prof.getId());
 			sauvegardeProfs.put("salaire", prof.getSalaireActuel());
 			sauvegardeProfs.put("nbheure", prof.getNbHeuresTravaillees());
