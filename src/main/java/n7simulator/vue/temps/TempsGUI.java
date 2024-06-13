@@ -1,7 +1,5 @@
 package n7simulator.vue.temps;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -20,16 +18,26 @@ import n7simulator.modele.Temps;
  */
 public class TempsGUI extends JPanel implements Observer {
 	
+	//label de la date affichee
 	private JLabel afficheurJourEnCours;
 	
-	public TempsGUI(Temps temps) {
-		String dateAffichage = formatJourneeEnCours(temps.getJourneeEnCours());
+	/**
+	 * Obtenir la vue du temps (de la date en cours)
+	 * @param temps
+	 */
+	public TempsGUI() {
+		Temps modeleTemps = Partie.getInstance().getTemps();
+		String dateAffichage = formatJourneeEnCours(modeleTemps.getJourneeEnCours());
 		this.afficheurJourEnCours = new JLabel(dateAffichage);
 		this.add(afficheurJourEnCours);
-		Partie.getInstance().getTemps().addObserver(this);
+		modeleTemps.addObserver(this);
 	}
 	
-	
+	/**
+	 * Formatte la journee en cours sous la forme jour mois annee
+	 * @param date : la date qu'il faut formatter
+	 * @return : la date formattee
+	 */
 	private String formatJourneeEnCours(LocalDate date) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.FRENCH);
 		return date.format(formatter);
