@@ -10,7 +10,7 @@ import n7simulator.modele.professeur.Professeur;
  * professeurs embauchés. Elle permet la gestion du salaire et du nombre
  * d'heures du professeur.
  */
-public class BoutonModifierContratProfesseur extends BoutonGeneriqueProfesseur {
+public class BoutonModifierContratProfesseur extends BoutonContratProfesseur {
 
 	/**
 	 * Obtenir un bouton de modification/gestion d'un professeur à embaucher.
