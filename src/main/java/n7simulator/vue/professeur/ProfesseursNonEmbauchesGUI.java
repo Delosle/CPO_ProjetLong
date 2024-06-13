@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
-import n7simulator.controller.professeur.BoutonChoixProfesseur;
+import n7simulator.controller.professeur.BoutonChoisirProfesseur;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 
@@ -42,7 +42,7 @@ public class ProfesseursNonEmbauchesGUI extends ListeProfesseursGUI {
 		this.add(new JSeparator());
 		for (Professeur professeur : this.professeursNonEmbauches) {
 			this.add(new ProfesseurGUI(professeur, false));
-			this.add(new BoutonChoixProfesseur(professeur));
+			this.add(new BoutonChoisirProfesseur(professeur));
 			this.add(Box.createRigidArea(new Dimension(0, 20)));// espacement
 			this.add(new JSeparator());// séparation entre les professeurs
 		}
