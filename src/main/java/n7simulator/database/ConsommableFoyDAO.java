@@ -8,10 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe permettant d'accéder aux données concernant les consommables du foy dans la
+ * base de données
+ */
 public class ConsommableFoyDAO {
 	
 	private ConsommableFoyDAO() {}
 
+	/**
+	 * Obtenir les consommables du foy presents dans la base de données
+	 * @return : la liste des consommables foy
+	 */
     public static List<ConsommableFoy> getAllConsommableFoy(){
 
         List<ConsommableFoy> consommableFoys = new ArrayList<>();
