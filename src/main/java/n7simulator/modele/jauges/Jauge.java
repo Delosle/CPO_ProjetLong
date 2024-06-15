@@ -71,4 +71,11 @@ public class Jauge extends Observable{
     public String toString(){
         return this.getNom() + " : " + getValue();
     }
+    
+    /**
+     * Permet de reinitialiser les jauges en debut de partie
+     */
+    public void reinitialiserValeur(double valeurDebut) {
+    	this.valeur = valeurDebut;
+    }
 }

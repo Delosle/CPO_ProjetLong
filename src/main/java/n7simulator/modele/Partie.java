@@ -105,10 +105,9 @@ public final class Partie extends Observable {
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
 			gestionnaireEvenementRegulier = new ApparitionEvenementRegulier();
 			temps = new Temps(LocalDate.now());
-			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
+			gestionProfesseurs = new GestionProfesseurs();
 			gestionEleves = new GestionEleves();
 			estPerdue = false;
-			ConsommablesFoy.setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
 			
 			// Ajout dans JourSuivant
 			JourSuivant jourSuivant = JourSuivant.getInstance();
@@ -221,15 +220,16 @@ public final class Partie extends Observable {
 	/**
 	 * Modifie la partie qui devient "perdue"
 	 */
-	public static void setPerdue() {
-		estPerdue = true;
+	public static void setEstPerdue(boolean estPerdueActuellement) {
+		estPerdue = estPerdueActuellement;
 	}
 
 	/**
 	 * Est ce que la partie est perdue ?
 	 * @return : si la partie est perdue
 	 */
-	public static boolean estPerdue() {
+	public static boolean estPerdue() { 
 		return estPerdue;
 	}
+	
 }

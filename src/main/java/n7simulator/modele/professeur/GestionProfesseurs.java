@@ -1,5 +1,6 @@
 package n7simulator.modele.professeur;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -25,9 +26,9 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivant 
 	 * @param professeursEmbauches    : liste des professeurs embauchés
 	 * @param professeursNonEmbauches : liste des professeurs non embauchés
 	 */
-	public GestionProfesseurs(List<Professeur> professeursEmbauches, List<Professeur> professeursNonEmbauches) {
-		this.professeursEmbauches = professeursEmbauches;
-		this.professeursNonEmbauches = professeursNonEmbauches;
+	public GestionProfesseurs() {
+		this.professeursEmbauches = new ArrayList<>();
+		this.professeursNonEmbauches = new ArrayList<>();
 	}
 
 	/**
@@ -128,6 +129,13 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivant 
 			// Si pas de profs embauchés, malus pédagogie
 			jaugePedagogie.ajouter(-20);
 		}
+	}
+	
+	public void initialiserListeProfesseurs(List<Professeur> professeursEmbauches, List<Professeur> professeursNonEmbauches) {
+		this.professeursEmbauches = professeursEmbauches;
+		this.professeursNonEmbauches = professeursNonEmbauches;
+		this.setChanged();
+		this.notifyObservers(this);
 	}
 
 }

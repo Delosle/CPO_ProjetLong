@@ -11,6 +11,7 @@ import n7simulator.database.ConsommableFoyDAO;
 import n7simulator.database.CreationBddAdmin;
 import n7simulator.database.CreerBddSauvegarde;
 import n7simulator.database.GestionBddSauvegarde;
+import n7simulator.database.ProfesseurDAO;
 import n7simulator.database.ValDebPartieDAO;
 import n7simulator.modele.Bibliotheque;
 import n7simulator.modele.Crous;
@@ -109,11 +110,11 @@ public class N7Simulator {
 		partie.initNomPartie((String) donneesPartie.get("nomPartie"));
 		partie.getGestionEleves().inscrireEleves((int) donneesPartie.get("nbEleves"));
 		try {
-			partie.getJaugeArgent().ajouter((double) donneesPartie.get("argent"));
-			partie.getJaugeBonheur().ajouter((double) donneesPartie.get("bonheur"));
-			partie.getJaugePedagogie().ajouter((double) donneesPartie.get("pedagogie"));
+			partie.getJaugeArgent().reinitialiserValeur((double) donneesPartie.get("argent"));
+			partie.getJaugeBonheur().reinitialiserValeur((double) donneesPartie.get("bonheur"));
+			partie.getJaugePedagogie().reinitialiserValeur((double) donneesPartie.get("pedagogie"));
 		} catch (ValeurNulleException vne) {
-			Partie.setPerdue();
+			Partie.setEstPerdue(true);
 			new GameOverFrame(vne.getJaugeDeclenchement());
 		}
 		String dateString = (String) donneesPartie.get("dateEnCours");
@@ -123,6 +124,8 @@ public class N7Simulator {
 		crousInstance.setPrixVente((double) donneesPartie.get("prixVenteRepascrous"));
 		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
 		biblioInstance.setNbLivre((int) donneesPartie.get("nbLivre"));
+		Partie.setEstPerdue(Boolean.parseBoolean((String)donneesPartie.get("estPerdue")));
+		
 
 	}
 
@@ -136,6 +139,7 @@ public class N7Simulator {
 		List<Map<String, Object>> donneesPartie = donneesChargees.get("ProfEmbauches");
 		Partie partie = Partie.getInstance();
 		GestionProfesseurs gestionProfesseurs = partie.getGestionProfesseurs();
+		gestionProfesseurs.initialiserListeProfesseurs(new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
 		List<Professeur> professeursNonEmbauches = gestionProfesseurs.getProfesseursNonEmbauches();
 
 		// Parcours des professeurs recupérés en bd

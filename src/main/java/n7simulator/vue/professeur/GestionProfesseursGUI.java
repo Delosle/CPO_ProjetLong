@@ -43,15 +43,4 @@ public class GestionProfesseursGUI extends JPanel {
 
 	}
 
-	/**
-	 * Récupère la liste des professeurs depuis la base de données
-	 * 
-	 * @return : la gestion des professeurs
-	 */
-	private GestionProfesseurs recuperationProfesseursBD() {
-		List<Professeur> professeursNonEmbauches = ProfesseurDAO.getAllProfesseurs();
-		List<Professeur> profsEmbauches = new ArrayList<>();
-		return new GestionProfesseurs(profsEmbauches, professeursNonEmbauches);
-	}
-
 }

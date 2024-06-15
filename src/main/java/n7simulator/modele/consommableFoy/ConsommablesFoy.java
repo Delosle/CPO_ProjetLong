@@ -1,5 +1,6 @@
 package n7simulator.modele.consommableFoy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  */
 public class ConsommablesFoy {
 
-    private static List<ConsommableFoy> consommables;
+    private static List<ConsommableFoy> consommables = new ArrayList<ConsommableFoy>();
     
     private ConsommablesFoy(){
     }

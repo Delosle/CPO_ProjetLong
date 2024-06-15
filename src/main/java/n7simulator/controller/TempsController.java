@@ -6,10 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import n7simulator.N7Simulator;
 import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.Partie;
 import n7simulator.modele.jauges.ValeurNulleException;
 import n7simulator.vue.GameOverFrame;
+import n7simulator.vue.N7Frame;
 import n7simulator.vue.PilotageGUI;
 
 /**
@@ -33,7 +35,8 @@ public class TempsController extends JPanel {
 				Partie.getInstance().genererEvenementIrregulier((PilotageGUI) getParent().getParent());
 				Partie.getInstance().genererEvenementRegulier((PilotageGUI) getParent().getParent());
 			} catch (ValeurNulleException vne) {
-				Partie.setPerdue();
+				Partie.setEstPerdue(true);
+				N7Simulator.sauvegarderPartie(); 
 				new GameOverFrame(vne.getJaugeDeclenchement());
 			}
 		}
