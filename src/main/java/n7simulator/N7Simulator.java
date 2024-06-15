@@ -107,16 +107,12 @@ public class N7Simulator {
 		// table Partie
 		Map<String, Object> donneesPartie = donneesChargees.get("Partie").get(0); // il n'y a qu'une ligne
 		Partie partie = Partie.getInstance();
+		
+		valoriserJauges(donneesPartie);
+		
 		partie.initNomPartie((String) donneesPartie.get("nomPartie"));
 		partie.getGestionEleves().inscrireEleves((int) donneesPartie.get("nbEleves"));
-		try {
-			partie.getJaugeArgent().reinitialiserValeur((double) donneesPartie.get("argent"));
-			partie.getJaugeBonheur().reinitialiserValeur((double) donneesPartie.get("bonheur"));
-			partie.getJaugePedagogie().reinitialiserValeur((double) donneesPartie.get("pedagogie"));
-		} catch (ValeurNulleException vne) {
-			Partie.setEstPerdue(true);
-			new GameOverFrame(vne.getJaugeDeclenchement());
-		}
+
 		String dateString = (String) donneesPartie.get("dateEnCours");
 		partie.getTemps().setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		Crous crousInstance = Crous.getInstance();
@@ -124,9 +120,41 @@ public class N7Simulator {
 		crousInstance.setPrixVente((double) donneesPartie.get("prixVenteRepascrous"));
 		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
 		biblioInstance.setNbLivre((int) donneesPartie.get("nbLivre"));
-		Partie.setEstPerdue(Boolean.parseBoolean((String)donneesPartie.get("estPerdue")));
-		
+		Partie.setEstPerdue(Boolean.parseBoolean((String) donneesPartie.get("estPerdue")));
 
+	}
+	
+	/**
+	 * Valorise les jauges pour une partie sauvegarde et lance l'écran de game over
+	 * si une jauge a atteint 0
+	 * @param donneesPartie : les donnees chargees de la partie
+	 */
+	private static void valoriserJauges(Map<String, Object> donneesPartie) {
+		Partie partie = Partie.getInstance();
+
+		double valeurArgent = (double) donneesPartie.get("argent");
+		double valeurBonheur = (double) donneesPartie.get("bonheur");
+		double valeurPedagogie = (double) donneesPartie.get("pedagogie");
+		
+		Jauge declenchementGameOver = null;
+		if(valeurArgent == 0) {
+			declenchementGameOver = partie.getJaugeArgent();
+		}
+		if(valeurBonheur == 0) {
+			declenchementGameOver = partie.getJaugeBonheur();
+		}
+		if(valeurPedagogie == 0) {
+			declenchementGameOver = partie.getJaugePedagogie();
+		}
+
+		if (declenchementGameOver != null) {
+			Partie.setEstPerdue(true);
+			new GameOverFrame(declenchementGameOver);
+		} else {
+			partie.getJaugeArgent().reinitialiserValeur(valeurArgent);
+			partie.getJaugeBonheur().reinitialiserValeur(valeurBonheur);
+			partie.getJaugePedagogie().reinitialiserValeur(valeurPedagogie);
+		}
 	}
 
 	/**
