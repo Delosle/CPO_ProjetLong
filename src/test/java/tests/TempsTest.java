@@ -8,7 +8,6 @@ import java.time.Month;
 import org.junit.Before;
 import org.junit.Test;
 
-import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
 
 public class TempsTest {
@@ -21,9 +20,8 @@ public class TempsTest {
 	}
 	
 	/*
-	 * Test vérifiant la date par defaut du temps lorsque celui-ci
-	 * est créé de zéro (nouveau temps et non chargement à partir 
-	 * d'une sauvegarde)
+	 * Test vérifiant l'initialisation d'une nouvelle date avec
+	 * le getter
 	 */
 	@Test
 	public void testInitialisationNouveauTemps() {

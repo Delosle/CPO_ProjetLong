@@ -86,7 +86,9 @@ public class N7Simulator {
 		Partie laPartie = Partie.getInstance();
 
 		//crous
-		Crous.getInstance(1, 1.30);
+		Crous crousInstance = Crous.getInstance();
+		crousInstance.setPrixVente(1.30);
+		crousInstance.setQualite(1);
 		
 		new ApparitionEvenementIrregulier();
 
@@ -117,7 +119,7 @@ public class N7Simulator {
 		}
 		String dateString = (String) donneesPartie.get("dateEnCours");
 		partie.getTemps().setJourneeEnCours(LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));		
-		Crous crousInstance = Crous.getInstance(0, 0);
+		Crous crousInstance = Crous.getInstance();
 		crousInstance.setQualite((int)donneesPartie.get("idQualiteRepasCrous"));
 		crousInstance.setPrixVente((double)donneesPartie.get("prixVenteRepascrous"));
 		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
@@ -212,7 +214,7 @@ public class N7Simulator {
 		sauvegardePartie.put("pedagogie", partieEnCours.getJaugePedagogie().getValue());
 		//a changer quand implementation des fonctionnalités
 		sauvegardePartie.put("estPerdue", Partie.estPerdue());
-		Crous crousInstance = Crous.getInstance(1, 1.30);
+		Crous crousInstance = Crous.getInstance();
 		sauvegardePartie.put("idQualiteRepasCrous", crousInstance.getQualite());
 		sauvegardePartie.put("prixVenteRepascrous", crousInstance.getPrixVente());
 		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
