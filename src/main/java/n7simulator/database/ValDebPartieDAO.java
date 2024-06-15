@@ -14,8 +14,10 @@ import n7simulator.modele.Temps;
  * partie dans la base de données
  */
 public class ValDebPartieDAO {
+	
+	private ValDebPartieDAO() {}
 
-	public static void initialiserPartieSauvegardee(int idPartie) {
+	public static void initialiserPartieSauvegardee() {
 		initialiserDonneesDebutPartie();
 		Connection connexionDB = null;
 

@@ -95,6 +95,19 @@ public class Crous extends Observable implements ImpactJourSuivant {
 		// round afin d'être sous la forme 2 centimes maximum.
 		return Math.round(marge * 100.0 ) / 100.0 * nbEleves;
 	}
+	
+	/**
+	 * permet de retourner la marge sur la vente des repas
+	 * par rapport aux champs du formulaire en cours d'edition
+	 * @return la marge sous forme X.XX comme les centimes en euros
+	 */
+	public double getMargeTemporaire(int indexQualite, double prixVente) {
+		//Afin de multiplier la marge d'un repas par le nombre d'élève
+		int nbEleves = Partie.getInstance().getGestionEleves().getNombreEleves();
+		double marge = prixVente - CrousDAO.getPrixVente(indexQualite + 1);
+		// round afin d'être sous la forme 2 centimes maximum.
+		return Math.round(marge * 100.0 ) / 100.0 * nbEleves;
+	}
 
 	/**
 	 * Recupere la liste de qualites avec leur prix associe sous forme de chaine de caractères

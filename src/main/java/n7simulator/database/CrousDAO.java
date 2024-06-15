@@ -3,17 +3,16 @@ package n7simulator.database;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import n7simulator.modele.Partie;
 
 /**
  * Classe permettant d'accéder aux données concernant le crous dans la
  * base de données
  */
 public class CrousDAO {
+	
+	private CrousDAO() {}
 	
 	/**
 	 * Obtenir le prix de vente en fonction d'une qualite choisie

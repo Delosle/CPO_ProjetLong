@@ -117,7 +117,9 @@ public class CrousController extends JPanel {
 	 * controlleur permettant d'updater la marge
 	 */
 	private void updateMarge() {
-		Double valeur = Crous.getInstance().getMarge();
+		int indexQualite = selecteur.getSelectedIndex();
+		Double prixRevente = (Double)spinnerPrixRevente.getValue();
+		Double valeur = Crous.getInstance().getMargeTemporaire(indexQualite, prixRevente);
 		String text = "";
 		if (valeur >= 0) {
 			text += "+ ";
