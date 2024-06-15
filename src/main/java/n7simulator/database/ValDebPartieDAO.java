@@ -11,7 +11,6 @@ import java.util.List;
 import n7simulator.modele.Bibliotheque;
 import n7simulator.modele.Partie;
 import n7simulator.modele.Temps;
-import n7simulator.modele.consommableFoy.ConsommablesFoy;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
@@ -81,7 +80,7 @@ public class ValDebPartieDAO {
 			}
 			
 			initialiserProfesseurs();
-			ConsommablesFoy.setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
+			partie.getFoy().setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
 			Bibliotheque.getInstance(0).setNbLivre(0);
 			Partie.setEstPerdue(false);
 

@@ -104,7 +104,7 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivant 
 				jaugePedagogie.ajouter((int)((moyennePeda - 50) / 3));
 			}
 
-			double moyenneSalaireSupMin = totalSalaireSupMin / nbProfsEmbauches;
+			double moyenneSalaireSupMin = (totalSalaireSupMin / nbProfsEmbauches);
 			
 			// Si trop d'élèves par profs et trop peu d'heures de cours pour les élèves, malus pédagogie
 			if (partie.getGestionEleves().getNombreEleves() / nbProfsEmbauches > 50 || partie.getGestionEleves().getNombreEleves() / totalHeureCours > 50) {

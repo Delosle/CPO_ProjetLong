@@ -1,9 +1,9 @@
 package n7simulator.controller.consommable;
 
-import n7simulator.joursuivant.ImpactConsommableFoy;
 import n7simulator.joursuivant.JourSuivant;
-import n7simulator.modele.consommableFoy.ConsommableFoy;
-import n7simulator.modele.consommableFoy.ConsommablesFoy;
+import n7simulator.modele.Partie;
+import n7simulator.modele.foy.ConsommableFoy;
+import n7simulator.modele.foy.Foy;
 import n7simulator.vue.consommable.ConsommableGUI;
 
 import javax.swing.*;
@@ -17,29 +17,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller des consommables du foy
+ * Controleur des consommables du foy
  */
 public class ConsommableFoyController extends JPanel {
 
     /**
-     * On veut garder une copie des repas à l'initialisation
+     * Copie des consommables à l'initialisation
      */
-    List<ConsommableFoy> consommableFoys;
+    private List<ConsommableFoy> consommableFoys;
 
-
+    /**
+     * Crée un controleur des consommables du foy
+     */
     public ConsommableFoyController(){
-        List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
+        List<ConsommableFoy> consommables = Partie.getInstance().getFoy().getConsommables();
         this.setLayout(new GridLayout(consommables.size(), 1));
-
-        ImpactConsommableFoy impact = ImpactConsommableFoy.getInstance();
-        JourSuivant.getInstance().addImpact(impact);
 
         this.consommableFoys = new ArrayList<>();
 
-        // on recupère les consommables en modèle; initialise les vues ainsi que
-        // les controleurs pour chaque consommable.
+        // Récupération des consommables du modèle et initialisation des vues ainsi que
+        // des controleurs pour chaque consommable.
         for (ConsommableFoy consommableFoy : consommables) {
-
             this.consommableFoys.add(ConsommableFoy.copieFoy(consommableFoy));
             ConsommableGUI vueRepas = new ConsommableGUI(consommableFoy.getNom(),consommableFoy.getPrix(),consommableFoy.getImage());
             consommableFoy.addObserver(vueRepas);
@@ -49,62 +47,63 @@ public class ConsommableFoyController extends JPanel {
             JPanel vueControl = creeVueControlFoy(consommableFoy, vueRepas);
             add(vueControl);
         }
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(this);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        // On récupère les dimensions de l'écran
+        // Récupération des dimensions de l'écran
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
 
-        setAutoscrolls(true);
+        this.setAutoscrolls(true);
 
         scrollPane.setPreferredSize(new Dimension((int)(width/2.5), (int)(height/2)));
         // Afficher la boite de dialogue
         int result = JOptionPane.showOptionDialog(null, scrollPane, "Consommables foy"
                         ,JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, null, null);
 
-        // Implémentation des modifications si non validation
+        // Si l'utilisateur clique sur annuler, restaure les prix
         if (result == JOptionPane.CANCEL_OPTION) {
             for (int i= 0; i < consommables.size(); i++){
             	consommables.get(i).setPrix(consommableFoys.get(i).getPrix());
             }
         }
 
-        //calcul des impacts ( Bonheur et Argent)
+        // Calcul des impacts ( Bonheur et Argent)
         double impactBonheur = 0;
         double impactArgent = 0;
         for(ConsommableFoy consommableFoy: consommables){
             impactArgent += consommableFoy.getMarge();
             impactBonheur += consommableFoy.getDiff();
         }
-
         //pour une journée l'impact max
         impactBonheur = impactBonheur > 10 ? 10 : impactBonheur;
 
-        impact.setImpactArgent(impactArgent);
-        impact.setImpactBonheur(impactBonheur);
+        Foy foy = Partie.getInstance().getFoy();
+        JourSuivant.getInstance().addImpact(foy);
+        foy.setImpactArgent(impactArgent);
+        foy.setImpactBonheur(impactBonheur);
     }
 
     /**
-     * Créer un JPannel contenant la vue et le bouton pour modifier un consommableFoy
+     * Créer un JPanel contenant la vue et le bouton pour modifier un consommableFoy
      * @param consommableFoy le consommable en modèle
      * @param vueRepas la vue du consommable
-     * @return le JPannel contenant le MVC du consommable.
+     * @return le JPanel contenant le MVC du consommable.
      */
     private static JPanel creeVueControlFoy(ConsommableFoy consommableFoy, ConsommableGUI vueRepas){
         JPanel monPanel = new JPanel(new GridLayout(2, 1));
 
         monPanel.setPreferredSize(new Dimension(500, 200));
         JButton boutonModifierPrixRepas = creerModifierPrixBouton(consommableFoy);
-        JPanel panelMofierPrix = new JPanel();
-        panelMofierPrix.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
-        panelMofierPrix.add(boutonModifierPrixRepas);
-        monPanel. add(vueRepas);
-        monPanel.add(panelMofierPrix);
+        JPanel panelModifierPrix = new JPanel();
+        panelModifierPrix.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+        panelModifierPrix.add(boutonModifierPrixRepas);
+        monPanel.add(vueRepas);
+        monPanel.add(panelModifierPrix);
         Border bottomBorder = new MatteBorder(0, 0, 2, 0, new Color(141, 111, 0));
         monPanel.setBorder(bottomBorder);
 
@@ -112,17 +111,17 @@ public class ConsommableFoyController extends JPanel {
     }
 
     /**
-     * Créer le bouton qui ouvre le controleur modifierPrix pour un consommable
+     * Crée le bouton qui ouvre le controleur modifierPrix pour un consommable.
      * @param consommableFoy le consommable en tant que modèle
      * @return le bouton.
      */
     public static JButton creerModifierPrixBouton(ConsommableFoy consommableFoy){
-        JButton leButton = new JButton("Modifier");
+        JButton boutonModifier = new JButton("Modifier");
         class ActionModifierPrix implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Créer la boite de dialogue
+                // Création de la boite de dialogue
                 JPanel panel = new JPanel(new GridLayout(3,1));
                 panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -160,8 +159,8 @@ public class ConsommableFoyController extends JPanel {
                 }
             }
         }
-        leButton.addActionListener(new ActionModifierPrix());
-        return  leButton;
+        boutonModifier.addActionListener(new ActionModifierPrix());
+        return boutonModifier;
     }
 
 }

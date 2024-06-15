@@ -1,4 +1,4 @@
-package n7simulator.modele.consommableFoy;
+package n7simulator.modele.foy;
 
 import java.util.Observable;
 

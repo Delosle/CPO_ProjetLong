@@ -41,7 +41,7 @@ public abstract class BoutonContratProfesseur extends JButton {
 	 *                           modification/initialisation du nombre d'heures du
 	 *                           professeur
 	 */
-	public BoutonContratProfesseur(Professeur professeur, String texteSalaire,
+	protected BoutonContratProfesseur(Professeur professeur, String texteSalaire,
 			String texteNbHeures) {
 		this.professeur = professeur;
 		this.gestionProfesseurs = Partie.getInstance().getGestionProfesseurs();

@@ -1,6 +1,6 @@
 package n7simulator.vue.Evenement;
 
-import n7simulator.controller.ChoixEventRegu;
+import n7simulator.controller.ChoixEventRegulierController;
 import n7simulator.modele.Partie;
 import n7simulator.modele.evenements.Evenement;
 import n7simulator.vue.PilotageGUI;
@@ -12,7 +12,7 @@ public class EvenementReguGUI extends EvenementGUI{
 
     public EvenementReguGUI(Evenement evenement, PilotageGUI pilotageGUI) {
         super(evenement, pilotageGUI);
-        panelChoix.add(new ChoixEventRegu(evenement,  Partie.getInstance(), this));
+        panelChoix.add(new ChoixEventRegulierController(evenement,  Partie.getInstance(), this));
         //panelChoix.add(panelBoutonsChoix);
         revalidate();
         repaint();

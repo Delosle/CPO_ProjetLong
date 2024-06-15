@@ -11,9 +11,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import n7simulator.controller.BibliothequeController;
+import n7simulator.controller.GestionBibliothequeController;
 import n7simulator.modele.Bibliotheque;
 
+/**
+ * Vue bibliothèque
+ */
 public class BibliothequeGUI extends JPanel implements Observer {
 
 	private Integer nbLivre;
@@ -54,7 +57,7 @@ public class BibliothequeGUI extends JPanel implements Observer {
 		contenu.add(informations, BorderLayout.WEST);
 
 		// Zone bouton modification
-		contenu.add(BibliothequeController.getBoutonOuverture(), BorderLayout.EAST);
+		contenu.add(GestionBibliothequeController.getBoutonOuverture(), BorderLayout.EAST);
 
 		this.add(contenu);
 
@@ -66,8 +69,10 @@ public class BibliothequeGUI extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		if (o instanceof Bibliotheque) {
 			Bibliotheque biblio = (Bibliotheque) o;
-	        int newNbLivre = biblio.getNbLivre(); // Récupération de la nouvelle valeur du nombre de livres
-	        labelLivre.setText(String.valueOf(newNbLivre)); // Mise à jour avec la nouvelle valeur
+			// Récupération de la nouvelle valeur du nombre de livres
+	        int newNbLivre = biblio.getNbLivre();
+	        // Mise à jour avec la nouvelle valeur
+	        labelLivre.setText(String.valueOf(newNbLivre));
 		}
 	}
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package n7simulator.controller;
 
 import java.awt.BorderLayout;

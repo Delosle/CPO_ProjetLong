@@ -1,8 +1,8 @@
 package n7simulator.vue.consommable;
 
 import n7simulator.controller.consommable.BoutonGestionConsommables;
-import n7simulator.modele.consommableFoy.ConsommableFoy;
-import n7simulator.modele.consommableFoy.ConsommablesFoy;
+import n7simulator.modele.Partie;
+import n7simulator.modele.foy.ConsommableFoy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class VueConsommables extends JPanel {
 
     public VueConsommables(){
         super(new GridLayout(1, 2));
-        List<ConsommableFoy> consommables = ConsommablesFoy.getConsommables();
+        List<ConsommableFoy> consommables = Partie.getInstance().getFoy().getConsommables();
         setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
 
         this.add(new JLabel("<html>Consommables foy <br>" +

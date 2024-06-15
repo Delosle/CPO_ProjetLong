@@ -2,7 +2,6 @@ package n7simulator.controller.professeur;
 
 import javax.swing.JOptionPane;
 
-import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
 
 /**
@@ -13,9 +12,8 @@ import n7simulator.modele.professeur.Professeur;
 public class BoutonChoisirProfesseur extends BoutonContratProfesseur {
 
 	/**
-	 * Obtenir un bouton de choix/gestion d'un professeur à embaucher.
-	 * 
-	 * @param professeur         : le professeur choisi
+	 * Obtenir un bouton de choix/gestion d'un professeur à embaucher. 
+	 * @param professeur : le professeur choisi
 	 */
 	public BoutonChoisirProfesseur(Professeur professeur) {
 		super(professeur, "Veuillez entrer le salaire proposé :",

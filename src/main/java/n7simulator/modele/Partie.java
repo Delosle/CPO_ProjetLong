@@ -1,22 +1,16 @@
 package n7simulator.modele;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.database.ConsommableFoyDAO;
-import n7simulator.database.ProfesseurDAO;
 import n7simulator.joursuivant.JourSuivant;
-import n7simulator.database.ValDebPartieDAO;
-import n7simulator.modele.consommableFoy.ConsommablesFoy;
+import n7simulator.modele.foy.Foy;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
-import n7simulator.modele.professeur.Professeur;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.evenements.Evenement_Irregu;
-import n7simulator.vue.Evenement.EvenementGUI;
 import n7simulator.modele.evenements.Evenement_Regulier;
 import n7simulator.vue.Evenement.EvenementIrreguGUI;
 import n7simulator.vue.Evenement.EvenementReguGUI;
@@ -87,7 +81,7 @@ public final class Partie extends Observable {
 	/**
 	 * les consommables au Foy
 	 */
-	private static ConsommablesFoy consommablesFoy;
+	private static Foy foy;
 
 
 	private Partie() {}
@@ -107,6 +101,7 @@ public final class Partie extends Observable {
 			temps = new Temps(LocalDate.now());
 			gestionProfesseurs = new GestionProfesseurs();
 			gestionEleves = new GestionEleves();
+			foy = new Foy();
 			estPerdue = false;
 			
 			// Ajout dans JourSuivant
@@ -114,6 +109,7 @@ public final class Partie extends Observable {
 			jourSuivant.addImpact(gestionProfesseurs);
 			jourSuivant.addImpact(temps);
 			jourSuivant.addImpact(gestionEleves);
+			jourSuivant.addImpact(foy);
 		}
 		return instance;
 	}
@@ -205,8 +201,8 @@ public final class Partie extends Observable {
 		return temps;
 	}
 
-	public ConsommablesFoy getConsommablesFoy(){
-		return consommablesFoy;
+	public Foy getFoy(){
+		return foy;
 	}
 
 	/**

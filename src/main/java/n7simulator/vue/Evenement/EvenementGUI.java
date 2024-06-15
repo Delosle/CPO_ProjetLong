@@ -1,6 +1,6 @@
 package n7simulator.vue.Evenement;
 
-import n7simulator.controller.ChoixEventRegu;
+import n7simulator.controller.ChoixEventRegulierController;
 import n7simulator.modele.Partie;
 import n7simulator.modele.evenements.Evenement;
 import n7simulator.vue.PilotageGUI;

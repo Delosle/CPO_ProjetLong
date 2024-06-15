@@ -11,14 +11,15 @@ import javax.swing.SwingUtilities;
 import n7simulator.N7Simulator;
 import n7simulator.database.GestionBddSauvegarde;
 import n7simulator.modele.Partie;
-import n7simulator.vue.startmenu.StartMenuGUI;
 
 /**
  * Classe représentant le formulaire de nouvelle partie
  */
 public class NouvellePartieFormulaire extends JPanel {
 
-	//champ texte permettant de rentrer le nom de la partie
+	/**
+	 * Champ texte permettant de rentrer le nom de la partie
+	 */
 	JTextField fieldNomPartie;
 
 	/**
@@ -66,16 +67,18 @@ public class NouvellePartieFormulaire extends JPanel {
 	 */
 	private boolean testerNomValide() {
 		String nomPartie = this.fieldNomPartie.getText().trim();
+		String messageErreur = null;
+		
 		if (nomPartie.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Le nom de la partie ne peut pas être vide.", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
+			messageErreur = "Le nom de la partie ne peut pas être vide.";
+		} else if (!GestionBddSauvegarde.nomPartieDisponible(nomPartie)) {
+			messageErreur = "La partie " + nomPartie + " existe déjà !";
 		}
-		if (!GestionBddSauvegarde.nomPartieDisponible(nomPartie)) {
-			JOptionPane.showMessageDialog(this, "La partie " + nomPartie + " existe déjà !", "Erreur",
-					JOptionPane.ERROR_MESSAGE);
+		
+		if (messageErreur != null) {		
+			JOptionPane.showMessageDialog(this, messageErreur, "Erreur", JOptionPane.ERROR_MESSAGE);
 			return false;
-		}
+		}		
 		return true;
 	}
 }
