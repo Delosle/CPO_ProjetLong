@@ -5,11 +5,14 @@ import javax.swing.*;
 import n7simulator.modele.jauges.*;
 import java.util.*;
 
+/**
+ * Classe representant la vue des jauges bornees
+ */
 public class JaugeBorneeGUI extends JPanel implements Observer {
-    private static int LARGEUR_PANNEL = 480;
-    private static int HAUTEUR_PANNEL = 80;
-    private static int LARGEUR_BARMAX = 350;
-    private static int HAUTER_BARMAX = 40;
+    private static final int LARGEUR_PANNEL = 480;
+    private static final int HAUTEUR_PANNEL = 80;
+    private static final int LARGEUR_BARMAX = 350;
+    private static final int HAUTER_BARMAX = 40;
     
     /**
      * Pannel pour afficher la valeur entière contenu dans la jauge
@@ -87,7 +90,6 @@ public class JaugeBorneeGUI extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         Double doubleVal = (Double) arg;
         Integer val = doubleVal.intValue();
-        //Integer val = (Integer) arg;
         valeurLabel.setText(""+val);
         largBar = LARGEUR_BARMAX * val / JaugeBornee.BORNE_MAX;
         bareValue.repaint(); // Redessine la barre de valeur lorsque la valeur est mise à jour

@@ -4,8 +4,10 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.*;
 import javax.swing.*;
-import n7simulator.modele.jauges.*;
 
+/**
+ * Classe representant la vue de la jauge argent
+ */
 public class ArgentGUI extends JPanel implements Observer {
 	
 	private static final DecimalFormat df = new DecimalFormat("0.00");

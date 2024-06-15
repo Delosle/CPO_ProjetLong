@@ -28,9 +28,7 @@ import n7simulator.vue.CarteGUI;
 import n7simulator.vue.N7Frame;
 import n7simulator.vue.PilotageGUI;
 import n7simulator.vue.Evenement.EventHistoryGUI;
-import n7simulator.vue.jauges.JaugesPannel;
 import n7simulator.vue.startmenu.StartMenuGUI;
-import n7simulator.vue.temps.TempsGUI;
 
 public class N7Simulator {
 
