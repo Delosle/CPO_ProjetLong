@@ -1,17 +1,16 @@
-package n7simulator.controller;
+package n7simulator.vue.batiment;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -23,81 +22,73 @@ import n7simulator.vue.N7Frame;
 /**
  * 
  */
-public abstract class AbstractBatiment extends JPanel implements InterfaceBatiment {
+public abstract class AbstractBatiment extends JPanel{
 
 	protected JPanel contenuBatiment; // Le JPanel dans lequel on place les actions
 	
-	protected JButton boutonAnnuler; // Le bouton qui annule les actions
+	protected JButton boutonFermer; // Le bouton qui annule les actions
 	
-	protected JButton boutonValider; // Le bouton qui valide les actions
-	
-	private N7Frame laFrame; // la fenêtre générale que l'on récupère pour afficher la vue du bâtiment
+	protected double width; // La largeur du bâtiment
 	
 	/** On créé un bâtiment abstrait
-	 * @param laFrame la fenêtre générale que l'on récupère pour afficher la vue du bâtiment
+	 *
 	 */
-	public AbstractBatiment(N7Frame laFrame, JPanel contenu) {
-		// On récupère la frame
-		this.laFrame = laFrame;
+	public AbstractBatiment(String nom, CarteGUI laCarte) {
 		
 		// On récupère les dimensions de l'écran
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double width = screenSize.getWidth();
-		double height = screenSize.getHeight();
+		double largeur = N7Frame.getScreenWidth();
+		double hauteur = N7Frame.getScreenHeight();
 		
 		// On définie les dimensions de la fenêtre d'action du bâtiment
-		double batimentLargeur = width * 0.675;
-		this.setSize((int)batimentLargeur, (int)height);
+		this.width = largeur * 0.675;
+		this.setSize((int)width, (int)hauteur);
 		
-		// On créé le JPanel qui contient les actions (rempli dans les sous-classes)
-		contenuBatiment = contenu;
+		contenuBatiment = new JPanel();
 		
 		// On fait en sorte que l'on puisse scroller pour voir toutes les actions sur le bâtiment
 		JScrollPane scrollable = new JScrollPane(contenuBatiment);
 		scrollable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Désactiver le défilement horizontal
 		scrollable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); // Activer le défilement vertical
-        
+		
 		contenuBatiment.setAutoscrolls(true);
-		Integer batimentHauteur = (int)height * 8 / 10;
-		scrollable.setPreferredSize(new Dimension((int)batimentLargeur, batimentHauteur));
+		
+		Integer batimentHauteur = (int)hauteur * 8 / 10;
+		scrollable.setPreferredSize(new Dimension((int)width, batimentHauteur));
 		this.add(scrollable);
+		
+		contenuBatiment.setLayout(new BoxLayout(contenuBatiment, BoxLayout.Y_AXIS));
+		
+		// Titre
+		JLabel titre = new JLabel("<html><body><h1>Batiment " + nom + "</h1></body></html>");
+		N7Frame.definirTaille(titre, (int)width, 75);
+		contenuBatiment.add(titre);
 		
 		// On créé la zone pour les boutons annuler et valider
 		FlowLayout layoutBoutons = new FlowLayout(FlowLayout.CENTER, 50, 0);
 		JPanel zoneBoutons = new JPanel(layoutBoutons);
-		zoneBoutons.setSize((int)width, (int)height - 2 * batimentHauteur);
+		zoneBoutons.setSize((int)width, (int)hauteur - 2 * batimentHauteur);
 		
 		// On créé les boutons
-		boutonAnnuler = new JButton("ANNULER");
-		boutonAnnuler.setBackground(Color.red);
-		boutonAnnuler.setForeground(Color.white);
-		
-		boutonValider = new JButton("VALIDER");
-		boutonValider.setBackground(Color.green);
-		boutonValider.setForeground(Color.white);
+		boutonFermer = new JButton("FERMER");
+		boutonFermer.setBackground(Color.darkGray);
+		boutonFermer.setForeground(Color.white);
 		
 		// On ajoute les boutons à la zone et on leur ajoute la fermeture de la fenetre d'action
-		zoneBoutons.add(boutonAnnuler);
-		zoneBoutons.add(boutonValider);
-		ajouterFermetureBouton(boutonAnnuler);
-		ajouterFermetureBouton(boutonValider);
-		this.add(zoneBoutons);
-	}
-	
-	/** Ajouter à un bouton la fermeture de la fenetre lorsque l'utilisateur appuie
-	 * @param bouton
-	 */
-	protected void ajouterFermetureBouton(JButton bouton) {
 		AbstractBatiment temp = this;
-		ActionListener cacherBatiment = new ActionListener() {
+		zoneBoutons.add(boutonFermer);
+		boutonFermer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				laFrame.retirerLayer(temp);
+				N7Frame.getInstance().retirerLayer(temp);
 			}
-		};
-		bouton.addActionListener(cacherBatiment);
+		});
+		this.add(zoneBoutons);
+		
+		this.afficherSurCarte(laCarte);
 	}
 	
-	@Override
+	/** Afficher sur la vue de la carte le bâtiment courant
+	 * @param laCarte la carte sur laquelle afficher le bâtiment
+	 */
 	public abstract void afficherSurCarte(CarteGUI laCarte);
 	
 	/** Afficher sur la vue de la carte un rectangle par les positions des cases
@@ -118,7 +109,7 @@ public abstract class AbstractBatiment extends JPanel implements InterfaceBatime
 		AbstractBatiment temp = this;
 		ActionListener afficherBatiment = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				laFrame.ajouterLayer(temp, JLayeredPane.PALETTE_LAYER);
+				N7Frame.getInstance().ajouterLayer(temp, JLayeredPane.PALETTE_LAYER);
 			}
 		};
 		
@@ -131,6 +122,7 @@ public abstract class AbstractBatiment extends JPanel implements InterfaceBatime
 				
 				// On créé la case et on l'ajoute selon les contraintes
 				caseCourante  = new JButton();
+				
 				// Supprimez les bordures et les marges
 				caseCourante.setBorder(BorderFactory.createEmptyBorder());
 				caseCourante.setMargin(new Insets(0, 0, 0, 0));

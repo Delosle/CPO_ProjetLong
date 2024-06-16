@@ -3,29 +3,27 @@ package n7simulator.vue;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import n7simulator.controller.*;
-import n7simulator.vue.professeur.GestionProfesseursGUI;
-
-import n7simulator.modele.Partie;
-
+import n7simulator.vue.batiment.BatimentAGUI;
+import n7simulator.vue.batiment.BatimentAdminGUI;
+import n7simulator.vue.batiment.BatimentBGUI;
+import n7simulator.vue.batiment.BatimentCGUI;
 /**
  * 
  */
 public class CarteGUI extends JPanel {
 
-	private BatimentA batimentA;
+	private BatimentAGUI batimentA;
 
-	private BatimentB batimentB;
+	private BatimentBGUI batimentB;
 
-	private BatimentC batimentC;
+	private BatimentCGUI batimentC;
 
-	private BatimentAdmin batimentAdmin;
+	private BatimentAdminGUI batimentAdmin;
 
 	/**
 	 * 
@@ -63,28 +61,20 @@ public class CarteGUI extends JPanel {
 
 			}
 		}
-
-	}
-
-	/** On créé les bâtiments dans la fenêtre
-	 * @param laFrame la fenêtre dans laquelle on place les bâtiments
-	 */
-	public void creerBatiments(N7Frame laFrame) {
+		
+		// On créé les bâtiments sur la carte
 		// Batiment A
-		batimentA = new BatimentA(laFrame, new JPanel());
-		batimentA.afficherSurCarte(this);
+		batimentA = new BatimentAGUI(this);
 
 		// Batiment B
-		batimentB = new BatimentB(laFrame, new GestionProfesseursGUI());
-		batimentB.afficherSurCarte(this);
+		batimentB = new BatimentBGUI(this);
 
 		// Batiment C
-		batimentC = new BatimentC(laFrame, new BatimentCGUI());
-		batimentC.afficherSurCarte(this);
+		batimentC = new BatimentCGUI(this);
 
 		// Batiment Admin
-		batimentAdmin = new BatimentAdmin(laFrame, new BatimentAdminGUI());
-		batimentAdmin.afficherSurCarte(this);
+		batimentAdmin = new BatimentAdminGUI(this);
+
 	}
 
 }
