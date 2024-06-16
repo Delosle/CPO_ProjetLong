@@ -25,7 +25,7 @@ public class N7Frame extends JFrame {
 	
 	private static PilotageGUI interfacePilotage = null;
 	
-	private static Dimension screenSize;
+	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	private JLayeredPane layeredPanel;
 	
@@ -35,8 +35,6 @@ public class N7Frame extends JFrame {
 	private N7Frame(){
 		// On créé la fenêtre globale
 		super("N7Simulator");
-		
-		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);	
 		addWindowListener(new WindowAdapter() {
