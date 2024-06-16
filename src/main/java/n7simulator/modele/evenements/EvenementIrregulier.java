@@ -1,76 +1,38 @@
 package n7simulator.modele.evenements;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 
 import n7simulator.modele.Partie;
-import java.sql.Connection;
-import n7simulator.database.DatabaseConnection;
 
+/**
+ * Classe qui représente un événement irrégulier
+ */
 public class EvenementIrregulier extends Evenement{
-    private LocalDate dateApparition;
+	
+	/**
+	 * Indique s'il sagit d'un bonus
+	 */
     private boolean bonus;
 
     /**
      * Constructeur
-     * @param id l'identifiant de l'événement
-     * @param dateApparition la date d'apparition de l'événement
      */
-    public EvenementIrregulier(int id, LocalDate dateApparition){
-        super(id);
-
-        Connection connexion = null;
-        try {
-            /*ouverture de connexion à la base de données*/
-            connexion = DatabaseConnection.getDBConnexion();
-
-            /*récupération des informations de l'événement*/
-            String query = "SELECT titre, description, impactBonheur, impactArgent, " +
-                    "impactPedagogie, bonus " +
-                    "FROM evenement_irregulier " +
-                    "WHERE id_eve_irre = " + id;
-
-            ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexion);
-
-            // récupération des informations de l'événement
-            while (resultDB.next()) {
-                titre = resultDB.getString("Titre");
-                description = resultDB.getString("description");
-                impactBonheur = resultDB.getInt("impactBonheur");
-                impactArgent = resultDB.getInt("impactArgent");
-                impactPedagogie = resultDB.getInt("impactPedagogie");
-                bonus = resultDB.getBoolean("bonus");
-            }
-
-            this.dateApparition = dateApparition;
-
-
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération des données " +
-                    "de l'evenement irregulier dans la base de données.");
-            e.printStackTrace();
-
-        } finally {
-            try {
-                DatabaseConnection.closeDBConnexion(connexion);
-
-            } catch (Exception e) {
-                System.err.println("Erreur lors de la fermeture de la connexion");
-                e.printStackTrace();
-        }
+    public EvenementIrregulier(int id, LocalDate dateApparition, String titre, String description,
+    		int impactBohneur, int impactArgent, int impactPedagogie, boolean bonus){
+        super(id, dateApparition, titre, description, impactBohneur, impactArgent, impactPedagogie);
+        this.bonus = bonus;
     }
-
-    }
-    /** @return la date d'apparition de l'événement
+    
+    /**Contient la date d'apparition de l'événement
+     *  @return la date d'apparition de l'événement
      */
     public LocalDate getDateApparition(){
         return dateApparition;
     }
 
-    /*
-        * @return si l'événement est un bonus
+    /** Indique si l'événement est une bonus
+     * @return si l'événement est un bonus
      */
     public boolean isBonus() {
         return bonus;

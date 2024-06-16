@@ -1,5 +1,7 @@
 package n7simulator.modele.evenements;
 
+import java.time.LocalDate;
+
 import n7simulator.modele.Partie;
 
 /**
@@ -8,22 +10,52 @@ import n7simulator.modele.Partie;
 public abstract class Evenement{
 	
 	/**
-	 * Id de l'événement en 
+	 * Id en BD
 	 */
     protected int id;
     
+    /**
+     * Date d'apparition
+     */
+    protected LocalDate dateApparition;
+    
+    /**
+     * Impact jauge bohneur
+     */
     protected int impactBonheur;
+    /**
+     * Impact jauge argent
+     */
     protected int impactArgent;
+    /**
+     * Impact jauge pédagogie
+     */
     protected int impactPedagogie;
     
+    /**
+     * Description de l'événement
+     */
     protected String description;
+    /**
+     * Titre de l'événement
+     */
     protected String titre;
 
     /**
      * Constructeur
+     * 
+     * @param id l'identifiant de l'événement
+     * @param dateApparition la date d'apparition de l'événement
      */
-    protected Evenement(int id){
+    protected Evenement(int id, LocalDate dateApparition, String titre, String description,
+    		int impactBohneur, int impactArgent, int impactPedagogie){
         this.id = id;
+        this.dateApparition = dateApparition;
+        this.titre = titre;
+        this.description = description;
+        this.impactBonheur = impactBohneur;
+        this.impactArgent = impactArgent;
+        this.impactPedagogie = impactPedagogie;
     }
 
    /*getters*/

@@ -9,26 +9,27 @@ import n7simulator.modele.Partie;
  */
 public class EvenementRegulier extends Evenement{
 	
+	/**
+	 * Impact négatif jauge bohneur
+	 */
     private int impactBonheurNeg;
-    private int impactArgentNeg;
-    private int impactPedagogieNeg;
     
-    private LocalDate dateApparition;
+    /**
+     * Impact négatif jauge argent
+     */
+    private int impactArgentNeg;
+    
+    /**
+     * Impact négatid jauge pédagogie
+     */
+    private int impactPedagogieNeg;
 
     /**
      * Constructeur
-     * @param id l'identifiant de l'événement
-     * @param dateApparition la date d'apparition de l'événement
      */
     public EvenementRegulier(int id, LocalDate dateApparition, String titre, String description, int impactBohneur,
     		int impactArgent, int impactPedagogie, int impactBohneurNeg, int impactArgentNeg, int impactPedagogieNeg){
-        super(id);
-        this.dateApparition = dateApparition;
-        this.titre = titre;
-        this.description = description;
-        this.impactBonheur = impactBohneur;
-        this.impactArgent = impactArgent;
-        this.impactPedagogie = impactPedagogie;
+    	super(id, dateApparition, titre, description, impactBohneur, impactArgent, impactPedagogie);
         this.impactBonheurNeg = impactBohneurNeg;
         this.impactArgentNeg = impactArgentNeg;
         this.impactPedagogieNeg = impactPedagogieNeg;

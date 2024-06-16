@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Observable;
 
+import n7simulator.database.EvenementIrregulierDAO;
 import n7simulator.database.EvenementRegulierDAO;
 import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.foy.Foy;
@@ -115,18 +116,24 @@ public final class Partie extends Observable {
 		return instance;
 	}
 
-
+	/**
+	 * Permet de générer des événements irréguliers
+	 * @param pilote
+	 */
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		for (int idEvenement : listeEvenement) {
-			EvenementIrregulier evenement = new EvenementIrregulier(idEvenement, temps.getJourneeEnCours());
+		List<EvenementIrregulier> evenements = EvenementIrregulierDAO.getEvenementsReguliersById(listeEvenement, temps.getJourneeEnCours());
+		for (EvenementIrregulier evenement : evenements) {
 			evenement.appliquerImpact(this, true);
 			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
 			evenementIrreguGUI.setVisible(true);
-
 		}
 	}
 
+	/**
+	 * Permet de générer des événements réguliers
+	 * @param pilote
+	 */
 	public void genererEvenementRegulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
 		List<EvenementRegulier> evenements = EvenementRegulierDAO.getEvenementsReguliersById(listeEvenement, temps.getJourneeEnCours());
