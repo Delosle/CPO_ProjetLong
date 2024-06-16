@@ -1,8 +1,5 @@
 package n7simulator.controller.consommable;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 
 /**
@@ -12,8 +9,6 @@ public class BoutonGestionConsommables extends JButton {
 		
 	public BoutonGestionConsommables() {
 		this.setText("Modifier");
-        this.addActionListener(e -> {
-        	new ConsommableFoyController();
-        });
+        this.addActionListener(e ->	new ConsommableFoyController());
 	}
 }

@@ -25,13 +25,13 @@ public class ApparitionEvenementRegulier {
      * Vérifie si un événement régulier doit se produire
      */
     public List <Integer> verifEvenementRegulier (LocalDate dateActuelle) {
-        //System.out.println("Date actuelle : " + dateActuelle);
         List <Integer> listeEvenement = new ArrayList<>();
+
         for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
             Map<String, Object> eventDetails = entry.getValue();
             String dateString = eventDetails.get("debut").toString();
-            //System.out.println("Date de l'événement : " + dateString + " date parametre : " + dateActuelle);
             LocalDate dateDebut = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            
             if (dateDebut.equals(dateActuelle)) {
                 listeEvenement.add(entry.getKey());
                 int periode = (int) eventDetails.get("periode");

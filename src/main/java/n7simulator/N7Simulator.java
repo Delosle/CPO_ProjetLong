@@ -86,8 +86,6 @@ public class N7Simulator {
 	 * Permet d'afficher la carte (interface principale du jeu)
 	 */
 	private static void affichageCarte() {
-		new ApparitionEvenementIrregulier();
-
 		// Creation des interfaces
 		PilotageGUI interfacePilotage = new PilotageGUI(new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
@@ -190,14 +188,34 @@ public class N7Simulator {
 		}
 	}
 
+	/**
+	 * Valorise toutes les données liées aux foy.
+	 * 
+	 * @param donneesChargees : les données récupérées depuis la bd
+	 */
 	private static void valoriserDonnesFoy(Map<String, List<Map<String, Object>>> donneesChargees) {
 		List<Map<String, Object>> donneesPartie = donneesChargees.get("ConsommableEnCours");
 		Foy foy = Partie.getInstance().getFoy();
 		foy.setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
 
 		List<ConsommableFoy> consommables = foy.getConsommables();
-		for (int i = 0; i < consommables.size(); i++) {
-			consommables.get(i).setPrix((double) donneesPartie.get(i).get("prix"));
+		
+		for (Map<String, Object> consommableModifieBD : donneesPartie) {
+			int idConsommable = (int)consommableModifieBD.get("idConsommable");
+			
+			boolean trouve = false;
+			int nbConsommables = consommables.size();
+			int i=0;
+			
+			while (i<nbConsommables && !trouve) {
+				ConsommableFoy conso = consommables.get(i);
+				if (idConsommable == conso.getId()) {
+					conso.setPrix((double) consommableModifieBD.get("prix"));
+					trouve = true;
+				}
+				i++;
+			}
+			
 		}
 	}
 

@@ -4,14 +4,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Observable;
 
+import n7simulator.database.EvenementRegulierDAO;
 import n7simulator.joursuivant.JourSuivant;
 import n7simulator.modele.foy.Foy;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
-import n7simulator.modele.evenements.Evenement_Irregu;
-import n7simulator.modele.evenements.Evenement_Regulier;
+import n7simulator.modele.evenements.EvenementIrregulier;
+import n7simulator.modele.evenements.EvenementRegulier;
 import n7simulator.vue.Evenement.EvenementIrreguGUI;
 import n7simulator.vue.Evenement.EvenementReguGUI;
 import n7simulator.vue.PilotageGUI;
@@ -118,7 +119,7 @@ public final class Partie extends Observable {
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
 		for (int idEvenement : listeEvenement) {
-			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
+			EvenementIrregulier evenement = new EvenementIrregulier(idEvenement, temps.getJourneeEnCours());
 			evenement.appliquerImpact(this, true);
 			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
 			evenementIrreguGUI.setVisible(true);
@@ -128,8 +129,8 @@ public final class Partie extends Observable {
 
 	public void genererEvenementRegulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
-		for (int idEvenement : listeEvenement) {
-			Evenement_Regulier evenement = new Evenement_Regulier(idEvenement, temps.getJourneeEnCours());
+		List<EvenementRegulier> evenements = EvenementRegulierDAO.getEvenementsReguliersById(listeEvenement, temps.getJourneeEnCours());
+		for (EvenementRegulier evenement : evenements) {
 			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
 			evenementReguGUI.setVisible(true);
 		}

@@ -30,7 +30,8 @@ public class ConsommableFoyController extends JPanel {
      * Crée un controleur des consommables du foy
      */
     public ConsommableFoyController(){
-        List<ConsommableFoy> consommables = Partie.getInstance().getFoy().getConsommables();
+    	Foy foy = Partie.getInstance().getFoy();
+    	List<ConsommableFoy> consommables = foy.getConsommables();
         this.setLayout(new GridLayout(consommables.size(), 1));
 
         this.consommableFoys = new ArrayList<>();
@@ -81,8 +82,7 @@ public class ConsommableFoyController extends JPanel {
         }
         //pour une journée l'impact max
         impactBonheur = impactBonheur > 10 ? 10 : impactBonheur;
-
-        Foy foy = Partie.getInstance().getFoy();
+        
         JourSuivant.getInstance().addImpact(foy);
         foy.setImpactArgent(impactArgent);
         foy.setImpactBonheur(impactBonheur);
