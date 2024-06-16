@@ -109,7 +109,8 @@ public class N7Simulator {
 		//Creation des interfaces
 		PilotageGUI interfacePilotage = new PilotageGUI(interfaceTemps, controllerTemps, jaugesPannel, new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
-		N7Frame fenetre = N7Frame.getInstance(interfaceCarte, interfacePilotage);
+		N7Frame.setUp(interfaceCarte, interfacePilotage);
+		N7Frame fenetre = N7Frame.getInstance();
 		
 	}
 	

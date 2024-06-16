@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -70,8 +69,7 @@ public class PilotageGUI extends JPanel {
 		zoneTemps.setLayout(new BoxLayout(zoneTemps, BoxLayout.Y_AXIS));
 		zoneTemps.setBorder(BorderFactory.createLineBorder(Color.black));
 		zoneTemps.add(interfaceTemps);
-		zoneTemps.add(controllerTemps); 
-		//TODO : test
+		zoneTemps.add(controllerTemps);
 		SauvegardeController test = new SauvegardeController(); 
 		zoneTemps.add(test);
 		this.add(zoneTemps, contraintes);
