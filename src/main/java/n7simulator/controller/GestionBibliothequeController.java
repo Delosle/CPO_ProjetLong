@@ -12,21 +12,24 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import n7simulator.modele.Bibliotheque;
 
-@SuppressWarnings("serial")
-public class BibliothequeController extends JPanel {
+/**
+ * Controleur de la bibliotheque
+ */
+public class GestionBibliothequeController extends JPanel {
+	
     private JSpinner spinnerNbLivreAchete;
     private JSpinner spinnerNbLivreVendu;
-    private JLabel coutA;
-    private JLabel coutV;
+    private JLabel labelCoutAchat;
+    private JLabel labelCoutVente;
 
-    public BibliothequeController() {
-        Bibliotheque instanceBiblio = Bibliotheque.getInstance(0);
+    public GestionBibliothequeController() {
+        Bibliotheque instanceBiblio = Bibliotheque.getInstance();
 
         // Création du contenant qui va contenir les éléments du controller
         JPanel contenant = new JPanel(new GridLayout(2, 1));
 
         // création et ajout des espaces de vente et achat de livre
-        contenant.add(createAchatSection(instanceBiblio));
+        contenant.add(createAchatSection());
         contenant.add(createVenteSection(instanceBiblio));
 
         int result = JOptionPane.showConfirmDialog(null, contenant, "Modifier le nombre de livres",
@@ -39,11 +42,10 @@ public class BibliothequeController extends JPanel {
     }
 
     /**
-     * Fonction permettant la création de la partie de selection d'achat
-     * @param instanceBiblio
-     * @return
+     * Fonction permettant la création de la partie de sélection d'achat
+     * @return un jpanel contenant la partie achat
      */
-    private JPanel createAchatSection(Bibliotheque instanceBiblio) {
+    private JPanel createAchatSection() {
         JPanel prixAchatLivre = new JPanel(new GridLayout(1, 2));
         JPanel nbAchat = new JPanel();
         nbAchat.setLayout(new BoxLayout(nbAchat, BoxLayout.Y_AXIS));
@@ -53,7 +55,7 @@ public class BibliothequeController extends JPanel {
         boxAchat.add(Box.createHorizontalGlue());
 
         spinnerNbLivreAchete = new JSpinner(new SpinnerNumberModel(0, 0, 1500, 1));
-        spinnerNbLivreAchete.addChangeListener(e -> updatePrixTransactionVente(spinnerNbLivreAchete, coutA));
+        spinnerNbLivreAchete.addChangeListener(e -> updatePrixTransactionVente(spinnerNbLivreAchete, labelCoutAchat));
 
         nbAchat.add(boxAchat);
         nbAchat.add(spinnerNbLivreAchete);
@@ -64,16 +66,21 @@ public class BibliothequeController extends JPanel {
         JLabel titleAchat = new JLabel("Cout d'achat total :");
         titleAchat.setAlignmentX(CENTER_ALIGNMENT);
 
-        coutA = new JLabel();
-        coutA.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        labelCoutAchat = new JLabel();
+        labelCoutAchat.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
         coutAchat.add(titleAchat);
-        coutAchat.add(coutA);
+        coutAchat.add(labelCoutAchat);
         prixAchatLivre.add(coutAchat);
 
         return prixAchatLivre;
     }
 
+    /**
+     * Fonction permettant de créer la partie vente de livres
+     * @param instanceBiblio
+     * @return un jpanel contenant la partie vente
+     */
     private JPanel createVenteSection(Bibliotheque instanceBiblio) {
         JPanel prixVenteLivre = new JPanel(new GridLayout(1, 2));
         JPanel nbVente = new JPanel();
@@ -84,7 +91,7 @@ public class BibliothequeController extends JPanel {
         boxVente.add(Box.createHorizontalGlue());
 
         spinnerNbLivreVendu = new JSpinner(new SpinnerNumberModel(0, 0, instanceBiblio.getNbLivre(), 1));
-        spinnerNbLivreVendu.addChangeListener(e -> updatePrixTransactionVente(spinnerNbLivreVendu, coutV));
+        spinnerNbLivreVendu.addChangeListener(e -> updatePrixTransactionVente(spinnerNbLivreVendu, labelCoutVente));
 
         nbVente.add(boxVente);
         nbVente.add(spinnerNbLivreVendu);
@@ -95,25 +102,34 @@ public class BibliothequeController extends JPanel {
         JLabel titleVente = new JLabel("Gain de revente total :");
         titleVente.setAlignmentX(CENTER_ALIGNMENT);
 
-        coutV = new JLabel();
-        coutV.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        labelCoutVente = new JLabel();
+        labelCoutVente.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
         coutVente.add(titleVente);
-        coutVente.add(coutV);
+        coutVente.add(labelCoutVente);
         prixVenteLivre.add(coutVente);
 
         return prixVenteLivre;
     }
 
+    /**
+     * Met à jour le cout de la transaction des livres 
+     * @param spinner
+     * @param cout label
+     */
     private void updatePrixTransactionVente(JSpinner spinner, JLabel cout) {
         int nbVendu = (int) spinner.getValue();
-        int valeur = nbVendu * Bibliotheque.getInstance(0).getPrixLivre();
+        int valeur = nbVendu * Bibliotheque.getInstance().getPrixLivre();
         cout.setText(String.format("%d €", valeur));
     }
 
+    /**
+     * Bouton pour ouvrir la fenêtre de gestion des livres
+     * @return un bouton
+     */
     public static JButton getBoutonOuverture() {
         JButton leBouton = new JButton("Modifier le nombre de livres");
-        leBouton.addActionListener(e -> new BibliothequeController());
+        leBouton.addActionListener(e -> new GestionBibliothequeController());
         return leBouton;
     }
 }

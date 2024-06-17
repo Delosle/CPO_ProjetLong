@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -27,7 +26,7 @@ public class GameOverFrame extends JDialog {
         this.setSize(300, 200);
         this.setLocationRelativeTo(null);
         this.setUndecorated(true);//enlève la barre en haut de la fenetre
-        //creation de la bordure
+        // Creation de la bordure
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, new Color(0xC01E1E)));
 
         JPanel mainPanel = new JPanel();
@@ -55,9 +54,21 @@ public class GameOverFrame extends JDialog {
         JPanel panelBoutons = new JPanel();
         panelBoutons.setLayout(new BoxLayout(panelBoutons, BoxLayout.X_AXIS));
         JButton boutonMenu = new JButton("Menu principal");
-        boutonMenu.addActionListener(new OuvrirMenuAction());
+        // Définition action bouton menu
+        boutonMenu.addActionListener(e -> {			
+				Window[] windows = Window.getWindows();
+		        for (Window window : windows) {
+		                window.dispose();
+		        }
+		        N7Frame.reinitialiserInstance();
+				new StartMenuGUI();
+		});
         JButton boutonQuitter = new JButton("Quitter");
-        boutonQuitter.addActionListener(new QuitterAction());
+        // Définition action bouton quitter
+        boutonQuitter.addActionListener(e -> {
+        	N7Simulator.sauvegarderPartie();
+			System.exit(0);
+        });
         panelBoutons.add(boutonMenu);
         panelBoutons.add(boutonQuitter);
         panelBoutons.setBackground(couleurBackground);
@@ -66,26 +77,5 @@ public class GameOverFrame extends JDialog {
         this.add(mainPanel);
         this.pack();
         this.setVisible(true);
-    }
-    
-    class QuitterAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			N7Simulator.sauvegarderPartie();
-			System.exit(0);
-		}
-    }
-    
-    class OuvrirMenuAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Window[] windows = Window.getWindows();
-	        for (Window window : windows) {
-	                window.dispose();
-	        }
-	        N7Frame.reinitialiserInstance();
-			new StartMenuGUI();
-		}
-    }
-    
+    }    
 }

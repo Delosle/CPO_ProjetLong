@@ -22,5 +22,20 @@ CREATE TABLE Partie (
     bonheur FLOAT NOT NULL,
     pedagogie FLOAT NOT NULL,
     idQualiteRepasCrous INT NOT NULL,
-    prixVenteRepascrous FLOAT NOT NULL
+    prixVenteRepascrous FLOAT NOT NULL,
+    nbLivre INT NOT NULL
+);
+
+CREATE TABLE DateEvenementRegulier (
+   idEvenementRegulier INTEGER,
+   dateEvenement DATE NOT NULL,
+   idPartie INTEGER NOT NULL REFERENCES Partie(idPartie),
+   PRIMARY KEY (idEvenementRegulier, idPartie)
+);
+
+CREATE TABLE ConsommableEnCours (
+    idConsommable INTEGER,
+    prix DOUBLE,
+    idPartie INTEGER NOT NULL REFERENCES Partie(idPartie),
+    PRIMARY KEY (idConsommable, idPartie)
 );

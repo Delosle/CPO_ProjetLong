@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.crypto.Data;
 
 import n7simulator.modele.professeur.Matiere;
 import n7simulator.modele.professeur.Professeur;
@@ -18,6 +17,8 @@ import n7simulator.modele.professeur.Professeur;
  * base de données
  */
 public class ProfesseurDAO {
+	
+	private ProfesseurDAO() {}
 
 	/**
 	 * Récupère la liste de tous les professeurs présents en base de données
@@ -74,7 +75,7 @@ public class ProfesseurDAO {
 	 * @return : les matières associées à leur id
 	 */
 	private static Map<Integer, Matiere> getAllMatieres() {
-		Map<Integer, Matiere> matieres = new HashMap<Integer, Matiere>();
+		Map<Integer, Matiere> matieres = new HashMap<>();
 		Connection connexionDB = null;
 		try {
 			// connexion à la base de données

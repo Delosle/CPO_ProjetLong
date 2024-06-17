@@ -4,12 +4,7 @@
 package n7simulator.vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,7 +23,7 @@ import n7simulator.modele.Crous;
 public class CrousGUI extends JPanel implements Observer {
 	
 	private Integer qualite;
-	
+	 
 	private Double prixRevente;
 	
 	private JLabel labelQualite;
@@ -39,7 +34,7 @@ public class CrousGUI extends JPanel implements Observer {
 	 * Création de la vue du Crous
 	 */
 	public CrousGUI() {
-		Crous instanceCrous = Crous.getInstance(0, 0.0);
+		Crous instanceCrous = Crous.getInstance();
 		
 		qualite = instanceCrous.getQualite();
 		prixRevente = instanceCrous.getPrixVente();

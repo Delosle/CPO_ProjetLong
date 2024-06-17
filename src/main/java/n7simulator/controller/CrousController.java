@@ -1,12 +1,7 @@
-/**
- * 
- */
 package n7simulator.controller;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import n7simulator.modele.Crous;
 
@@ -28,7 +21,7 @@ import n7simulator.modele.Crous;
  */
 public class CrousController extends JPanel {
 	
-	private JComboBox selecteur;
+	private JComboBox<String> selecteur;
 	private JSpinner spinnerPrixRevente;
 	private JLabel marge;
 
@@ -37,7 +30,7 @@ public class CrousController extends JPanel {
 	 */
 	public CrousController() {
 		
-		Crous instanceCrous = Crous.getInstance(0, 0.00);
+		Crous instanceCrous = Crous.getInstance();
 		
 		String[] options = instanceCrous.getListeQualites();
 		
@@ -53,13 +46,8 @@ public class CrousController extends JPanel {
 		b.add(new JLabel("Qualité :"));
 	    b.add( Box.createHorizontalGlue() );
 		// On créé le sélecteur
-		selecteur = new JComboBox(options);
-		selecteur.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				updateMarge();
-			}
-		});
+		selecteur = new JComboBox<>(options);
+		selecteur.addActionListener(e -> updateMarge());
 		
 		// On place les éléments
 		qualite.add(b);
@@ -82,12 +70,7 @@ public class CrousController extends JPanel {
 	    // On créé la zone de saisie du prix
 		spinnerPrixRevente = new JSpinner(
 				new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
-		spinnerPrixRevente.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				updateMarge();
-			}
-		});
+		spinnerPrixRevente.addChangeListener(e -> updateMarge());
 		
 		// On place les éléments
 		revente.add(bPR);
@@ -133,7 +116,7 @@ public class CrousController extends JPanel {
 	private void updateMarge() {
 		int indexQualite = selecteur.getSelectedIndex();
 		Double prixRevente = (Double)spinnerPrixRevente.getValue();
-		Double valeur = Crous.getInstance(0, 0.0).getMarge(indexQualite, prixRevente);
+		Double valeur = Crous.getInstance().getMargeTemporaire(indexQualite, prixRevente);
 		String text = "";
 		if (valeur >= 0) {
 			text += "+ ";
@@ -154,12 +137,7 @@ public class CrousController extends JPanel {
 	 */
 	public static JButton getBoutonOuverture() {
 		JButton leBouton = new JButton("Modifier");
-		ActionListener ouvrirModification = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CrousController fenetre = new CrousController();
-			}
-		};
-		leBouton.addActionListener(ouvrirModification);
+		leBouton.addActionListener((e -> new CrousController()));
 		return leBouton;
 	}
 

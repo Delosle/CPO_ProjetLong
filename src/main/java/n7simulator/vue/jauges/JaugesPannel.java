@@ -6,50 +6,55 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-public class JaugesPannel extends JPanel{
-    static final int LARGEUR_PANNEL = 500;
-    static final int HAUTEUR_PANNEL = 240;
+import n7simulator.modele.Partie;
+import n7simulator.modele.jauges.Jauge;
 
-    /**
-     * La vue sur l'argent
-     */
-    private ArgentGUI vueArgent;
-    /**
-     * La vue sur le bonheur
-     */
-    private JaugeBorneeGUI vueBonheur;
-    /**
-     * La vue sur la pédagogie
-     */
-    private JaugeBorneeGUI vuePedagogie;
+/**
+ * Classe representant la vue contenant toutes les jauges
+ */
+public class JaugesPannel extends JPanel {
+	private static final int LARGEUR_PANNEL = 500;
+	private static final int HAUTEUR_PANNEL = 240;
 
-    public JaugesPannel(double initBonheur, double initPedagogie, double sommeInitiale) {
-        setLayout(new GridLayout(3, 1));
-        
-        vueArgent = new ArgentGUI("Argent", sommeInitiale);
-        vueBonheur = new JaugeBorneeGUI("Bonheur", initBonheur, new Color(212, 0, 253));
-        vuePedagogie = new JaugeBorneeGUI("Pedagogie", initPedagogie, Color.BLUE);
+	/**
+	 * La vue sur l'argent
+	 */
+	private ArgentGUI vueArgent;
+	/**
+	 * La vue sur le bonheur
+	 */
+	private JaugeBorneeGUI vueBonheur;
+	/**
+	 * La vue sur la pédagogie
+	 */
+	private JaugeBorneeGUI vuePedagogie;
 
-        // .......... TO-DO............
-        // Ajouter les controllers des jauges
+	public JaugesPannel() {
+		creerJauges();
 
-        setLayout(new GridLayout(3,1));
-        setPreferredSize(new Dimension(LARGEUR_PANNEL, HAUTEUR_PANNEL));
-        
-        add(vueBonheur);
-        add(vuePedagogie);
-        add(vueArgent);
-    }
+		setLayout(new GridLayout(3, 1));
+		setPreferredSize(new Dimension(LARGEUR_PANNEL, HAUTEUR_PANNEL));
 
-    public ArgentGUI getVueArgent(){
-        return vueArgent;
-    }
+		add(vueBonheur);
+		add(vuePedagogie);
+		add(vueArgent);
+	}
 
-    public JaugeBorneeGUI getVueBonheur(){
-        return vueBonheur;
-    }
+	/**
+	 * Cree les jauges appartenant a la vue
+	 */
+	private void creerJauges() {
+		Partie partie = Partie.getInstance();
+		Jauge argent = partie.getJaugeArgent();
+		Jauge bonheur = partie.getJaugeBonheur();
+		Jauge pedagogie = partie.getJaugePedagogie();
 
-    public JaugeBorneeGUI getVuePedagogie(){
-        return vuePedagogie;
-    }
+		vueArgent = new ArgentGUI("Argent", argent.getValue());
+		vueBonheur = new JaugeBorneeGUI("Bonheur", bonheur.getValue(), new Color(212, 0, 253));
+		vuePedagogie = new JaugeBorneeGUI("Pedagogie", pedagogie.getValue(), Color.BLUE);
+		argent.addObserver(vueArgent);
+		bonheur.addObserver(vueBonheur);
+		pedagogie.addObserver(vuePedagogie);
+	}
+
 }

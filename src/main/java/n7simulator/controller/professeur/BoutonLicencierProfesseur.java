@@ -33,43 +33,39 @@ public class BoutonLicencierProfesseur extends JButton {
 		this.professeur = professeur;
 		this.gestionProfesseurs = Partie.getInstance().getGestionProfesseurs();
 		this.setText("Licencier");
-		this.addActionListener(new ActionLicencier());
-	}
+		this.addActionListener(new ActionListener() {
+			/**
+			 * Action du bouton licencier : affiche un formulaire de confirmation et
+			 * licencie le professeur le cas échéant.
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Créer la boite de dialogue
+				JPanel panel = new JPanel();
+				panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-	/**
-	 * Action du bouton licencier : affiche un formulaire de confirmation et
-	 * licencie le professeur le cas échéant.
-	 */
-	class ActionLicencier implements ActionListener {
+				// Message de confirmation
+				JLabel messageLabel = new JLabel(
+						"Etes-vous sûrs de vouloir licencier " + professeur.getPrenom() + " " + professeur.getNom() + " ?");
+				panel.add(messageLabel);
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Créer la boite de dialogue
-			JPanel panel = new JPanel();
-			panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+				// Afficher la boite de dialogue
+				String[] options = { "Oui", "Non" };
+				int result = JOptionPane.showOptionDialog(null, panel, "Confirmation du licenciement",
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-			// Message de confirmation
-			JLabel messageLabel = new JLabel(
-					"Etes-vous sûrs de vouloir licencier " + professeur.getPrenom() + " " + professeur.getNom() + " ?");
-			panel.add(messageLabel);
+				// Implémentation des modifications
+				if (result == JOptionPane.OK_OPTION) {
+					// le professeur est licencié
+					gestionProfesseurs.licencierProfesseur(professeur);
+					// message de confirmation
+					JOptionPane.showMessageDialog(null,
+							professeur.getPrenom() + " " + professeur.getNom() + " a été licencié(e).", "Confirmation",
+							JOptionPane.INFORMATION_MESSAGE);
 
-			// Afficher la boite de dialogue
-			String[] options = { "Oui", "Non" };
-			int result = JOptionPane.showOptionDialog(null, panel, "Confirmation du licenciement",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-
-			// Implémentation des modifications
-			if (result == JOptionPane.OK_OPTION) {
-				// le professeur est licencié
-				gestionProfesseurs.licencierProfesseur(professeur);
-				// message de confirmation
-				JOptionPane.showMessageDialog(null,
-						professeur.getPrenom() + " " + professeur.getNom() + " a été licencié(e).", "Confirmation",
-						JOptionPane.INFORMATION_MESSAGE);
-
+				}
 			}
-		}
-
+		});
 	}
 
 }

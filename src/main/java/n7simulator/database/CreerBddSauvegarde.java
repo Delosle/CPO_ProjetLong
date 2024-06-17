@@ -1,19 +1,19 @@
 package n7simulator.database;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.*;
 
-
+/**
+ *  Classe créant la base de donnée de sauvegarde du jeu.
+ */
 public class CreerBddSauvegarde {
+	
+	private CreerBddSauvegarde() {}
 
     /**
      * Permet d'initialiser la base de données SauvegardePartie
      */
     public static boolean initialiserBddSauvegarde() {
-        Connection connection = null;
         try {
             // La bdd ne doit pas être modifié, il est donc préférable de supprimer
             // le fichier de base de données s'il existe

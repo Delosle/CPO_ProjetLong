@@ -23,7 +23,7 @@ import n7simulator.modele.professeur.Professeur;
  * d'un professeur. Il s'agit d'une classe abstraite devant être adaptée en
  * fonction du contexte de modification du professeur.
  */
-public abstract class BoutonGeneriqueProfesseur extends JButton {
+public abstract class BoutonContratProfesseur extends JButton {
 
 	// Le professeur étant modifié.
 	protected Professeur professeur;
@@ -41,7 +41,7 @@ public abstract class BoutonGeneriqueProfesseur extends JButton {
 	 *                           modification/initialisation du nombre d'heures du
 	 *                           professeur
 	 */
-	public BoutonGeneriqueProfesseur(Professeur professeur, String texteSalaire,
+	protected BoutonContratProfesseur(Professeur professeur, String texteSalaire,
 			String texteNbHeures) {
 		this.professeur = professeur;
 		this.gestionProfesseurs = Partie.getInstance().getGestionProfesseurs();

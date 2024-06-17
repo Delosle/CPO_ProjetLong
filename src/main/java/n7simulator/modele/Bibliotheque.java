@@ -5,21 +5,18 @@ import java.util.Observable;
 import n7simulator.joursuivant.ImpactJourSuivant;
 import n7simulator.joursuivant.JourSuivant;
 
-@SuppressWarnings("deprecation")
 public class Bibliotheque extends Observable implements ImpactJourSuivant {
+	
 	private static Bibliotheque instance;
-	private final int prixLivre = 15;
+	private static final int PRIX_LIVRE = 15;
 	private int nbLivre;
 	private int ancienNbLivre;
 	
 	/**
-	 * Permet de Créer le crous à partir d'un qualité et d'un prix de vente
-	 * @param qualite
-	 * @param prixVente
+	 * Permet de Créer la Bibliotheque à partir d'un nombre de livre initial
+	 * ancien livre sert à caculer l'impact
 	 */
-	private Bibliotheque (int nbLivre) {
-		this.nbLivre = nbLivre;
-		this.ancienNbLivre = nbLivre;
+	private Bibliotheque() {
 		JourSuivant.getInstance().addImpact(this);
 	}
 	
@@ -27,9 +24,9 @@ public class Bibliotheque extends Observable implements ImpactJourSuivant {
 	 * Permet de récupérer la Bibliotheque.
 	 * @return la bibliotheque
 	 */
-	public static Bibliotheque getInstance(int nbLivre) {
+	public static Bibliotheque getInstance() {
 		if (instance == null) {
-			instance = new Bibliotheque(nbLivre);
+			instance = new Bibliotheque();
 		}
 		return instance;
 	}
@@ -43,8 +40,7 @@ public class Bibliotheque extends Observable implements ImpactJourSuivant {
 	}
 
 	/**
-	 * setter du nombre de livre
-	 * notifie les observateurs du changement
+	 * Modifie le nombre de livres le nombre de livres.
 	 */
 	public void setNbLivre(int nbLivre) {
 		this.ancienNbLivre = this.nbLivre;
@@ -53,14 +49,18 @@ public class Bibliotheque extends Observable implements ImpactJourSuivant {
 		this.notifyObservers(this);
 	}
 	
+	/**
+	 * Récupère le prix d'un livre
+	 * @return le prix d'achat ou de revente d'un livre
+	 */
 	public int getPrixLivre() {
-		return prixLivre;
+		return PRIX_LIVRE;
 	}
 
 	@Override
 	public void effectuerImpactJourSuivant() {
 		Partie instancePartie = Partie.getInstance();
-		instancePartie.getJaugeArgent().ajouter((this.ancienNbLivre - this.nbLivre) * this.prixLivre);
+		instancePartie.getJaugeArgent().ajouter((double)(this.ancienNbLivre - this.nbLivre) * PRIX_LIVRE);
 		if (nbLivre > 5) {
 			instancePartie.getJaugePedagogie().ajouter(0.5 * nbLivre + 5);
 			instancePartie.getJaugeBonheur().ajouter(5);

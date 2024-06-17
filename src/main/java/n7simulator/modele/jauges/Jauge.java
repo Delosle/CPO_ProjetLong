@@ -2,8 +2,6 @@ package n7simulator.modele.jauges;
 
 import java.util.Observable;
 
-import n7simulator.modele.Partie;
-import n7simulator.vue.GameOverFrame;
 
 /**
  * Cette classe définit la structure générale des jauges
@@ -19,7 +17,7 @@ public class Jauge extends Observable{
 	/**
      * la valeur entière de la jauge.
      */
-    public double valeur;
+    private double valeur;
 
     /**
      * Initialiser une jauge avec une valeur initialie.
@@ -57,6 +55,7 @@ public class Jauge extends Observable{
      * augmenter ou reduire la valeur de la jauge suivant
      * le signe de la valeur en paramètre: La jauge repasse à zéro si après déduction
      * elle est inférieure à zéro.
+     * Leve une exception si la valeur atteint 0.
      * @param valeur la valeur a ajouter à la jauge
      */
     public void ajouter(double valeur) {
@@ -71,5 +70,12 @@ public class Jauge extends Observable{
     @Override
     public String toString(){
         return this.getNom() + " : " + getValue();
+    }
+    
+    /**
+     * Permet de reinitialiser les jauges en debut de partie
+     */
+    public void reinitialiserValeur(double valeurDebut) {
+    	this.valeur = valeurDebut;
     }
 }

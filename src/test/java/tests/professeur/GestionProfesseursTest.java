@@ -28,7 +28,8 @@ public class GestionProfesseursTest {
         professeurB = Mockito.mock(Professeur.class);
         professeursEmbauches.add(professeurA);
         professeursNonEmbauches.add(professeurB);
-        gestionProfesseurs = new GestionProfesseurs(professeursEmbauches, professeursNonEmbauches);
+        gestionProfesseurs = new GestionProfesseurs();
+        gestionProfesseurs.initialiserListeProfesseurs(professeursEmbauches, professeursNonEmbauches);
     }
 
     @Test

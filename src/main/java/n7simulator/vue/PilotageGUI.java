@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,7 +23,7 @@ public class PilotageGUI extends JPanel {
 	/** Créer la vue du pilotage
 	 * @param interfaceTemps l'interface de gestion du temps
 	 */
-	public PilotageGUI(TempsGUI interfaceTemps, TempsController controllerTemps, JaugesPannel jaugesGUI, EventHistoryGUI eventHistoryGUI) {
+	public PilotageGUI(EventHistoryGUI eventHistoryGUI) {
 		this.setBackground(Color.white);
 		this.setLayout(new GridBagLayout());
 		
@@ -34,21 +33,22 @@ public class PilotageGUI extends JPanel {
 		contraintes.gridx = 0;
 		
 		// On ajoute les jauges
+		
+
+		JaugesPannel jaugesPannel = new JaugesPannel();
 		contraintes.weighty = 1.0;
 		contraintes.gridy = 0;
 		JLabel caseCourante = new JLabel();
 		caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		// Ajouter jaugesGUI à caseCourante
+		// Ajouter jaugesPannel à caseCourante
 		caseCourante.setLayout(new BorderLayout());
-		caseCourante.add(jaugesGUI, BorderLayout.WEST);
+		caseCourante.add(jaugesPannel, BorderLayout.WEST);
 		this.add(caseCourante, contraintes);
 		
 		// On ajoute l'élément médiant
 		contraintes.weighty = 2.0;
 		contraintes.gridy = 1;
-		//caseCourante = new JLabel();
-		//caseCourante.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// On ajoute EventHistoryGUI a l'element median
 		JPanel median = new JPanel();
@@ -56,11 +56,8 @@ public class PilotageGUI extends JPanel {
 		median.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		median.add(eventHistoryGUI, BorderLayout.CENTER);
-		//eventHistoryGUI.adjustSizeToParent();
 		add(median, contraintes);
 		this.eventHistoryGUI = eventHistoryGUI;
-
-
 
 		
 		// On ajoute le temps
@@ -69,19 +66,23 @@ public class PilotageGUI extends JPanel {
 		JPanel zoneTemps = new JPanel();
 		zoneTemps.setLayout(new BoxLayout(zoneTemps, BoxLayout.Y_AXIS));
 		zoneTemps.setBorder(BorderFactory.createLineBorder(Color.black));
+		TempsGUI interfaceTemps = new TempsGUI(); 
+		TempsController controllerTemps = new TempsController();
 		zoneTemps.add(interfaceTemps);
 		zoneTemps.add(controllerTemps); 
-		//TODO : test
-		SauvegardeController test = new SauvegardeController(); 
-		zoneTemps.add(test);
+		
+		//Partie sauvegarde
+		SauvegardeController sauvegardeController = new SauvegardeController(); 
+		zoneTemps.add(sauvegardeController);
 		this.add(zoneTemps, contraintes);
 		
-		
 	}
 
-	public void enregistrerEvent(JPanel event) {
-		eventHistoryGUI.addEvent(event);
-
+	public void enregistrerEvent(JPanel event, boolean isRegu) {
+		if (isRegu) {
+			eventHistoryGUI.addEventRegulier(event);
+		} else {
+			eventHistoryGUI.addEventIrregulier(event);
+		}
 	}
-
 }

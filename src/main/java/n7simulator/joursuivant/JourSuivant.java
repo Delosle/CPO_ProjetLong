@@ -10,7 +10,7 @@ public final class JourSuivant {
 
 	private static JourSuivant instance;
 	
-	private static List<ImpactJourSuivant> impacts;
+	private static List<ImpactJourSuivant> impacts = new ArrayList<>();
 
 	/**
 	 * Contient l'instance de la classe.
@@ -23,9 +23,7 @@ public final class JourSuivant {
 		return instance;
 	}
 	
-	private JourSuivant() {
-		impacts = new ArrayList<ImpactJourSuivant>();
-	}
+	private JourSuivant() {}
 	
 	/**
 	 * Ajoute un impact dans la liste des impacts.
@@ -42,12 +40,5 @@ public final class JourSuivant {
 		for (ImpactJourSuivant impact : impacts) {
 			impact.effectuerImpactJourSuivant();
 		}
-	}
-	
-	/**
-	 * Permet de clearer le contenu des listes.
-	 */
-	public void reinitialiser() {
-		impacts.clear();
 	}
 }

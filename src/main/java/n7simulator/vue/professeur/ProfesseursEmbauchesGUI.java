@@ -1,15 +1,10 @@
 package n7simulator.vue.professeur;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import n7simulator.controller.professeur.BoutonLicencierProfesseur;
@@ -23,7 +18,7 @@ import n7simulator.modele.professeur.Professeur;
 public class ProfesseursEmbauchesGUI extends ListeProfesseursGUI {
 
 	// la liste des professeurs embauchés
-	List<Professeur> professeursEmbauches = null;
+	private List<Professeur> professeursEmbauches = null;
 
 	/**
 	 * Creation de la vue des professeurs embauches
@@ -84,7 +79,6 @@ public class ProfesseursEmbauchesGUI extends ListeProfesseursGUI {
 	public void update(Observable o, Object arg) {
 		this.professeursEmbauches = ((GestionProfesseurs) arg).getProfesseursEmbauches();
 		this.updateListeProfesseurs();
-
 	}
 
 }

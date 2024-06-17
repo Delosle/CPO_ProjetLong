@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
+import n7simulator.database.CrousDAO;
 import n7simulator.database.DatabaseConnection;
 import n7simulator.joursuivant.ImpactJourSuivant;
 import n7simulator.joursuivant.JourSuivant;
@@ -25,10 +29,9 @@ public class Crous extends Observable implements ImpactJourSuivant {
 	 * @param qualite
 	 * @param prixVente
 	 */
-	private Crous(int qualite, double prixVente) {
-		this.qualite = qualite;
-		this.prixVente = prixVente;
-		// TODO : décommenter la ligne suivante pour ajouter l'impact quand on merge avec develop
+	private Crous() {
+		this.qualite = 0;
+		this.prixVente = 0;
 		JourSuivant.getInstance().addImpact(this);
 	}
 	
@@ -36,9 +39,9 @@ public class Crous extends Observable implements ImpactJourSuivant {
 	 * Permet de récupérer le Crous.
 	 * @return le Crous
 	 */
-	public static Crous getInstance(int qualite, double prixVente) {
+	public static Crous getInstance() {
 		if (instance == null) {
-			instance = new Crous(qualite, prixVente);
+			instance = new Crous();
 		}
 		return instance;
 	}
@@ -86,130 +89,59 @@ public class Crous extends Observable implements ImpactJourSuivant {
 	 * @return la marge sous forme X.XX comme les centimes en euros
 	 */
 	public double getMarge() {
-		Connection connexionDB = null;
-		double marge = 0;
 		//Afin de multiplier la marge d'un repas par le nombre d'élève
 		int nbEleves = Partie.getInstance().getGestionEleves().getNombreEleves();
-		try {
-			// connexion à la base de données
-			connexionDB = DatabaseConnection.getDBConnexion();
-			// requête à la base de données
-			String query = "SELECT prix FROM RepasCrous WHERE id_repas = " + (this.qualite + 1);
-			ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
-			// stock le résultat
-			marge = this.prixVente - resultDB.getDouble("prix");
-		} catch (SQLException e) {
-			System.err.println("Erreur lors de la récupération du prix d'achat des repas dans la base de données.");
-			e.printStackTrace();
-		} finally {
-			try {
-				DatabaseConnection.closeDBConnexion(connexionDB);
-			} catch (Exception e) {
-				System.err.println("Erreur lors de la fermeture de la connexion");
-				e.printStackTrace();
-			}
-		}
+		double marge = this.prixVente - CrousDAO.getPrixVente(this.qualite + 1);
+		// round afin d'être sous la forme 2 centimes maximum.
+		return Math.round(marge * 100.0 ) / 100.0 * nbEleves;
+	}
+	
+	/**
+	 * permet de retourner la marge sur la vente des repas
+	 * par rapport aux champs du formulaire en cours d'edition
+	 * @return la marge sous forme X.XX comme les centimes en euros
+	 */
+	public double getMargeTemporaire(int indexQualite, double prixVente) {
+		//Afin de multiplier la marge d'un repas par le nombre d'élève
+		int nbEleves = Partie.getInstance().getGestionEleves().getNombreEleves();
+		double marge = prixVente - CrousDAO.getPrixVente(indexQualite + 1);
 		// round afin d'être sous la forme 2 centimes maximum.
 		return Math.round(marge * 100.0 ) / 100.0 * nbEleves;
 	}
 
 	/**
-	 * retourne la marge pour l'affichage
-	 * stock l'ancienne marge pour la restocker après avoir testé la marge
-	 * d'une nouvelle valeur
-	 * @param indexQualite
-	 * @param prixVente
-	 * @return marge actuelle
-	 */
-	public double getMarge(int indexQualite, double prixVente) {
-		int tempQualite = this.qualite;
-		double tempPrixVente = this.prixVente;
-		double valRetour;
-		try {
-			this.qualite = indexQualite;
-			this.prixVente = prixVente;
-			valRetour = getMarge();
-		} 
-		finally {
-			this.qualite = tempQualite;
-			this.prixVente = tempPrixVente;
-		}
-		return valRetour;
-	}
-
-	/**
-	 * va regarder en bdd les valeurs de qualité afin de les retourner
-	 * @return liste des qualités en bdd
+	 * Recupere la liste de qualites avec leur prix associe sous forme de chaine de caractères
+	 * @return liste des qualités
 	 */
 	public String[] getListeQualites() {
-		Connection connexionDB = null;
-		List<String> listeRetour = new ArrayList<String>();
-		try {
-			// connexion à la base de données
-			connexionDB = DatabaseConnection.getDBConnexion();
-			// requête à la base de données
-			String query = "SELECT * FROM RepasCrous";
-			ResultSet resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
-			while (resultDB.next()) {
-				double prix = resultDB.getDouble("prix");
-				int indexQualite = resultDB.getInt("qualite");
-				listeRetour.add(QUALITE_STR[indexQualite - 1] + " : " + "%.2f".formatted(prix));
-			}
-			
-		} catch (SQLException e) {
-			System.err.println("Erreur lors de la récupération des repas dans la base de données.");
-			e.printStackTrace();
-		} finally {
-			try {
-				DatabaseConnection.closeDBConnexion(connexionDB);
-			} catch (Exception e) {
-				System.err.println("Erreur lors de la fermeture de la connexion");
-				e.printStackTrace();
-			}
+		HashMap<Integer, Double> mapQualitePrix = CrousDAO.getListeQualitesPrix();
+		List<String> listeRetour = new ArrayList<>();
+
+		for(Map.Entry<Integer, Double> elementQualitePrix : mapQualitePrix.entrySet()) {
+			listeRetour.add(QUALITE_STR[elementQualitePrix.getKey() - 1] + " : " + "%.2f".formatted(elementQualitePrix.getValue()));
 		}
+		
 		String[] retour = new String[listeRetour.size()];
 		for (int i = 0; i < listeRetour.size(); i ++) {
 			retour[i] = listeRetour.get(i);
 		}
 		return retour;
 	}
+	
 
 	@Override
 	public void effectuerImpactJourSuivant() {
 		double marge = getMarge();
-		Partie instance = Partie.getInstance();
-		instance.getJaugeArgent().ajouter((int)marge);
-		double margeIndividuelle = getMarge() / instance.getGestionEleves().getNombreEleves();
+		Partie instancePartie = Partie.getInstance();
+		instancePartie.getJaugeArgent().ajouter((int)marge);
+		double margeIndividuelle = getMarge() / instancePartie.getGestionEleves().getNombreEleves();
 		if (margeIndividuelle > 1) {
-			instance.getJaugeBonheur().ajouter(- 10);
+			instancePartie.getJaugeBonheur().ajouter(- 10);
 		}
 		else if(margeIndividuelle < 1) {
-			instance.getJaugeBonheur().ajouter(2 * qualite);
+			instancePartie.getJaugeBonheur().ajouter(2.0 * qualite);
 		}
 	}
 	
-	/* Problème : le pointeur se ferme quand la connexion à la BD se ferme
-	private Object utiliserBD(String query) {
-		Connection connexionDB = null;
-		ResultSet resultDB;
-		try {
-			// connexion à la base de données
-			connexionDB = DatabaseConnection.getDBConnexion();
-			resultDB = DatabaseConnection.effectuerRequete(query, connexionDB);
-			return resultDB.;
-		} catch (SQLException e) {
-			System.err.println("Erreur lors de la récupération du prix d'achat des repas dans la base de données.");
-			e.printStackTrace();
-		} finally {
-			try {
-				DatabaseConnection.closeDBConnexion(connexionDB);
-			} catch (Exception e) {
-				System.err.println("Erreur lors de la fermeture de la connexion");
-				e.printStackTrace();
-			}
-		}
-		// Cet élément de return est juste pour tromper le compilateur
-		return new String("");
-	}
-	*/
+	
 }

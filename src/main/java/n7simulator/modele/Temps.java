@@ -48,6 +48,6 @@ public class Temps extends Observable implements ImpactJourSuivant {
 
 	@Override
 	public void effectuerImpactJourSuivant() {
-		incrementJournee();
+		this.incrementJournee();
 	}
 }

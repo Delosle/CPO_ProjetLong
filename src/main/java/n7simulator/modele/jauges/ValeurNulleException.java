@@ -6,7 +6,7 @@ package n7simulator.modele.jauges;
 public class ValeurNulleException extends RuntimeException {
 	
 	//La jauge ayant déclenché l'exception
-	private Jauge jaugeDeclenchement;
+	private final Jauge jaugeDeclenchement;
 	
 	/**
 	 * Obtenir une exception

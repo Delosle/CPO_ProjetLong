@@ -57,11 +57,10 @@ public class Professeur extends Observable {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.description = description;
-		this.salaireMin = salaireMin;
-		this.salaireActuel = salaireMin;
 		this.matiere = matiere;
 		this.niveau = niveau;
 		this.salaireMin = salaireMin;
+		this.salaireActuel = salaireMin;
 		this.nbHeuresTravailles = 0;
 	}
 

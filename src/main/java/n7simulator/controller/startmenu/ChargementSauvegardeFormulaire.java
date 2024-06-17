@@ -35,7 +35,7 @@ public class ChargementSauvegardeFormulaire extends JPanel {
 		// Recuperation du nom des sauvegardes en BD
 		List<String> nomsSauvegardes = getNomSauvegardeBD();
 		
-		if (nomsSauvegardes.size() == 0) {
+		if (nomsSauvegardes.isEmpty()) {
 			this.add(new JLabel("<html>Aucune partie sauvegardée ! Veuillez commencer une nouvelle partie.</html>"));
 		} else {
 			this.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -61,7 +61,7 @@ public class ChargementSauvegardeFormulaire extends JPanel {
 		int result = JOptionPane.showOptionDialog(null, this, "Choix de la sauvegarde", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		
-		//si bouton retour
+		// Si bouton retour, retour menu
 		if (result == 0) {
 			new StartMenuGUI();
 		}

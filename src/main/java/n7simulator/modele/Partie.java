@@ -1,21 +1,23 @@
 package n7simulator.modele;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import n7simulator.database.ProfesseurDAO;
+import n7simulator.database.EvenementIrregulierDAO;
+import n7simulator.database.EvenementRegulierDAO;
 import n7simulator.joursuivant.JourSuivant;
-import n7simulator.database.ValDebPartieDAO;
+import n7simulator.modele.foy.Foy;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
 import n7simulator.modele.professeur.GestionProfesseurs;
-import n7simulator.modele.professeur.Professeur;
 import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
-import n7simulator.modele.evenements.Evenement_Irregu;
-import n7simulator.vue.Evenement.EvenementGUI;
+import n7simulator.modele.evenements.EvenementIrregulier;
+import n7simulator.modele.evenements.EvenementRegulier;
+import n7simulator.vue.Evenement.EvenementIrreguGUI;
+import n7simulator.vue.Evenement.EvenementReguGUI;
 import n7simulator.vue.PilotageGUI;
+import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 
 /**
  * Classe modélisant une partie du jeu N7Simulator.
@@ -62,18 +64,28 @@ public final class Partie extends Observable {
 	 * Gestionnaire des événements irréguliers
 	 */
 	private static ApparitionEvenementIrregulier gestionnaireEvenementIrregulier;
-	
+
+	/**
+	 * Gestionnaire des événements réguliers
+	 */
+	private static ApparitionEvenementRegulier gestionnaireEvenementRegulier;
+
 	/**
 	 * Les élèves
 	 */
 	private static GestionEleves gestionEleves;
-	
+
 	/**
 	 * Indique si la partie est perdue ou non
 	 */
 	private static boolean estPerdue;
 
-	
+	/**
+	 * les consommables au Foy
+	 */
+	private static Foy foy;
+
+
 	private Partie() {}
 	
 	/**
@@ -87,9 +99,11 @@ public final class Partie extends Observable {
 			jaugeBonheur = new JaugeBornee("Bonheur");
 			jaugePedagogie = new JaugeBornee("Pedagogie");
 			gestionnaireEvenementIrregulier = new ApparitionEvenementIrregulier();
+			gestionnaireEvenementRegulier = new ApparitionEvenementRegulier();
 			temps = new Temps(LocalDate.now());
-			gestionProfesseurs = new GestionProfesseurs((List<Professeur>)new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
+			gestionProfesseurs = new GestionProfesseurs();
 			gestionEleves = new GestionEleves();
+			foy = new Foy();
 			estPerdue = false;
 			
 			// Ajout dans JourSuivant
@@ -97,20 +111,35 @@ public final class Partie extends Observable {
 			jourSuivant.addImpact(gestionProfesseurs);
 			jourSuivant.addImpact(temps);
 			jourSuivant.addImpact(gestionEleves);
+			jourSuivant.addImpact(foy);
 		}
 		return instance;
 	}
 
-
+	/**
+	 * Permet de générer des événements irréguliers
+	 * @param pilote
+	 */
 	public void genererEvenementIrregulier(PilotageGUI pilote) {
 		List <Integer> listeEvenement = gestionnaireEvenementIrregulier.calculApparitionEvenementIrregulier(jaugeBonheur, jaugePedagogie);
-		System.out.println("Evenements : " + listeEvenement);
-		for (int idEvenement : listeEvenement) {
-			Evenement_Irregu evenement = new Evenement_Irregu(idEvenement, temps.getJourneeEnCours());
-			evenement.appliquerImpact(this);
-			EvenementGUI evenementGUI = new EvenementGUI(evenement, pilote);
-			evenementGUI.setVisible(true);
+		List<EvenementIrregulier> evenements = EvenementIrregulierDAO.getEvenementsReguliersById(listeEvenement, temps.getJourneeEnCours());
+		for (EvenementIrregulier evenement : evenements) {
+			evenement.appliquerImpact(this, true);
+			EvenementIrreguGUI evenementIrreguGUI = new EvenementIrreguGUI(evenement, pilote);
+			evenementIrreguGUI.setVisible(true);
+		}
+	}
 
+	/**
+	 * Permet de générer des événements réguliers
+	 * @param pilote
+	 */
+	public void genererEvenementRegulier(PilotageGUI pilote) {
+		List <Integer> listeEvenement = gestionnaireEvenementRegulier.recupererEvenementsReguliersDate(temps.getJourneeEnCours());
+		List<EvenementRegulier> evenements = EvenementRegulierDAO.getEvenementsReguliersById(listeEvenement, temps.getJourneeEnCours());
+		for (EvenementRegulier evenement : evenements) {
+			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
+			evenementReguGUI.setVisible(true);
 		}
 	}
 
@@ -119,7 +148,7 @@ public final class Partie extends Observable {
 	 * Renseigner le nom de la partie (sauvegarde)
 	 * @param nomPartie : le nom de la partie
 	 */
-	public void initNomPartie(String initNomPartie) {
+	public static void initNomPartie(String initNomPartie) {
 		nomPartie = initNomPartie;
 	}
 	
@@ -179,19 +208,32 @@ public final class Partie extends Observable {
 	public Temps getTemps() {
 		return temps;
 	}
-	
+
+	public Foy getFoy(){
+		return foy;
+	}
+
+	/**
+	 * Obtenir le gestionnaire des événements réguliers
+	 * @return : le gestionnaire des événements réguliers
+	 */
+	public ApparitionEvenementRegulier getGestionnaireEvenementRegulier() {
+		return gestionnaireEvenementRegulier;
+  }
+
 	/**
 	 * Modifie la partie qui devient "perdue"
 	 */
-	public static void setPerdue() {
-		estPerdue = true;
+	public static void setEstPerdue(boolean estPerdueActuellement) {
+		estPerdue = estPerdueActuellement;
 	}
-	
+
 	/**
 	 * Est ce que la partie est perdue ?
 	 * @return : si la partie est perdue
 	 */
-	public static boolean estPerdue() {
+	public static boolean estPerdue() { 
 		return estPerdue;
 	}
+	
 }

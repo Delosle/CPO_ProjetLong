@@ -1,13 +1,18 @@
 package n7simulator.database;
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+/**
+ * Classe generale de creation de base de donnees
+ */
 public class CreationBddUtilitaire {
+	
+	private CreationBddUtilitaire() {}
 
     public static Connection creerBDD(String dbPath) {
         Connection conn = null;
@@ -24,8 +29,9 @@ public class CreationBddUtilitaire {
      * Lire le fichier SQL depuis /main/ressources et le renvoyer sous forme de String
      * @param fileName
      * @return contenu du .sql sous forme d'une grande chaine de caractère
+     * @throws IOException : s'il y a une erreur lors de la lecture du fichier SQL
      */
-    public static String readSqlFile(String fileName) throws Exception {
+    public static String readSqlFile(String fileName) throws IOException {
         StringBuilder sqlString = new StringBuilder();
         // try avec ressources : permet de savoir que ces ressources seront fermées à la fin du try
         // InputStream : obtient le flux d'entrée
