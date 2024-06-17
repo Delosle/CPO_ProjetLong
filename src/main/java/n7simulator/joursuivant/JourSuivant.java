@@ -41,11 +41,4 @@ public final class JourSuivant {
 			impact.effectuerImpactJourSuivant();
 		}
 	}
-	
-	/**
-	 * Permet de clearer le contenu des listes.
-	 */
-	public void reinitialiser() {
-		impacts.clear();
-	}
 }
