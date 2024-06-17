@@ -26,6 +26,7 @@ public class BibliothequeTest {
 			biblioField = Bibliotheque.class.getDeclaredField("instance");
 			biblioField.setAccessible(true);
 			biblioField.set(null, null);
+			
 		} catch (NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -81,9 +82,9 @@ public class BibliothequeTest {
 		biblio = Bibliotheque.getInstance();
 		biblio.setNbLivre(5);
 		Partie instancePartie = Partie.getInstance();
-		instancePartie.getJaugeArgent().ajouter(50);
-		instancePartie.getJaugeBonheur().ajouter(20);
-		instancePartie.getJaugePedagogie().ajouter(20);
+		instancePartie.getJaugeArgent().reinitialiserValeur(1500);
+		instancePartie.getJaugeBonheur().reinitialiserValeur(20);
+		instancePartie.getJaugePedagogie().reinitialiserValeur(20);
 		Double valeurAvantPeda = instancePartie.getJaugePedagogie().getValue();
 		
 		//On fait modifier les jauges
