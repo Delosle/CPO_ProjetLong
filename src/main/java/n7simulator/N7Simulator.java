@@ -70,12 +70,12 @@ public class N7Simulator {
 				.recupererInfoBddSauvegarde(nomPartie);
 
 		// Valorsiation des données de la partie
-		valoriserDonneesPartie(donneesChargees);
-		valoriserDonneesProfesseur(donneesChargees);
-		valoriserDonnesFoy(donneesChargees);
-		valoriserDonneesDateEvenementRegulier(donneesChargees);
-		// affichage de l'interface du jeu
-		if (!Partie.estPerdue()) {
+		boolean estPerdu = valoriserDonneesPartie(donneesChargees);
+		if(!estPerdu) {
+			valoriserDonneesProfesseur(donneesChargees);
+			valoriserDonnesFoy(donneesChargees);
+			valoriserDonneesDateEvenementRegulier(donneesChargees);
+			// affichage de l'interface du jeu
 			affichageCarte();
 		}
 
@@ -96,13 +96,12 @@ public class N7Simulator {
 	 * Valorise toutes les données liées à la partie (table Partie en bd)
 	 * 
 	 * @param donneesChargees : les données récupérées depuis la bd
+	 * @return si la partie est perdue ou non 
 	 */
-	private static void valoriserDonneesPartie(Map<String, List<Map<String, Object>>> donneesChargees) {
+	private static boolean valoriserDonneesPartie(Map<String, List<Map<String, Object>>> donneesChargees) {
 		// table Partie
 		Map<String, Object> donneesPartie = donneesChargees.get("Partie").get(0); // il n'y a qu'une ligne
 		Partie partie = Partie.getInstance();
-		
-		valoriserJauges(donneesPartie);
 		
 		partie.initNomPartie((String)donneesPartie.get("nomPartie"));
 		partie.getGestionEleves().inscrireEleves((int) donneesPartie.get("nbEleves"));
@@ -115,14 +114,21 @@ public class N7Simulator {
 		Bibliotheque biblioInstance = Bibliotheque.getInstance();
 		biblioInstance.setNbLivre((int) donneesPartie.get("nbLivre"));
 		Partie.setEstPerdue(Boolean.parseBoolean((String) donneesPartie.get("estPerdue")));
+		
+		if(valoriserJauges(donneesPartie)) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
 	 * Valorise les jauges pour une partie sauvegarde et lance l'écran de game over
 	 * si une jauge a atteint 0
 	 * @param donneesPartie : les donnees chargees de la partie
+	 * @return : si la partie est perdue
 	 */
-	private static void valoriserJauges(Map<String, Object> donneesPartie) {
+	private static boolean valoriserJauges(Map<String, Object> donneesPartie) {
 		Partie partie = Partie.getInstance();
 
 		double valeurArgent = (double) donneesPartie.get("argent");
@@ -143,10 +149,12 @@ public class N7Simulator {
 		if (declenchementGameOver != null) {
 			Partie.setEstPerdue(true);
 			new GameOverFrame(declenchementGameOver);
+			return true;
 		} else {
 			partie.getJaugeArgent().reinitialiserValeur(valeurArgent);
 			partie.getJaugeBonheur().reinitialiserValeur(valeurBonheur);
 			partie.getJaugePedagogie().reinitialiserValeur(valeurPedagogie);
+			return false;
 		}
 	}
 
