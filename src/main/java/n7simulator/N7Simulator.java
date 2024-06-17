@@ -160,7 +160,7 @@ public class N7Simulator {
 		List<Map<String, Object>> donneesPartie = donneesChargees.get("ProfEmbauches");
 		Partie partie = Partie.getInstance();
 		GestionProfesseurs gestionProfesseurs = partie.getGestionProfesseurs();
-		gestionProfesseurs.initialiserListeProfesseurs(new ArrayList<Professeur>(), ProfesseurDAO.getAllProfesseurs());
+		gestionProfesseurs.initialiserListeProfesseurs(new ArrayList<>(), ProfesseurDAO.getAllProfesseurs());
 		List<Professeur> professeursNonEmbauches = gestionProfesseurs.getProfesseursNonEmbauches();
 
 		// Parcours des professeurs recupérés en bd
@@ -337,7 +337,7 @@ public class N7Simulator {
 		Map<Integer, Map<String, Object>> donneeEvenement = gestionnaireEvenementRegulier.getDonneesEvenements();
 
 		for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
-			Map<String, Object> sauvegardeEvenement = new HashMap<String, Object>();
+			Map<String, Object> sauvegardeEvenement = new HashMap<>();
 			Integer idEveReg = entry.getKey();
 			sauvegardeEvenement.put("idEvenementRegulier", idEveReg);
 			Map<String, Object> eventDetails = entry.getValue();
