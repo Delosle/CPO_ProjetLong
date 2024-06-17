@@ -21,11 +21,11 @@ public class BibliothequeTest {
 	@Before
 	public void setUp() {
 		//Creer la bilbiotheque
-		Field biblio;
+		Field biblioField;
 		try {
-			biblio = Bibliotheque.class.getDeclaredField("instance");
-			biblio.setAccessible(true);
-			biblio.set(null, null);
+			biblioField = Bibliotheque.class.getDeclaredField("instance");
+			biblioField.setAccessible(true);
+			biblioField.set(null, null);
 		} catch (NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException | IllegalAccessException e) {

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.jauges.JaugeBornee;
+import n7simulator.modele.jauges.ValeurNulleException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,8 +61,9 @@ public class JaugesTest {
     /**
      * Test pour se rassurer que la valeure des
      * jauges n'est jamais inférieure à zéro
-     */
-    @Test
+     * et que l'exception ValeurNulle est levée
+     */ 
+    @Test(expected = ValeurNulleException.class)
     public  void testValeurLimitesInferieur(){
         jauge1.ajouter(-100);
         jauge2.ajouter(-10);
