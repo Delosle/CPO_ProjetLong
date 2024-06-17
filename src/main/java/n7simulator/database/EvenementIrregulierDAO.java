@@ -5,7 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import n7simulator.modele.evenements.EvenementIrregulier;
@@ -71,5 +75,42 @@ public class EvenementIrregulierDAO {
 			}
 		}
 		return evenements;
+	}
+	
+	/**
+	 * Permet de récupérer les données de tous les événements irréguliers.
+	 * @return
+	 */
+	public static Map<Integer, Map<String, Object>> recupererDonneesEvenementsIrreguliers() {
+		Map<Integer, Map<String, Object>> donnees = new LinkedHashMap<>();
+		try {
+            Connection conn = DatabaseConnection.getDBConnexion();
+            String query = "SELECT id_eve_irre, impactBonheur, impactPedagogie, frequence, bonus"
+            		     + " FROM evenement_irregulier";
+            ResultSet result = DatabaseConnection.effectuerRequete(query, conn);
+            while (result.next()) {
+                int idEveIrre = result.getInt("id_eve_irre");
+                Map<String, Object> eventDetails = new HashMap<>();
+                List<String> liste = Arrays.asList("impactBonheur", "impactPedagogie");
+                for (String key : liste) {
+                    int value = (int) result.getObject(key);
+                    if (value > 0) {
+                        eventDetails.put(key, 1);
+                    } else if (value < 0) {
+                        eventDetails.put(key, -1);
+                    } else if (value == 0   ) {
+                        eventDetails.put(key, 0);
+                    }
+                }
+                eventDetails.put("frequence", result.getObject("frequence"));
+                eventDetails.put("bonus", result.getObject("bonus"));
+                donnees.put(idEveIrre, eventDetails);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération des données " +
+                    "de l'evenement irregulier dans la base de données.");
+            e.printStackTrace();
+        }
+		return donnees;
 	}
 }

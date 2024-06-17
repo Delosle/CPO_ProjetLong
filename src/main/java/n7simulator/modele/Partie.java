@@ -135,7 +135,7 @@ public final class Partie extends Observable {
 	 * @param pilote
 	 */
 	public void genererEvenementRegulier(PilotageGUI pilote) {
-		List <Integer> listeEvenement = gestionnaireEvenementRegulier.verifEvenementRegulier(temps.getJourneeEnCours());
+		List <Integer> listeEvenement = gestionnaireEvenementRegulier.recupererEvenementsReguliersDate(temps.getJourneeEnCours());
 		List<EvenementRegulier> evenements = EvenementRegulierDAO.getEvenementsReguliersById(listeEvenement, temps.getJourneeEnCours());
 		for (EvenementRegulier evenement : evenements) {
 			EvenementReguGUI evenementReguGUI = new EvenementReguGUI(evenement, pilote);
@@ -148,7 +148,7 @@ public final class Partie extends Observable {
 	 * Renseigner le nom de la partie (sauvegarde)
 	 * @param nomPartie : le nom de la partie
 	 */
-	public void initNomPartie(String initNomPartie) {
+	public static void initNomPartie(String initNomPartie) {
 		nomPartie = initNomPartie;
 	}
 	

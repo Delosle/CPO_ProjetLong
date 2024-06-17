@@ -80,9 +80,9 @@ public class PilotageGUI extends JPanel {
 
 	public void enregistrerEvent(JPanel event, boolean isRegu) {
 		if (isRegu) {
-			eventHistoryGUI.addEventRegu(event);
+			eventHistoryGUI.addEventRegulier(event);
 		} else {
-			eventHistoryGUI.addEventIrregu(event);
+			eventHistoryGUI.addEventIrregulier(event);
 		}
 	}
 }

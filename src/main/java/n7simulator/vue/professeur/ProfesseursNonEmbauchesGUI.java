@@ -3,15 +3,9 @@ package n7simulator.vue.professeur;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.border.EmptyBorder;
-
 import n7simulator.controller.professeur.BoutonChoisirProfesseur;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
@@ -25,8 +19,7 @@ public class ProfesseursNonEmbauchesGUI extends ListeProfesseursGUI {
 	List<Professeur> professeursNonEmbauches;
 
 	/**
-	 * Creation de la vue des professeurs non embauches
-	 * 
+	 * Creation de la vue des professeurs non embauches 
 	 */
 	public ProfesseursNonEmbauchesGUI(GestionProfesseurs gestionProfesseurs) {
 		super();

@@ -52,7 +52,4 @@ public class EventIrregTest {
 //        assertEquals(500, nouvellePartie.getJaugeArgent().getValue(), EPSILON);
 //        assertEquals(15, nouvellePartie.getJaugePedagogie().getValue(), EPSILON);
 //    }
-
-
-
 }

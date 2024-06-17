@@ -78,7 +78,7 @@ public class ConsommableFoyController extends JPanel {
         double impactArgent = 0;
         for(ConsommableFoy consommableFoy: consommables){
             impactArgent += consommableFoy.getMarge();
-            impactBonheur += consommableFoy.getDiff();
+            impactBonheur += consommableFoy.getDifferencePrixLimite();
         }
         //pour une journée l'impact max
         impactBonheur = impactBonheur > 10 ? 10 : impactBonheur;

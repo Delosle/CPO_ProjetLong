@@ -1,9 +1,5 @@
 package n7simulator.controller.startmenu;
 
-import java.awt.Window;
-
-import javax.swing.SwingUtilities;
-
 /**
  * Classe représentant le bouton de nouvelle partie dans le menu principal du jeu
  */

@@ -38,28 +38,16 @@ public class BibliothequeTest {
 	 */
 	@Test
 	public void testInitialisationBiblio() {
-		biblio = Bibliotheque.getInstance(10);
+		biblio = Bibliotheque.getInstance();
+		biblio.setNbLivre(10);
 		assertEquals(10, biblio.getNbLivre());
 		assertEquals(15, biblio.getPrixLivre());
 	}
-
-	/*
-	 * Test vérifiant que la bibliothèque est une instance
-	 */
-	@Test
-	public void testInvariantInstance() {
-		biblio = Bibliotheque.getInstance(10);
-		biblio = Bibliotheque.getInstance(20);
-		assertEquals(10, biblio.getNbLivre());
-		assertEquals(15, biblio.getPrixLivre());
-	}
-
-	/*
-	 * Test vérifiant que le nombre de livre peut être modifié
-	 */
+	
 	@Test
 	public void testSetLivre() {
-		biblio = Bibliotheque.getInstance(10);
+		biblio = Bibliotheque.getInstance();
+		biblio.setNbLivre(10);
 		assertEquals(10, biblio.getNbLivre());
 		biblio.setNbLivre(5);
 		assertEquals(5, biblio.getNbLivre());
@@ -70,7 +58,8 @@ public class BibliothequeTest {
 	 */	
 	@Test
 	public void testImpactPos() {
-		biblio = Bibliotheque.getInstance(10);
+		biblio = Bibliotheque.getInstance();
+		biblio.setNbLivre(10);
 		Partie instancePartie = Partie.getInstance();
 		instancePartie.getJaugeArgent().ajouter(50);
 		instancePartie.getJaugeBonheur().ajouter(50);
@@ -89,7 +78,8 @@ public class BibliothequeTest {
 	 */	
 	@Test
 	public void testImpactNeg() {
-		biblio = Bibliotheque.getInstance(5);
+		biblio = Bibliotheque.getInstance();
+		biblio.setNbLivre(5);
 		Partie instancePartie = Partie.getInstance();
 		instancePartie.getJaugeArgent().ajouter(50);
 		instancePartie.getJaugeBonheur().ajouter(20);
@@ -106,7 +96,8 @@ public class BibliothequeTest {
 	 */	
 	@Test
 	public void testImpactArgent() {
-		biblio = Bibliotheque.getInstance(5);
+		biblio = Bibliotheque.getInstance();
+		biblio.setNbLivre(5);
 		Partie instancePartie = Partie.getInstance();
 		instancePartie.getJaugeArgent().ajouter(50);
 		instancePartie.getJaugeBonheur().ajouter(20);

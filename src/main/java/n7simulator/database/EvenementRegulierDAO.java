@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import n7simulator.modele.evenements.EvenementRegulier;
@@ -73,5 +76,31 @@ public class EvenementRegulierDAO {
 	        }
 		}
         return evenements;
+	}
+	
+	/**
+	 * Permet de récupérer les données de tous les événements réguliers.
+	 * @return
+	 */
+	public static Map<Integer, Map<String, Object>> recupererDonneesEvenementsReguliers() {
+		Map<Integer, Map<String, Object>> donnees = new LinkedHashMap<>();
+		try {
+            Connection conn = DatabaseConnection.getDBConnexion();
+            String query = "SELECT id_eve_reg, periode, debut FROM evenement_regulier";
+            ResultSet result = DatabaseConnection.effectuerRequete(query, conn);
+            while (result.next()) {
+                int idEveReg = result.getInt("id_eve_reg");
+                Map<String, Object> eventDetails = new HashMap<>();
+                eventDetails.put("periode", result.getObject("periode"));
+                eventDetails.put("debut", result.getObject("debut"));
+                donnees.put(idEveReg, eventDetails);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération des données " +
+                    "de l'evenement régulier dans la base de données.");
+            e.printStackTrace();
+
+        }
+		return donnees;
 	}
 }

@@ -20,7 +20,6 @@ import n7simulator.modele.foy.ConsommableFoy;
 import n7simulator.modele.foy.Foy;
 import n7simulator.modele.evenements.ApparitionEvenementRegulier;
 import n7simulator.vue.GameOverFrame;
-import n7simulator.modele.evenements.ApparitionEvenementIrregulier;
 import n7simulator.modele.jauges.Jauge;
 import n7simulator.modele.professeur.GestionProfesseurs;
 import n7simulator.modele.professeur.Professeur;
@@ -90,8 +89,7 @@ public class N7Simulator {
 		PilotageGUI interfacePilotage = new PilotageGUI(new EventHistoryGUI());
 		CarteGUI interfaceCarte = new CarteGUI();
 		N7Frame.setUp(interfaceCarte, interfacePilotage);
-		N7Frame fenetre = N7Frame.getInstance();
-	
+		N7Frame.getInstance();	
 	}
 
 	/**
@@ -106,7 +104,7 @@ public class N7Simulator {
 		
 		valoriserJauges(donneesPartie);
 		
-		partie.initNomPartie((String) donneesPartie.get("nomPartie"));
+		partie.initNomPartie((String)donneesPartie.get("nomPartie"));
 		partie.getGestionEleves().inscrireEleves((int) donneesPartie.get("nbEleves"));
 
 		String dateString = (String) donneesPartie.get("dateEnCours");
@@ -114,10 +112,9 @@ public class N7Simulator {
 		Crous crousInstance = Crous.getInstance();
 		crousInstance.setQualite((int) donneesPartie.get("idQualiteRepasCrous"));
 		crousInstance.setPrixVente((double) donneesPartie.get("prixVenteRepascrous"));
-		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
+		Bibliotheque biblioInstance = Bibliotheque.getInstance();
 		biblioInstance.setNbLivre((int) donneesPartie.get("nbLivre"));
 		Partie.setEstPerdue(Boolean.parseBoolean((String) donneesPartie.get("estPerdue")));
-
 	}
 	
 	/**
@@ -214,8 +211,7 @@ public class N7Simulator {
 					trouve = true;
 				}
 				i++;
-			}
-			
+			}			
 		}
 	}
 
@@ -271,7 +267,7 @@ public class N7Simulator {
 		Crous crousInstance = Crous.getInstance();
 		sauvegardePartie.put("idQualiteRepasCrous", crousInstance.getQualite());
 		sauvegardePartie.put("prixVenteRepascrous", crousInstance.getPrixVente());
-		Bibliotheque biblioInstance = Bibliotheque.getInstance(0);
+		Bibliotheque biblioInstance = Bibliotheque.getInstance();
 		sauvegardePartie.put("nbLivre", biblioInstance.getNbLivre());
 
 		List<Map<String, Object>> result = new ArrayList<>();
@@ -301,10 +297,15 @@ public class N7Simulator {
 			sauvegardeProfs.put("nbheure", prof.getNbHeuresTravaillees());
 			listeSauvegardeProfs.add(sauvegardeProfs);
 		}
-
 		return listeSauvegardeProfs;
 	}
 
+	/**
+	 * Obtenir un objet contenant toutes les données liées aux foy afin de pouvoir les écrire en bd
+	 * 
+	 * @return : une liste d'objets associatifs (entre le nom de la colonne et sa
+	 *         valeur)
+	 */
 	private static List<Map<String, Object>> getObjetSauvegardeFoy() {
 		List<Map<String, Object>> listeSauvegardeFoy = new ArrayList<>();
 
@@ -333,7 +334,7 @@ public class N7Simulator {
 
 		Partie partieEnCours = Partie.getInstance();
 		ApparitionEvenementRegulier gestionnaireEvenementRegulier = partieEnCours.getGestionnaireEvenementRegulier();
-		Map<Integer, Map<String, Object>> donneeEvenement = gestionnaireEvenementRegulier.getDonneeEvenement();
+		Map<Integer, Map<String, Object>> donneeEvenement = gestionnaireEvenementRegulier.getDonneesEvenements();
 
 		for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
 			Map<String, Object> sauvegardeEvenement = new HashMap<String, Object>();

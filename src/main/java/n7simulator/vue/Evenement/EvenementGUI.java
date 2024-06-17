@@ -1,20 +1,14 @@
 package n7simulator.vue.Evenement;
 
-import n7simulator.controller.ChoixEventRegulierController;
-import n7simulator.modele.Partie;
 import n7simulator.modele.evenements.Evenement;
 import n7simulator.vue.PilotageGUI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.time.LocalDate;
 
 public class EvenementGUI extends JFrame {
+	
     protected String titre;
     protected String description;
     protected int impactBonheur;
@@ -102,44 +96,46 @@ public class EvenementGUI extends JFrame {
         zoneImpacts.add(panelArgent);
         zoneImpacts.add(panelPedagogie);
         zoneImpacts.setBorder(new EmptyBorder( 0, 60, 0, 0));
-        //zone_Impacts.setBackground(Color.GREEN); // A commenter, sert a modif du GridBagLayout
 
         // On met en place le layer de la popup, en y ajoutant les differents elements
         JPanel popupPanel = new JPanel();
         GridBagLayout minigridBag = new GridBagLayout();
-        GridBagConstraints mini_c = new GridBagConstraints();
-        //popupPanel.setBackground(Color.YELLOW);
+        GridBagConstraints minigridConstraints = new GridBagConstraints();
         popupPanel.setLayout(minigridBag);
-        mini_c.fill = GridBagConstraints.BOTH;
+        minigridConstraints.fill = GridBagConstraints.BOTH;
 
-        mini_c.gridy = 0;
-        mini_c.weighty=0.1;
-        mini_c.weightx=1;
-        minigridBag.setConstraints(panelTitre, mini_c);
+        minigridConstraints.gridy = 0;
+        minigridConstraints.weighty=0.1;
+        minigridConstraints.weightx=1;
+        minigridBag.setConstraints(panelTitre, minigridConstraints);
         popupPanel.add(panelTitre);
 
-        mini_c.gridy = 1;
-        mini_c.weighty=0.35;
-        mini_c.weightx=1;
-        minigridBag.setConstraints(panelDescription, mini_c);
+        minigridConstraints.gridy = 1;
+        minigridConstraints.weighty=0.35;
+        minigridConstraints.weightx=1;
+        minigridBag.setConstraints(panelDescription, minigridConstraints);
         popupPanel.add(panelDescription);
 
-        mini_c.gridy = 2;
-        mini_c.weighty=0.3;
-        mini_c.weightx=1;
-        minigridBag.setConstraints(zoneImpacts, mini_c);
+        minigridConstraints.gridy = 2;
+        minigridConstraints.weighty=0.3;
+        minigridConstraints.weightx=1;
+        minigridBag.setConstraints(zoneImpacts, minigridConstraints);
         popupPanel.add(zoneImpacts);
 
-        mini_c.gridy = 3;
-        mini_c.weighty=0.3;
+        minigridConstraints.gridy = 3;
+        minigridConstraints.weighty=0.3;
 
-        minigridBag.setConstraints(panelChoix, mini_c);
+        minigridBag.setConstraints(panelChoix, minigridConstraints);
         popupPanel.add(panelChoix);
 
         add(popupPanel);
 
     }
 
+    /**
+     * Crée un panel propre à tous les événements.
+     * @return
+     */
     public JPanel getPermanent() {
         JPanel miniPanel = new JPanel();
         JPanel panelTitre = new JPanel();
@@ -147,11 +143,11 @@ public class EvenementGUI extends JFrame {
         gridLayout.setHgap(20);
         miniPanel.setLayout(gridLayout);
 
-        JLabel titre = new JLabel(this.titre);
-        panelTitre.add(titre);
+        JLabel titreLabel = new JLabel(this.titre);
+        panelTitre.add(titreLabel);
 
-        JPanel zone_Impacts = new JPanel();
-        zone_Impacts.setLayout(new GridLayout(1, 3));
+        JPanel zoneImpactsPanel = new JPanel();
+        zoneImpactsPanel.setLayout(new GridLayout(1, 3));
 
         JLabel impactBonheurText = new JLabel("" + this.impactBonheur);
         impactBonheurText.setForeground(new Color(212, 0, 253));
@@ -159,12 +155,12 @@ public class EvenementGUI extends JFrame {
         JLabel impactPedagogieText = new JLabel("" + this.impactPedagogie);
         impactPedagogieText.setForeground(Color.BLUE);
 
-        zone_Impacts.add(impactBonheurText);
-        zone_Impacts.add(impactPedagogieText);
-        zone_Impacts.add(new JLabel("" + this.impactArgent));
+        zoneImpactsPanel.add(impactBonheurText);
+        zoneImpactsPanel.add(impactPedagogieText);
+        zoneImpactsPanel.add(new JLabel("" + this.impactArgent));
 
         miniPanel.add(panelTitre);
-        miniPanel.add(zone_Impacts);
+        miniPanel.add(zoneImpactsPanel);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
@@ -173,6 +169,7 @@ public class EvenementGUI extends JFrame {
         miniPanel.setSize(dimensionEvent);
         miniPanel.setMaximumSize(dimensionEvent);
         miniPanel.setMinimumSize(dimensionEvent);
+        
         return miniPanel;
     }
 }

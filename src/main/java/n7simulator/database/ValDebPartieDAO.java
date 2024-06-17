@@ -81,7 +81,7 @@ public class ValDebPartieDAO {
 			
 			initialiserProfesseurs();
 			partie.getFoy().setConsommablesListe(ConsommableFoyDAO.getAllConsommableFoy());
-			Bibliotheque.getInstance(0).setNbLivre(0);
+			Bibliotheque.getInstance().setNbLivre(0);
 			Partie.setEstPerdue(false);
 
 		} catch (SQLException e) {

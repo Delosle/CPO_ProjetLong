@@ -1,9 +1,9 @@
 package n7simulator.modele.evenements;
-import java.sql.*;
+
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
-import n7simulator.database.DatabaseConnection;
+import n7simulator.database.EvenementRegulierDAO;
 
 
 public class ApparitionEvenementRegulier {
@@ -11,23 +11,22 @@ public class ApparitionEvenementRegulier {
     /**
      * Contient les données de l'événement
      */
-    private Map<Integer, Map<String, Object>> donneeEvenement; // contient les données de l'événement
+    private Map<Integer, Map<String, Object>> donneesEvenements;
 
     /**
      * Constructeur de la classe ApparitionEvenementRegulier
      */
     public ApparitionEvenementRegulier() {
-        donneeEvenement = new LinkedHashMap<>();
-        recupDonneeEvenement();
+        donneesEvenements = EvenementRegulierDAO.recupererDonneesEvenementsReguliers();
     }
 
     /**
-     * Vérifie si un événement régulier doit se produire
+     * Retourne la liste des événements qui doivent se produire à cette date.
      */
-    public List <Integer> verifEvenementRegulier (LocalDate dateActuelle) {
+    public List <Integer> recupererEvenementsReguliersDate(LocalDate dateActuelle) {
         List <Integer> listeEvenement = new ArrayList<>();
 
-        for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
+        for (Map.Entry<Integer, Map<String, Object>> entry : donneesEvenements.entrySet()) {
             Map<String, Object> eventDetails = entry.getValue();
             String dateString = eventDetails.get("debut").toString();
             LocalDate dateDebut = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -49,8 +48,12 @@ public class ApparitionEvenementRegulier {
         return listeEvenement;
     }
 
-    public Map<Integer, Map<String, Object>> getDonneeEvenement() {
-        return donneeEvenement;
+    /**
+     * Retourne les données des événements
+     * @return
+     */
+    public Map<Integer, Map<String, Object>> getDonneesEvenements() {
+        return donneesEvenements;
     }
 
     /**
@@ -62,32 +65,9 @@ public class ApparitionEvenementRegulier {
             //recup id de l'événement
             int idEveReg = (int) eventDetails.get("idEvenementRegulier");
             //recup dico avec les données de l'événement
-            Map<String, Object> event = donneeEvenement.get(idEveReg);
+            Map<String, Object> event = donneesEvenements.get(idEveReg);
             event.put("debut", eventDetails.get("dateEvenement"));
-            donneeEvenement.put(idEveReg, event);
-        }
-    }
-
-    /**
-     * Récupère les données de l'événement dans la base de données
-     */
-    private void recupDonneeEvenement() {
-        try {
-            Connection conn = DatabaseConnection.getDBConnexion();
-            String query = "SELECT id_eve_reg, periode, debut FROM evenement_regulier";
-            ResultSet result = DatabaseConnection.effectuerRequete(query, conn);
-            while (result.next()) {
-                int idEveReg = result.getInt("id_eve_reg");
-                Map<String, Object> eventDetails = new HashMap<>();
-                eventDetails.put("periode", result.getObject("periode"));
-                eventDetails.put("debut", result.getObject("debut"));
-                donneeEvenement.put(idEveReg, eventDetails);
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération des données " +
-                    "de l'evenement régulier dans la base de données.");
-            e.printStackTrace();
-
+            donneesEvenements.put(idEveReg, event);
         }
     }
 }

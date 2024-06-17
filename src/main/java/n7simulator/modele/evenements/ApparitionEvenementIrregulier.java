@@ -1,57 +1,21 @@
 package n7simulator.modele.evenements;
 
-import java.sql.*;
 import java.util.*;
-import n7simulator.database.DatabaseConnection;
+import n7simulator.database.EvenementIrregulierDAO;
 import n7simulator.modele.jauges.Jauge;
 
 public class ApparitionEvenementIrregulier {
 
     /**
-     * Contient les données de l'événement
+     * Contient les données des événements
      */
-    private Map<Integer, Map<String, Object>> donneeEvenement; // contient les données de l'événement
+    private Map<Integer, Map<String, Object>> donneesEvenements;
 
     /**
      * Constructeur de la classe ApparitionEvenementIrregulier
      */
     public ApparitionEvenementIrregulier() {
-        donneeEvenement = new LinkedHashMap<>();
-        recupDonneeEvenement();
-    }
-
-    /**
-     * Récupère les données de l'événement dans la base de données
-     */
-    private void recupDonneeEvenement(){
-        try {
-            Connection conn = DatabaseConnection.getDBConnexion();
-            //int nbEvenement = DatabaseConnection.effectuerRequete("SELECT MAX(idPartie) as maxId FROM Partie;", conn).getInt("maxId");
-            String query = "SELECT id_eve_irre, impactBonheur, impactPedagogie, frequence, bonus FROM evenement_irregulier";
-            ResultSet result = DatabaseConnection.effectuerRequete(query, conn);
-            while (result.next()) {
-                int idEveIrre = result.getInt("id_eve_irre");
-                Map<String, Object> eventDetails = new HashMap<>();
-                List<String> liste = Arrays.asList("impactBonheur", "impactPedagogie");
-                for (String key : liste) {
-                    int value = (int) result.getObject(key);
-                    if (value > 0) {
-                        eventDetails.put(key, 1);
-                    } else if (value < 0) {
-                        eventDetails.put(key, -1);
-                    } else if (value == 0   ) {
-                        eventDetails.put(key, 0);
-                    }
-                }
-                eventDetails.put("frequence", result.getObject("frequence"));
-                eventDetails.put("bonus", result.getObject("bonus"));
-                donneeEvenement.put(idEveIrre, eventDetails);
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération des données " +
-                    "de l'evenement irregulier dans la base de données.");
-            e.printStackTrace();
-        }
+        donneesEvenements = EvenementIrregulierDAO.recupererDonneesEvenementsIrreguliers();
     }
 
     /**
@@ -82,7 +46,7 @@ public class ApparitionEvenementIrregulier {
     public List <Integer> calculApparitionEvenementIrregulier (Jauge bonheur, Jauge pedagogie){
         Map<String, Object> valeurJauges = recupValeurJauges(bonheur, pedagogie);
         List <Integer> listeEvenement = new ArrayList<>();
-        for (Map.Entry<Integer, Map<String, Object>> entry : donneeEvenement.entrySet()) {
+        for (Map.Entry<Integer, Map<String, Object>> entry : donneesEvenements.entrySet()) {
             Map<String, Object> eventDetails = entry.getValue();
             double frequence = (double) eventDetails.get("frequence");
             //bonus 100 - val de jauges * frequence

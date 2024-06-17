@@ -131,6 +131,11 @@ public class GestionProfesseurs extends Observable implements ImpactJourSuivant 
 		}
 	}
 	
+	/**
+	 * Permet d'initialiser les listes des professeurs emabuches et non embauches.
+	 * @param professeursEmbauches
+	 * @param professeursNonEmbauches
+	 */
 	public void initialiserListeProfesseurs(List<Professeur> professeursEmbauches, List<Professeur> professeursNonEmbauches) {
 		this.professeursEmbauches = professeursEmbauches;
 		this.professeursNonEmbauches = professeursNonEmbauches;

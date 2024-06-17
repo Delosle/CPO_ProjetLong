@@ -19,14 +19,21 @@ import n7simulator.modele.Bibliotheque;
  */
 public class BibliothequeGUI extends JPanel implements Observer {
 
+	/**
+	 * Nombre de livres de la bibliothèque
+	 */
 	private Integer nbLivre;
+	
+	/**
+	 * Label contenant le nombre de livres
+	 */
 	private JLabel labelLivre;
 
 	/**
 	 * Création de la vue de la Bibliotheque
 	 */
 	public BibliothequeGUI() {
-		Bibliotheque instanceBiblio = Bibliotheque.getInstance(0);
+		Bibliotheque instanceBiblio = Bibliotheque.getInstance();
 		nbLivre = instanceBiblio.getNbLivre();
 
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));

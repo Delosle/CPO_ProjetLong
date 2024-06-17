@@ -1,10 +1,11 @@
 package n7simulator.vue.Evenement;
 
-import n7simulator.modele.evenements.Evenement;
-
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vue pour l'historique des événements.
+ */
 public class EventHistoryGUI extends JPanel{
 
     static final int LARGEUR_PANNEL = 50;
@@ -45,17 +46,20 @@ public class EventHistoryGUI extends JPanel{
     }
 
     /**
-     * Ajoute un événement à l'historique
+     * Ajoute un événement irrégulier à l'historique
      * @param event l'événement à ajouter
      */
-
-    public void addEventIrregu(JPanel event) {
+    public void addEventIrregulier(JPanel event) {
         eventIrreguHistory.add(event, 0);
         this.revalidate();
         this.repaint();
     }
 
-    public void addEventRegu(JPanel event) {
+    /**
+     * Ajoute un événement régulier à l'historique
+     * @param event l'événement à ajouter
+     */
+    public void addEventRegulier(JPanel event) {
         eventReguHistory.add(event, 0);
         this.revalidate();
         this.repaint();

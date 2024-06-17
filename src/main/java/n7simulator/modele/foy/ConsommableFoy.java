@@ -46,10 +46,18 @@ public class ConsommableFoy extends Observable {
         this.image = image;
     }
 
+    /**
+     * Retourne le prix du consommable.
+     * @return
+     */
     public double getPrix() {
         return prix;
     }
 
+    /**
+     * Retourne le prix limite du consommable.
+     * @return
+     */
     public double getPrixLimite() {
         return prixLimite;
     }
@@ -64,27 +72,43 @@ public class ConsommableFoy extends Observable {
         notifyObservers(prix);
     }
 
+    /**
+     * Retourne le nom de l'image du consommable.
+     * @return
+     */
     public String getImage(){
         return image;
     }
 
+    /**
+     * Retourne le nom du consommable.
+     * @return
+     */
     public String getNom(){
         return nom;
     }
 
+    /**
+     * Retourne l'identifiant en base de données du consommable.
+     */
     public int getId() {
         return id;
     }
 
-    public static ConsommableFoy copieFoy(ConsommableFoy foy){
-        return new ConsommableFoy(foy.getId(),foy.getNom(), foy.getPrix(), foy.prixLimite, foy.getImage()) ;
+    /**
+     * Crée une copie de l'objet.
+     * @param consommable le consommable à copier
+     * @return le nouvel objet
+     */
+    public static ConsommableFoy copieFoy(ConsommableFoy consommable){
+        return new ConsommableFoy(consommable.getId(),consommable.getNom(), consommable.getPrix(), consommable.prixLimite, consommable.getImage()) ;
     }
 
     /**
-     * Obteinr la différence entre le prix limite et le prix du consommable
+     * Obtenir la différence entre le prix limite et le prix du consommable
      * @return la différence.
      */
-    public double getDiff(){
+    public double getDifferencePrixLimite(){
         return getPrixLimite() - getPrix();
     }
 

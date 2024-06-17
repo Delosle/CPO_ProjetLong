@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class VueConsommables extends JPanel {
 
+	/**
+	 * Constructeur
+	 */
     public VueConsommables(){
         super(new GridLayout(1, 2));
         List<ConsommableFoy> consommables = Partie.getInstance().getFoy().getConsommables();
@@ -26,11 +29,11 @@ public class VueConsommables extends JPanel {
 
 
         JButton modifier = new BoutonGestionConsommables();
-        JPanel modifierPannel = new JPanel(new GridLayout(3, 1));
-        modifierPannel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        JPanel modificationPanel = new JPanel(new GridLayout(3, 1));
+        modificationPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         //Adaptation de la vue
-        modifierPannel.add(new JPanel());
-        modifierPannel.add(modifier);
-        add(modifierPannel);
+        modificationPanel.add(new JPanel());
+        modificationPanel.add(modifier);
+        this.add(modificationPanel);
     }
 }

@@ -23,7 +23,7 @@ public class GestionBibliothequeController extends JPanel {
     private JLabel labelCoutVente;
 
     public GestionBibliothequeController() {
-        Bibliotheque instanceBiblio = Bibliotheque.getInstance(0);
+        Bibliotheque instanceBiblio = Bibliotheque.getInstance();
 
         // Création du contenant qui va contenir les éléments du controller
         JPanel contenant = new JPanel(new GridLayout(2, 1));
@@ -119,7 +119,7 @@ public class GestionBibliothequeController extends JPanel {
      */
     private void updatePrixTransactionVente(JSpinner spinner, JLabel cout) {
         int nbVendu = (int) spinner.getValue();
-        int valeur = nbVendu * Bibliotheque.getInstance(0).getPrixLivre();
+        int valeur = nbVendu * Bibliotheque.getInstance().getPrixLivre();
         cout.setText(String.format("%d €", valeur));
     }
 
